@@ -15,6 +15,7 @@ public class IdVar extends Ident {
 		System.out.println("Premier essai");
 		int i;
 		int e;
+		int gt;
 	}
 	
 }
