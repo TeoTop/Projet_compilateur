@@ -9,13 +9,4 @@ public class IdVar extends Ident {
 	public void setOffset(int offset) {
 		this.offset = offset;
 	}
-	
-	
-	public void test(){
-		System.out.println("Premier essai");
-		int i;
-		int e;
-		int gt;
-	}
-	
 }
