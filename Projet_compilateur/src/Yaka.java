@@ -44,7 +44,6 @@ public class Yaka implements YakaConstants {
     jj_consume_token(ident);
     bloc();
     jj_consume_token(FPROGRAMME);
-   System.out.println(YakaTokenManager.expression.toString());
   }
 
   static final public void bloc() throws ParseException {
@@ -236,6 +235,9 @@ public class Yaka implements YakaConstants {
       jj_la1[9] = jj_gen;
       ;
     }
+    /* Vider les piles pour évaluer une autre expression */
+        YakaTokenManager.expression.clearType();
+        YakaTokenManager.expression.clearOp();
   }
 
   static final public void simpleExpr() throws ParseException {

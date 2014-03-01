@@ -46,7 +46,8 @@ public class Expression {
 					empileType("erreur");
 				}
 			}
-		}
+			this.opera.pop();
+		}/* ajouter un else */
 	}
 	
 	public void testAdd() {
@@ -63,7 +64,16 @@ public class Expression {
 					empileType("erreur");
 				}
 			}
-		}
+			this.opera.pop();
+		}/* ajouter un else */
+	}
+	
+	public void clearType() {
+		this.type.clear();
+	}
+	
+	public void clearOp() {
+		this.opera.clear();
 	}
 	
 	@Override
