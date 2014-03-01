@@ -9,4 +9,11 @@ public class IdVar extends Ident {
 	public void setOffset(int offset) {
 		this.offset = offset;
 	}
+
+	@Override
+	public String toString() {
+		return "IdVar [offset=" + offset + " Type="+ getType() +"]";
+	}
+	
+	
 }
