@@ -42,4 +42,12 @@ public abstract class YVM {
 	public abstract void Goto();
 	
 	public abstract void queue();
+	
+	public abstract void ecrireEnt();
+
+	public abstract void ecrireChaine(String x);
+
+	public abstract void ecrireBool();
+
+	public abstract void lireEnt(int x);
 }

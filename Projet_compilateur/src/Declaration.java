@@ -8,7 +8,7 @@ public class Declaration {
 		super();
 	}
 	
-	//déclaration des variables
+	//dï¿½claration des variables
 	public void ajoutNomVariable(String ident){
 		YakaTokenManager.tabident.rangeIdent(ident,id);
 	}
@@ -23,7 +23,7 @@ public class Declaration {
 		id.setType(this.type);
 		YakaTokenManager.tabident.rangeIdent(ident,id);
 	}
-	//déclaration des constantes
+	//dï¿½claration des constantes
 	public void ajoutNomConstante(String ident){
 		id = new IdConst();
 		YakaTokenManager.tabident.rangeIdent(ident,id);
@@ -34,6 +34,10 @@ public class Declaration {
 	  	if (idConst != null){
 	  		((IdConst) id).setValeur(idConst.getValeur());
 	  		id.setType(idConst.getType());
+	  	}
+	  	else {
+	  		id.setType("erreur");
+	  		Erreur.erreurDeclarationConstante(ident);
 	  	}
 	}
 	

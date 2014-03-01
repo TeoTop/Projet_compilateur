@@ -2,102 +2,117 @@ import java.io.OutputStream;
 
 
 public class YVMasm extends YVM {
+	/* fichier de sortie */
 	private OutputStream fichier;
-	
+	/* compteur de nombre de message pour la creation de variable pour la fonction ecrireChaine */
+	private int comptString;
 	
 	public YVMasm(String nom) {
 		super();
 		this.fichier = Ecriture.ouvrir(nom);;
+		this.comptString = 0;
 	}
 
 	@Override
 	public void isub() {
-		 Ecriture.ecrireString(this.fichier , "; isub \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "sub ax,bx \n");
-		 Ecriture.ecrireString(this.fichier , "push ax \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;isub");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tsub ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
 	@Override
 	public void ineg() {
 		// TODO Auto-generated method stub
-		Ecriture.ecrireString(this.fichier , "pop ax \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;ineg");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
 		
 	}
 
 	@Override
 	public void iinf() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , "; iinf \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "cmp ax,bx \n");
-		 Ecriture.ecrireString(this.fichier , "jl $+6 \n");
-		 Ecriture.ecrireString(this.fichier , "push -1 \n");
-		 Ecriture.ecrireString(this.fichier , "jmp $+4 \n");
-		 Ecriture.ecrireString(this.fichier , "push 0 \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;iinf");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tjl $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
+		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
 
 	}
 
 	@Override
 	public void iegal() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , "; iegal \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "cmp ax,bx \n");
-		 Ecriture.ecrireString(this.fichier , "jle $+6 \n");
-		 Ecriture.ecrireString(this.fichier , "push -1 \n");
-		 Ecriture.ecrireString(this.fichier , "jmp $+4 \n");
-		 Ecriture.ecrireString(this.fichier , "push 0 \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;iegal");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tjle $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
+		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
 
 	}
 
 	@Override
 	public void iload(int offset) {
 		// TODO Auto-generated method stub
-		Ecriture.ecrireString(this.fichier , "push word ptr [bp-");
-		Ecriture.ecrireInt(this.fichier,offset);
-		Ecriture.ecrireString(this.fichier , "] \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;iload " + offset + "");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp-" + offset + "]");
+		/*Ecriture.ecrireInt(this.fichier,offset);
+		Ecriture.ecrireString(this.fichier , "] \n");*/
 
 	}
 
 	@Override
 	public void istore(int offset) {
 		// TODO Auto-generated method stub
-		
-		Ecriture.ecrireString(this.fichier , "pop ax \n");
-		Ecriture.ecrireString(this.fichier , "push word ptr [bp-");
-		Ecriture.ecrireInt(this.fichier,offset);
-		Ecriture.ecrireString(this.fichier , "] \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;istore " + offset + "");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp-" + offset + "]");
+		/*Ecriture.ecrireInt(this.fichier,offset);
+		Ecriture.ecrireString(this.fichier , "] \n");*/
 	}
 
 	@Override
 	public void iconst(int valeur) {
 		// TODO Auto-generated method stub
-		
-		Ecriture.ecrireString(this.fichier , "push ");
-		Ecriture.ecrireInt(this.fichier,valeur);
-		Ecriture.ecrireString(this.fichier , "\n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;iconst " + valeur + "");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush " + valeur + "");
+		/*Ecriture.ecrireInt(this.fichier,valeur);
+		Ecriture.ecrireString(this.fichier , "\n");*/
 	}
 
 	
 	@Override
 	public void ifeq() {
 		// TODO Auto-generated method stub
+		Ecriture.ecrireStringln(this.fichier,  "");
 		 
 	}
 
 	@Override
 	public void iffaux() {
 		// TODO Auto-generated method stub
+		Ecriture.ecrireStringln(this.fichier,  "");
 
 	}
 
 	@Override
 	public void Goto() {
 		// TODO Auto-generated method stub
+		Ecriture.ecrireStringln(this.fichier,  "");
 
 	}
 
@@ -105,62 +120,67 @@ public class YVMasm extends YVM {
 	@Override
 	public void iadd() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";iadd \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "add ax,bx \n");
-		 Ecriture.ecrireString(this.fichier , "push ax \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;iadd");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tadd ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 		
 	}
 
 	@Override
 	public void imul() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";imul \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "imul bx\n");
-		 Ecriture.ecrireString(this.fichier , "push ax \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;imul");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\timul bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 		
 	}
 
 	@Override
 	public void idiv() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";idiv \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "cwd \n");
-		 Ecriture.ecrireString(this.fichier , "idiv bx \n");
-		 Ecriture.ecrireString(this.fichier , "push ax \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;idiv");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		 Ecriture.ecrireString(this.fichier , "\tcwd \n"); /* dx =  ou -1 */
+		Ecriture.ecrireStringln(this.fichier,  "\tidiv bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 		
 	}
 
 	@Override
 	public void isup() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";isup \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "cmp ax,bx \n");
-		 Ecriture.ecrireString(this.fichier , "jg $+6 \n");
-		 Ecriture.ecrireString(this.fichier , "push -1 \n");
-		 Ecriture.ecrireString(this.fichier , "jmp $+4 \n");
-		 Ecriture.ecrireString(this.fichier , "push 0 \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;isup");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tjg $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
+		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
 		
 	}
 
 	@Override
 	public void iinfegal() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";iinfegal \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "cmp ax,bx \n");
-		 Ecriture.ecrireString(this.fichier , "jg $+6 \n");
-		 Ecriture.ecrireString(this.fichier , "push -1 \n");
-		 Ecriture.ecrireString(this.fichier , "jmp $+4 \n");
-		 Ecriture.ecrireString(this.fichier , "push 0 \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;iinfegal");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tjg $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
+		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
 		
 		
 		
@@ -169,70 +189,114 @@ public class YVMasm extends YVM {
 	@Override
 	public void isupegal() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";isupegal \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "cmp ax,bx \n");
-		 Ecriture.ecrireString(this.fichier , "jge $+6 \n");
-		 Ecriture.ecrireString(this.fichier , "push -1 \n");
-		 Ecriture.ecrireString(this.fichier , "jmp $+4 \n");
-		 Ecriture.ecrireString(this.fichier , "push 0 \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;isupegal");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tjge $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
+		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
+		Ecriture.ecrireStringln(this.fichier,  "push 0");
 		
 	}
 
 	@Override
 	public void idiff() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";idiff \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "cmp ax,bx \n");
-		 Ecriture.ecrireString(this.fichier , "jne $+6 \n");
-		 Ecriture.ecrireString(this.fichier , "push -1 \n");
-		 Ecriture.ecrireString(this.fichier , "jmp $+4 \n");
-		 Ecriture.ecrireString(this.fichier , "push 0 \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;idiff");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tjne $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
+		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
 	}
 
 	@Override
 	public void entete() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";entete \n");
-		 Ecriture.ecrireString(this.fichier , ".model SMALL \n");
-		 Ecriture.ecrireString(this.fichier , ".586 \n");
-		 Ecriture.ecrireString(this.fichier , ". CODE \n");
-		 Ecriture.ecrireString(this.fichier , "debut : \n");
-		 Ecriture.ecrireString(this.fichier , "STARTUPCODE \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  ";entete");
+		/* il faut ajouter les fonctions externes => biblio.obj */
+		Ecriture.ecrireStringln(this.fichier,  ".MODEL SMALL");
+		Ecriture.ecrireStringln(this.fichier,  ".586");
+		Ecriture.ecrireStringln(this.fichier,  ".CODE");
+		Ecriture.ecrireStringln(this.fichier,  "debut:");
+		Ecriture.ecrireStringln(this.fichier,  "\tSTARTUPCODE");
 	}
 
 	@Override
 	public void queue() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";queue \n");
-		 Ecriture.ecrireString(this.fichier , "nope \n");
-		 Ecriture.ecrireString(this.fichier , "exitcode \n");
-		 Ecriture.ecrireString(this.fichier , "end debut \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;queue");
+		Ecriture.ecrireStringln(this.fichier,  "\tnop");
+		Ecriture.ecrireStringln(this.fichier,  "\tEXITCODE");
+		Ecriture.ecrireStringln(this.fichier,  "End debut");
 
 	}
 
 	@Override
 	public void ouvrePrinc(int offset) {
 		// TODO Auto-generated method stub
-	   	    Ecriture.ecrireString(this.fichier , ";ouvrirPrinc \n");
-			Ecriture.ecrireString(this.fichier , "mov bp,sp \n");
-			Ecriture.ecrireString(this.fichier , "sub sp,");
-			Ecriture.ecrireString(this.fichier , "push word ptr [bp-");
-			Ecriture.ecrireInt(this.fichier,offset);
-			Ecriture.ecrireString(this.fichier , "] \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+   	    Ecriture.ecrireStringln(this.fichier,  "\t;ouvrirPrinc");
+		Ecriture.ecrireStringln(this.fichier,  "\tmov bp,sp");
+		Ecriture.ecrireString(this.fichier , "\tsub sp,");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp-" + offset + "");
+		/*Ecriture.ecrireInt(this.fichier,offset);
+		Ecriture.ecrireString(this.fichier , "] \n");*/
 		}
 
 	@Override
 	public void ior() {
 		// TODO Auto-generated method stub
-		 Ecriture.ecrireString(this.fichier , ";ior \n");
-		 Ecriture.ecrireString(this.fichier , "pop bx \n");
-		 Ecriture.ecrireString(this.fichier , "pop ax \n");
-		 Ecriture.ecrireString(this.fichier , "or ax,bx \n");
-		 Ecriture.ecrireString(this.fichier , "push ax \n");
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;ior");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tor ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
+	
+	/* entrée, sortie */
+	
+	public void ecrireEnt() {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireEnt");
+		Ecriture.ecrireString(this.fichier,"\tcall ecrent");
+	}
+	
+	public void ecrireChaine(String x) {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  ";ecrireChaine");
+		Ecriture.ecrireStringln(this.fichier, ".DATA\n\tmess" + this.comptString + " DB " + x + "$");
+		Ecriture.ecrireStringln(this.fichier, ".CODE\n\tlea dx,mess" + this.comptString + "\n\tpush dx\n\tcall ecrch");
+		this.comptString++;
+	}
+	
+	public void ecrireBool() {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireBool");
+		Ecriture.ecrireStringln(this.fichier,  "\tcall ecrbool");
+	}
+	
+	public void lireEnt(int x) {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;lireEnt");
+		Ecriture.ecrireStringln(this.fichier,  "\tlea dx,[bp" + x + "]");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush dx");
+		Ecriture.ecrireStringln(this.fichier,  "\tcall lirent");
+	}
+	
+	public void aLaLigne() {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;aLaLigne");
+		Ecriture.ecrireStringln(this.fichier,  "\tcall ligsuiv");
+	}
+	
 		
 }
