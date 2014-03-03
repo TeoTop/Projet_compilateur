@@ -1,6 +1,7 @@
 
 public class IdVar extends Ident {
 	private int offset;
+	public String test;
 
 	public int getOffset() {
 		return offset;
