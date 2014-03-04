@@ -10,7 +10,7 @@
 
 
 options{
-	JDK_VERSION="1.5";	
+	JDK_VERSION="1.5";
 }
 
 PARSER_BEGIN(Yaka)
@@ -18,42 +18,64 @@ PARSER_BEGIN(Yaka)
 
 
 public class Yaka {
-
-
-  public static void main(String args[]) { 
-    Yaka analyseur;
-    java.io.InputStream input;
-
-    if (args.length==1) {
-      System.out.print(args[args.length-1] + ": ");
-      try {
-        input = new java.io.FileInputStream(args[args.length-1]+".yaka");
-      } catch (java.io.FileNotFoundException e) {
-        System.out.println("Fichier introuvable.");
-        return;
-      }
-    } else if (args.length==0) {
-      System.out.println("Lecture sur l'entree standard...");
-      input = System.in;
-    } else {
-      System.out.println("Usage: java Gram [fichier]");
-      return;
-    }
-    try {
-      analyseur = new Yaka(input);
-      analyseur.analyse();
-      System.out.println("analyse syntaxique reussie!");
-      if (Erreur.err) {
-    	  System.out.println("Compilation impossible");
-      }
-    } catch (ParseException e) {
-      String msg = e.getMessage();
-      msg = msg.substring(0,msg.indexOf("\n"));
-      System.out.println("Erreur de syntaxe : "+msg);
-    }
-  } 
+	public static void main(String args[]) {
+		Yaka analyseur;
+		java.io.InputStream input;
+		java.io.OutputStream output;
+		java.io.File temp;
+		java.io.InputStream tmp = null;
+		String fichierOut;
+		if (args.length==2) {
+			System.out.print(args[0] + ": ");
+			try {
+				input = new java.io.FileInputStream(args[0] + ".yaka"); /* avant : args.lentgh -1 */
+			} catch (java.io.FileNotFoundException e) {
+				System.out.println("Fichier introuvable.");
+				return;
+			}
+		} else if (args.length==1) {
+			System.out.println("Lecture sur l'entree standard...");
+			input = System.in;
+		} else {
+			System.out.println("Usage: java Gram [fichier]");
+			return;
+		}
+		try {
+			analyseur = new Yaka(input);
+			analyseur.analyse();
+			System.out.println("analyse syntaxique reussie!");
+			temp = new java.io.File("yvm.tmp");
+			if (Erreur.err) {
+				System.out.println("Compilation impossible");
+				System.out.println("La g\u00e9n\u00e9ration du fichier a \u00e9chou\u00e9");
+			}
+			else {
+				if (args.length >= 1) {
+					fichierOut = args[1] + ".asm";
+				}
+				else {
+					fichierOut = "sortie.asm";
+				}
+				output = Ecriture.ouvrir(fichierOut);
+				try {
+					tmp = new java.io.FileInputStream(temp);
+				} catch (java.io.FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				output = Ecriture.ouvrir(fichierOut);
+				Ecriture.ecrireFichier(output,tmp);
+				Ecriture.fermer(output);
+				Lecture.fermer(tmp);
+				System.out.println("Le fichier `" + fichierOut + "` a \u00e9t\u00e9 g\u00e9n\u00e9r\u00e9 avec succ\u00e8s");
+			}
+			temp.delete(); /* suppression du ficher temporaire */
+		} catch (ParseException e) {
+			String msg = e.getMessage();
+			msg = msg.substring(0,msg.indexOf("\u005cn"));
+			System.out.println("Erreur de syntaxe : "+msg);
+		}
+	}
 }
-
 PARSER_END(Yaka)
 /***************************************/
 /********** TOKEN DEFINITIONS **********/
@@ -66,7 +88,7 @@ public static int entierLu;
 public static Declaration declaration= new Declaration();
 public static Expression expression = new Expression();
 public static TabIdent tabident;
-public static YVM yvm;
+public static YVM yvm = new YVMasm();
 }
 
 /*** Skip whitespace and comments ***/
@@ -121,8 +143,23 @@ TOKEN :
 | <ALALIGNE : "ALALIGNE">
 
 }
-
-
+/* Operateurs */
+TOKEN :
+{
+	<ADD : "+">
+	| <SUBNEG : "-">
+	| <OR : "OR">
+	| <MUL : "*">
+	| <DIV : "/">
+	| <AND : "AND">
+	| <NOT : "NOT">
+	| <EGAL : "=">
+	| <DIFF : "<>">
+	| <INF : "<">
+	| <INFEGAL : "<=">
+	| <SUP : ">">
+	| <SUPEGAL : ">=">
+}
 
 /*** unites de base nombres, idents,  strings ***/
 TOKEN  :
@@ -148,17 +185,24 @@ void analyse() : {}
 {
 	{
 		YakaTokenManager.tabident = new TabIdent();
+		YakaTokenManager.tabident = new TabIdent();
+		YakaTokenManager.tabident = new TabIdent();
+		YakaTokenManager.yvm.entete();
+		YakaTokenManager.yvm.ouvrePrinc(14);
 	}
    <PROGRAMME>
    <ident>	
    bloc()
-   <FPROGRAMME> 
+   <FPROGRAMME>
+   {
+		YakaTokenManager.yvm.queue();
+	}
 }
 
 void bloc() : {}{
  (declConst())*
- (declVar())*		
-   suiteExpr() 
+ (declVar())*
+   suiteInstr() 
 }
 
 void declConst() : {}
@@ -205,7 +249,7 @@ void valConst() : {}{
 void declVar() : {}
 {
   <VAR>
-  type()	
+  type()
   <ident>
   {
 	YakaTokenManager.declaration.ajoutNomVariable(YakaTokenManager.identLu);
@@ -233,9 +277,46 @@ void type() :{}
 /*
  * Syntaxe des instructions.
  */
-void suiteExpr() : {}
-{ (expression() (";" (expression())? )*)? }
+void suiteInstr() : {}
+{
+	instruction()
+	(
+		";" (
+				instruction()
+			)?
+	)*
+}
 
+
+void instruction() : {}
+{
+	affectation() | lecture() | ecriture()
+}
+
+void affectation() : {}
+{
+	<ident>
+	{
+		String id = YakaTokenManager.identLu;
+	}
+	
+	"="
+	
+	expression()
+	{
+		YakaTokenManager.expression.store(id); /* ajouter un paramètre (identLu) */
+	}
+}
+
+void lecture() : {}
+{
+	<LIRE> "(" <ident> ")"
+}
+
+void ecriture() : {}
+{
+	<ECRIRE> ("(" expression() | <chaine> ")") | <ALALIGNE>
+}
 
 
 /*
@@ -244,16 +325,24 @@ void suiteExpr() : {}
 void expression() : {}
 {
   simpleExpr() 
-  (opRel()
+(
 {
-	YakaTokenManager.expression.empileOpera(YakaTokenManager.identLu);
-}
-  simpleExpr() 
-  )?
-{
-    /* Vider les piles pour évaluer une autre expression */
+	YakaTokenManager.expression.testRel();
+	/* Vider les piles pour évaluer une autre expression */
 	YakaTokenManager.expression.clearType();
 	YakaTokenManager.expression.clearOp();
+}
+  opRel()
+  simpleExpr() 
+{
+	YakaTokenManager.expression.testRel();
+	/* Vider les piles pour évaluer une autre expression */
+	YakaTokenManager.expression.executerOpRel();
+	YakaTokenManager.expression.clearType();
+	YakaTokenManager.expression.clearOp();
+} 
+  )?
+{
 }
 }
 
@@ -262,24 +351,41 @@ void expression() : {}
 void simpleExpr() : {}
 {
    terme() 
-   (opAdd() 
+   (
+   {/*YakaTokenManager.expression.testType();*/} /* tester si le type de l'ident est entier */
+   
+   opAdd()
    terme()
-   {YakaTokenManager.expression.testAdd();}
+   {
+	   /*YakaTokenManager.expression.testType();*/
+	   YakaTokenManager.expression.testAdd();
+	   YakaTokenManager.expression.executerOpAdd();
+	}
    )*
 } 
 void terme() : {}
 {
   facteur() 
-  (opMul() 
+  (
+  {/*YakaTokenManager.expression.testType();*/}
+  opMul()
   facteur()
-  {YakaTokenManager.expression.testMul();}
+   {
+	   /*YakaTokenManager.expression.testType();*/
+	   YakaTokenManager.expression.testMul();
+	   YakaTokenManager.expression.executerOpMul();
+	}
   )*
 }
 void facteur() : {}
 {   primaire() 
-  |  opNeg()
-
-	primaire() 
+  |  
+  opNeg()
+	primaire()
+  {
+	  /*YakaTokenManager.expression.testType();*/
+	  YakaTokenManager.expression.executerOpNeg();
+	}
 }
 
 void primaire (): {}
@@ -293,62 +399,108 @@ void valeur () : {}
 { <entier> 	
 	{
 		YakaTokenManager.expression.empileType("entier");
+		YakaTokenManager.yvm.iconst(YakaTokenManager.entierLu);
 	}
  | <ident>
 	 {
-	  YakaTokenManager.expression.empileTypeAvecIdent(YakaTokenManager.identLu);
+		YakaTokenManager.expression.empileTypeAvecIdent(YakaTokenManager.identLu);
+		YakaTokenManager.expression.loadIdent(YakaTokenManager.identLu);
 	 }
  | <VRAI> 
 	{
 		YakaTokenManager.expression.empileType("booleen");
-	}		
+		YakaTokenManager.yvm.iconst(-1);
+	}
  | <FAUX> 
 	{
 		YakaTokenManager.expression.empileType("booleen");
-	}		
+		YakaTokenManager.yvm.iconst(0);
+	}
  
 }
 
 void opRel() : {}
 {
    "=" 	
-  {YakaTokenManager.expression.empileOpera("=");}	
+  {
+	  YakaTokenManager.expression.empileOpera("=");
+	  YakaTokenManager.expression.setLastOpRel("=");
+	}
  | "<>" 
-  {YakaTokenManager.expression.empileOpera("<>");}		
+  {
+	  YakaTokenManager.expression.empileOpera("<>");
+	  YakaTokenManager.expression.setLastOpRel("<>");
+  }
  | "<" 	
-  {YakaTokenManager.expression.empileOpera("<");}		
+  {
+	  YakaTokenManager.expression.empileOpera("<");
+	  YakaTokenManager.expression.setLastOpRel("<");
+  }
  | "<=" 
-  {YakaTokenManager.expression.empileOpera("<=");}		
+  {
+	  YakaTokenManager.expression.empileOpera("<=");
+	  YakaTokenManager.expression.setLastOpRel("<=");
+  }
  | ">" 	
-  {YakaTokenManager.expression.empileOpera(">");}		
+  {
+	  YakaTokenManager.expression.empileOpera(">");
+	  YakaTokenManager.expression.setLastOpRel(">");
+  }
  | ">=" 
-  {YakaTokenManager.expression.empileOpera(">=");}		
+  {
+	  YakaTokenManager.expression.empileOpera(">=");
+	  YakaTokenManager.expression.setLastOpRel(">=");
+  }
 } 
 
 void opAdd() : {}
 {
     "+"
-  {YakaTokenManager.expression.empileOpera("+");}		
+  {
+	  YakaTokenManager.expression.empileOpera("+");
+	  YakaTokenManager.expression.setLastOpAdd("+");
+	}
   |  "-" 
-  {YakaTokenManager.expression.empileOpera("-");} 
+  {
+	  YakaTokenManager.expression.empileOpera("-");
+	  YakaTokenManager.expression.setLastOpAdd("-");
+	}
   | <OU> 
-  {YakaTokenManager.expression.empileOpera("ou");}	
+  {
+	  YakaTokenManager.expression.empileOpera("ou");
+	  YakaTokenManager.expression.setLastOpAdd("OU");
+	}
 }
 
 void opMul() : {}
 {
   "*"	
-  {YakaTokenManager.expression.empileOpera("*");}	
+  {
+	YakaTokenManager.expression.empileOpera("*");
+	  YakaTokenManager.expression.setLastOpMul("*");
+  }
   | "/"	
-  {YakaTokenManager.expression.empileOpera("/");}	
+  {
+	YakaTokenManager.expression.empileOpera("/");
+	  YakaTokenManager.expression.setLastOpMul("/");
+  }
   | <ET>	
-  {YakaTokenManager.expression.empileOpera("et");}
+  {
+	  YakaTokenManager.expression.empileOpera("et");
+	  YakaTokenManager.expression.setLastOpMul("ET");
+	}
 } 
 
 void opNeg() : {}
 { "-" 
-  {YakaTokenManager.expression.empileOpera("-");}		
+  {
+	  YakaTokenManager.expression.empileOpera("-");
+	  YakaTokenManager.expression.setLastOpNeg("-");
+  }
  | <NON>
-  {YakaTokenManager.expression.empileOpera("non");}	
+  {
+	  YakaTokenManager.expression.empileOpera("non");
+	  YakaTokenManager.expression.setLastOpNeg("NON");
+  }
 }
-
+/* entree / sortie / affectation / test si la variable a une valeur sinon 0 / cmt connaitre la valeur de la variable ? / tester le type de la variable et de l'expression a affecter */

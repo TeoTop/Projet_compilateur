@@ -37,7 +37,8 @@ public class Declaration {
 	  	}
 	  	else {
 	  		id.setType("erreur");
-	  		Erreur.erreurDeclarationConstante(ident);
+	  		//Erreur.erreurDeclarationConstante(ident);
+	  		Erreur.message("La constante `" + ident + "` n'existe pas");
 	  	}
 	}
 	

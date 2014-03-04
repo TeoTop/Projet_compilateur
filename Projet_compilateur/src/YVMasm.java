@@ -6,10 +6,10 @@ public class YVMasm extends YVM {
 	private OutputStream fichier;
 	/* compteur de nombre de message pour la creation de variable pour la fonction ecrireChaine */
 	private int comptString;
-	
-	public YVMasm(String nom) {
+
+	public YVMasm() {
 		super();
-		this.fichier = Ecriture.ouvrir(nom);;
+		this.fichier = Ecriture.ouvrir("yvm.tmp");; /* ecrire dans un fichier tmp et puis le copier dans l'autre fichier ssi il n'y a pas d'erreur */
 		this.comptString = 0;
 	}
 
@@ -29,7 +29,8 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ineg");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
-		
+		Ecriture.ecrireStringln(this.fichier,  "\tmul -1");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
 		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
-		Ecriture.ecrireStringln(this.fichier,  "\tjl $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tjge $+6"); /* jge */
 		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
 		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
@@ -55,7 +56,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
 		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
-		Ecriture.ecrireStringln(this.fichier,  "\tjle $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tjne $+6");  /* jne */
 		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
 		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
@@ -67,7 +68,7 @@ public class YVMasm extends YVM {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;iload " + offset + "");
-		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp-" + offset + "]");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp" + offset + "]");
 		/*Ecriture.ecrireInt(this.fichier,offset);
 		Ecriture.ecrireString(this.fichier , "] \n");*/
 
@@ -79,7 +80,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;istore " + offset + "");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
-		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp-" + offset + "]");
+		Ecriture.ecrireStringln(this.fichier,  "\tmov word ptr [bp" + offset + "],ax");
 		/*Ecriture.ecrireInt(this.fichier,offset);
 		Ecriture.ecrireString(this.fichier , "] \n");*/
 	}
@@ -94,26 +95,30 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireString(this.fichier , "\n");*/
 	}
 
-	
+
 	@Override
-	public void ifeq() {
+	public void ifeq(String etiq) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
-		 
+		Ecriture.ecrireStringln(this.fichier,  "\t;ifeq " + etiq);
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,0");
+		Ecriture.ecrireStringln(this.fichier,  "\tje " + etiq);
 	}
 
 	@Override
-	public void iffaux() {
+	public void iffaux(String etiq) {
 		// TODO Auto-generated method stub
-		Ecriture.ecrireStringln(this.fichier,  "");
+		ifeq(etiq);
 
 	}
 
 	@Override
-	public void Goto() {
+	public void Goto(String etiq) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
-
+		Ecriture.ecrireStringln(this.fichier,  "\t;goto " + etiq);
+		Ecriture.ecrireStringln(this.fichier,  "\tjmp " + etiq);
 	}
 
 
@@ -126,7 +131,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
 		Ecriture.ecrireStringln(this.fichier,  "\tadd ax,bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
-		
+
 	}
 
 	@Override
@@ -136,9 +141,9 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\t;imul");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
-		Ecriture.ecrireStringln(this.fichier,  "\timul bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tmul bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
-		
+
 	}
 
 	@Override
@@ -148,10 +153,10 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\t;idiv");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
-		 Ecriture.ecrireString(this.fichier , "\tcwd \n"); /* dx =  ou -1 */
-		Ecriture.ecrireStringln(this.fichier,  "\tidiv bx");
+		Ecriture.ecrireStringln(this.fichier , "\tcwd"); /* dx = 0 ou -1 */
+		Ecriture.ecrireStringln(this.fichier,  "\tdiv bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
-		
+
 	}
 
 	@Override
@@ -162,11 +167,11 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
 		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
-		Ecriture.ecrireStringln(this.fichier,  "\tjg $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tjle $+6"); /* jle */
 		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
 		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
-		
+
 	}
 
 	@Override
@@ -181,9 +186,9 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
 		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
-		
-		
-		
+
+
+
 	}
 
 	@Override
@@ -194,11 +199,11 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
 		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
-		Ecriture.ecrireStringln(this.fichier,  "\tjge $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tjl $+6"); /* jl */
 		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
 		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
-		Ecriture.ecrireStringln(this.fichier,  "push 0");
-		
+		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
+
 	}
 
 	@Override
@@ -209,7 +214,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
 		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,bx");
-		Ecriture.ecrireStringln(this.fichier,  "\tjne $+6");
+		Ecriture.ecrireStringln(this.fichier,  "\tje $+6"); /* je */
 		Ecriture.ecrireStringln(this.fichier,  "\tpush -1");
 		Ecriture.ecrireStringln(this.fichier,  "\tjmp $+4");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
@@ -218,7 +223,6 @@ public class YVMasm extends YVM {
 	@Override
 	public void entete() {
 		// TODO Auto-generated method stub
-		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  ";entete");
 		/* il faut ajouter les fonctions externes => biblio.obj */
 		Ecriture.ecrireStringln(this.fichier,  ".MODEL SMALL");
@@ -236,20 +240,19 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tnop");
 		Ecriture.ecrireStringln(this.fichier,  "\tEXITCODE");
 		Ecriture.ecrireStringln(this.fichier,  "End debut");
-
+		Ecriture.fermer(this.fichier);
 	}
 
 	@Override
 	public void ouvrePrinc(int offset) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
-   	    Ecriture.ecrireStringln(this.fichier,  "\t;ouvrirPrinc");
+		Ecriture.ecrireStringln(this.fichier,  "\t;ouvrePrinc");
 		Ecriture.ecrireStringln(this.fichier,  "\tmov bp,sp");
-		Ecriture.ecrireString(this.fichier , "\tsub sp,");
-		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp-" + offset + "");
+		Ecriture.ecrireStringln(this.fichier , "\tsub sp," + offset);
 		/*Ecriture.ecrireInt(this.fichier,offset);
 		Ecriture.ecrireString(this.fichier , "] \n");*/
-		}
+	}
 
 	@Override
 	public void ior() {
@@ -261,15 +264,34 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tor ax,bx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
-	
+
+	public void inot() {
+		// TODO Auto-generated method stub
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;inot");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tnot ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
+	}
+
+	public void iand() {
+		// TODO Auto-generated method stub
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;and");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tand ax,bx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
+	}
+
 	/* entrée, sortie */
-	
+
 	public void ecrireEnt() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireEnt");
 		Ecriture.ecrireString(this.fichier,"\tcall ecrent");
 	}
-	
+
 	public void ecrireChaine(String x) {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  ";ecrireChaine");
@@ -277,13 +299,13 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier, ".CODE\n\tlea dx,mess" + this.comptString + "\n\tpush dx\n\tcall ecrch");
 		this.comptString++;
 	}
-	
+
 	public void ecrireBool() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireBool");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ecrbool");
 	}
-	
+
 	public void lireEnt(int x) {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;lireEnt");
@@ -291,12 +313,12 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush dx");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall lirent");
 	}
-	
+
 	public void aLaLigne() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;aLaLigne");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ligsuiv");
 	}
-	
-		
+
+
 }

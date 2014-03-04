@@ -1,8 +1,8 @@
 
 public class IdConst extends Ident {
-	private Object valeur;
+	private int valeur;
 
-	public Object getValeur() {
+	public int getValeur() {
 		return valeur;
 	}
 
@@ -15,7 +15,7 @@ public class IdConst extends Ident {
 		return "IdConst [valeur=" + valeur + " type="+ this.getType() + "]";
 	}
 
-	public void setValeur(Object valeur) {
+	public void setValeur(int valeur) {
 		this.valeur = valeur;
 	}
 }

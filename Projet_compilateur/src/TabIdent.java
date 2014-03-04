@@ -1,7 +1,6 @@
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Stack;
 
 
 public class TabIdent {
@@ -21,7 +20,7 @@ public class TabIdent {
 	}
 	
 	public void rangeIdent(String clef, Ident id){
-		if (!existeIdent(YakaTokenManager.identLu)) {
+		if (!existeIdent(YakaTokenManager.identLu)) { /* identLu = id ? */
 			if (id instanceof IdVar){
 				int offset = ( -2 * nbVar() ) - 2;
 				((IdVar) id).setOffset(offset);;
@@ -29,7 +28,8 @@ public class TabIdent {
 			table.put(clef, id);
 		}
 		else {
-			Erreur.erreurDeclarationDouble(clef);
+			//Erreur.erreurDeclarationDouble(clef);
+			Erreur.message("Déclaration double pour : " + clef);
 		}
 		
 		

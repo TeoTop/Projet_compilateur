@@ -63,15 +63,41 @@ public interface YakaConstants {
   /** RegularExpression Id. */
   int ALALIGNE = 34;
   /** RegularExpression Id. */
-  int chiffre = 35;
+  int ADD = 35;
   /** RegularExpression Id. */
-  int entier = 36;
+  int SUBNEG = 36;
   /** RegularExpression Id. */
-  int lettre = 37;
+  int OR = 37;
   /** RegularExpression Id. */
-  int ident = 38;
+  int MUL = 38;
   /** RegularExpression Id. */
-  int chaine = 39;
+  int DIV = 39;
+  /** RegularExpression Id. */
+  int AND = 40;
+  /** RegularExpression Id. */
+  int NOT = 41;
+  /** RegularExpression Id. */
+  int EGAL = 42;
+  /** RegularExpression Id. */
+  int DIFF = 43;
+  /** RegularExpression Id. */
+  int INF = 44;
+  /** RegularExpression Id. */
+  int INFEGAL = 45;
+  /** RegularExpression Id. */
+  int SUP = 46;
+  /** RegularExpression Id. */
+  int SUPEGAL = 47;
+  /** RegularExpression Id. */
+  int chiffre = 48;
+  /** RegularExpression Id. */
+  int entier = 49;
+  /** RegularExpression Id. */
+  int lettre = 50;
+  /** RegularExpression Id. */
+  int ident = 51;
+  /** RegularExpression Id. */
+  int chaine = 52;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -115,6 +141,19 @@ public interface YakaConstants {
     "\"ECRIRE\"",
     "\"LIRE\"",
     "\"ALALIGNE\"",
+    "\"+\"",
+    "\"-\"",
+    "\"OR\"",
+    "\"*\"",
+    "\"/\"",
+    "\"AND\"",
+    "\"NOT\"",
+    "\"=\"",
+    "\"<>\"",
+    "\"<\"",
+    "\"<=\"",
+    "\">\"",
+    "\">=\"",
     "<chiffre>",
     "<entier>",
     "<lettre>",
@@ -122,18 +161,8 @@ public interface YakaConstants {
     "<chaine>",
     "\",\"",
     "\";\"",
-    "\"=\"",
-    "\"-\"",
     "\"(\"",
     "\")\"",
-    "\"<>\"",
-    "\"<\"",
-    "\"<=\"",
-    "\">\"",
-    "\">=\"",
-    "\"+\"",
-    "\"*\"",
-    "\"/\"",
   };
 
 }

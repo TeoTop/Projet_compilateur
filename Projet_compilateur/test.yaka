@@ -1,0 +1,7 @@
+PROGRAMME prog
+CONST a=1,b=VRAI;
+VAR ENTIER c,d;
+VAR BOOLEEN e;
+c = a+-2*a-d;
+e = c > 5*d;
+FPROGRAMME
