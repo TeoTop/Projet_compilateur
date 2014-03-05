@@ -5,23 +5,23 @@ import java.util.Set;
 
 public class TabIdent {
 	private HashMap<String,Ident> table;
-	
+
 	public TabIdent(){
 		table = new HashMap<String,Ident>();
 	}
-	
+
 	public Ident chercheIdent(String clef){
 		return table.get(clef);
 	}
-	
+
 	public boolean existeIdent(String clef){
 		return table.get(clef) != null;
-		
+
 	}
-	
+
 	public void rangeIdent(String clef, Ident id){
 		if (!existeIdent(YakaTokenManager.identLu)) { /* identLu = id ? */
-			if (id instanceof IdVar){
+			if (id.isVar()){
 				int offset = ( -2 * nbVar() ) - 2;
 				((IdVar) id).setOffset(offset);;
 			}
@@ -31,19 +31,19 @@ public class TabIdent {
 			//Erreur.erreurDeclarationDouble(clef);
 			Erreur.message("Déclaration double pour : " + clef);
 		}
-		
-		
+
+
 	}
-	private int nbVar() {
+	public int nbVar() {
 		int nb = 0;
 		Set<String> cles = table.keySet();
 		Iterator<String> it = cles.iterator();
 		while (it.hasNext()){
-		   Object cle = it.next();
-		   Object valeur = table.get(cle);
-		   if(valeur instanceof IdVar){
-			   nb ++;
-		   }
+			Object cle = it.next();
+			Ident valeur = table.get(cle);
+			if(valeur.isVar()){
+				nb ++;
+			}
 		}
 		return nb;
 	}

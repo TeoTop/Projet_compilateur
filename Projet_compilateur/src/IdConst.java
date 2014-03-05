@@ -10,12 +10,17 @@ public class IdConst extends Ident {
 		super();
 	}
 
+	public void setValeur(int valeur) {
+		this.valeur = valeur;
+	}
+
+	public boolean isVar() {
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return "IdConst [valeur=" + valeur + " type="+ this.getType() + "]";
 	}
 
-	public void setValeur(int valeur) {
-		this.valeur = valeur;
-	}
 }

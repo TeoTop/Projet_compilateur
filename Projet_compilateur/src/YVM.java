@@ -54,4 +54,6 @@ public abstract class YVM {
 	public abstract void ecrireBool();
 
 	public abstract void lireEnt(int x);
+	
+	public abstract void aLaLigne();
 }

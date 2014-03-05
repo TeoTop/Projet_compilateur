@@ -1,5 +1,5 @@
 
-public class Ident {
+public abstract class Ident {
 	private String type;
 
 	public String getType() {
@@ -10,10 +10,13 @@ public class Ident {
 		this.type = type;
 	}
 
+	public abstract boolean isVar();
+	
 	@Override
 	public String toString() {
 		return "Ident [type=" + type + "]";
 	}
-	
-	
+
+
+
 }

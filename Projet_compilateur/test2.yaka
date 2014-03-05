@@ -1,0 +1,7 @@
+PROGRAMME prog
+CONST e=2;
+VAR ENTIER x,y,z;
+VAR BOOLEEN a;
+LIRE(x);
+y = x;
+FPROGRAMME

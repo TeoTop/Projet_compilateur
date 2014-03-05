@@ -5,12 +5,18 @@
  * 	cr�ation : 13 f�vrier 2002
  *
  *     nature : projet etudiant
- *
+ *Groupe 1.1
+ * CHAPON Théo
+ * EL OMARI ALAOUI Hassan
+ * MARCHAIS Julien
+ * MESDOURI Marouan
+ * TUEKAM Marlène
+ * Février - Mars 2014
  */
 
 
 options{
-	JDK_VERSION="1.5";
+	JDK_VERSION="1.6"; /* 1.5 */
 }
 
 PARSER_BEGIN(Yaka)
@@ -29,15 +35,17 @@ public class Yaka {
 			System.out.print(args[0] + ": ");
 			try {
 				input = new java.io.FileInputStream(args[0] + ".yaka"); /* avant : args.lentgh -1 */
+				fichierOut = args[1] + ".asm";
 			} catch (java.io.FileNotFoundException e) {
 				System.out.println("Fichier introuvable.");
 				return;
 			}
 		} else if (args.length==1) {
+			fichierOut = args[0] + ".asm";
 			System.out.println("Lecture sur l'entree standard...");
 			input = System.in;
 		} else {
-			System.out.println("Usage: java Gram [fichier]");
+			System.out.println("Usage: java Yaka [fichier entrée] [fichier sortie] ou java Yaka [fichier sortie]");
 			return;
 		}
 		try {
@@ -50,12 +58,6 @@ public class Yaka {
 				System.out.println("La g\u00e9n\u00e9ration du fichier a \u00e9chou\u00e9");
 			}
 			else {
-				if (args.length >= 1) {
-					fichierOut = args[1] + ".asm";
-				}
-				else {
-					fichierOut = "sortie.asm";
-				}
 				output = Ecriture.ouvrir(fichierOut);
 				try {
 					tmp = new java.io.FileInputStream(temp);
@@ -188,7 +190,6 @@ void analyse() : {}
 		YakaTokenManager.tabident = new TabIdent();
 		YakaTokenManager.tabident = new TabIdent();
 		YakaTokenManager.yvm.entete();
-		YakaTokenManager.yvm.ouvrePrinc(14);
 	}
    <PROGRAMME>
    <ident>	
@@ -202,6 +203,7 @@ void analyse() : {}
 void bloc() : {}{
  (declConst())*
  (declVar())*
+	{YakaTokenManager.yvm.ouvrePrinc(YakaTokenManager.tabident.nbVar() * 2);}
    suiteInstr() 
 }
 
@@ -304,18 +306,38 @@ void affectation() : {}
 	
 	expression()
 	{
-		YakaTokenManager.expression.store(id); /* ajouter un paramètre (identLu) */
+		YakaTokenManager.expression.store(id);
+	/* Vider les piles pour évaluer une autre expression */
+	YakaTokenManager.expression.clearType();
+	YakaTokenManager.expression.clearOp();
 	}
 }
 
 void lecture() : {}
 {
 	<LIRE> "(" <ident> ")"
+	{
+		YakaTokenManager.expression.lire(YakaTokenManager.identLu);
+	}
 }
 
 void ecriture() : {}
 {
-	<ECRIRE> ("(" expression() | <chaine> ")") | <ALALIGNE>
+	<ECRIRE> "("( 
+	expression()
+	{
+		YakaTokenManager.expression.ecrire();
+	}
+	| 
+	<chaine> 
+	{
+		YakaTokenManager.yvm.ecrireChaine(YakaTokenManager.chaineLue);
+	}
+	)")" | 
+	<ALALIGNE>
+	{
+		YakaTokenManager.yvm.aLaLigne();
+	}
 }
 
 
@@ -326,20 +348,11 @@ void expression() : {}
 {
   simpleExpr() 
 (
-{
-	YakaTokenManager.expression.testRel();
-	/* Vider les piles pour évaluer une autre expression */
-	YakaTokenManager.expression.clearType();
-	YakaTokenManager.expression.clearOp();
-}
   opRel()
   simpleExpr() 
 {
 	YakaTokenManager.expression.testRel();
-	/* Vider les piles pour évaluer une autre expression */
 	YakaTokenManager.expression.executerOpRel();
-	YakaTokenManager.expression.clearType();
-	YakaTokenManager.expression.clearOp();
 } 
   )?
 {
@@ -352,12 +365,11 @@ void simpleExpr() : {}
 {
    terme() 
    (
-   {/*YakaTokenManager.expression.testType();*/} /* tester si le type de l'ident est entier */
    
    opAdd()
    terme()
    {
-	   /*YakaTokenManager.expression.testType();*/
+	   
 	   YakaTokenManager.expression.testAdd();
 	   YakaTokenManager.expression.executerOpAdd();
 	}
@@ -367,11 +379,10 @@ void terme() : {}
 {
   facteur() 
   (
-  {/*YakaTokenManager.expression.testType();*/}
   opMul()
   facteur()
    {
-	   /*YakaTokenManager.expression.testType();*/
+	   
 	   YakaTokenManager.expression.testMul();
 	   YakaTokenManager.expression.executerOpMul();
 	}
@@ -383,7 +394,8 @@ void facteur() : {}
   opNeg()
 	primaire()
   {
-	  /*YakaTokenManager.expression.testType();*/
+	  
+	   YakaTokenManager.expression.testNeg();
 	  YakaTokenManager.expression.executerOpNeg();
 	}
 }
@@ -468,7 +480,7 @@ void opAdd() : {}
   | <OU> 
   {
 	  YakaTokenManager.expression.empileOpera("ou");
-	  YakaTokenManager.expression.setLastOpAdd("OU");
+	  YakaTokenManager.expression.setLastOpAdd("OR");
 	}
 }
 
@@ -487,7 +499,7 @@ void opMul() : {}
   | <ET>	
   {
 	  YakaTokenManager.expression.empileOpera("et");
-	  YakaTokenManager.expression.setLastOpMul("ET");
+	  YakaTokenManager.expression.setLastOpMul("AND");
 	}
 } 
 
@@ -500,7 +512,7 @@ void opNeg() : {}
  | <NON>
   {
 	  YakaTokenManager.expression.empileOpera("non");
-	  YakaTokenManager.expression.setLastOpNeg("NON");
+	  YakaTokenManager.expression.setLastOpNeg("NOT");
   }
 }
-/* entree / sortie / affectation / test si la variable a une valeur sinon 0 / cmt connaitre la valeur de la variable ? / tester le type de la variable et de l'expression a affecter */
+/* on ne peut pas faire opneg pour une expression */

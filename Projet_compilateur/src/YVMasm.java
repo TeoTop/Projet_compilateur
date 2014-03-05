@@ -244,12 +244,12 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
-	public void ouvrePrinc(int offset) {
+	public void ouvrePrinc(int nbOctet) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
-		Ecriture.ecrireStringln(this.fichier,  "\t;ouvrePrinc");
+		Ecriture.ecrireStringln(this.fichier,  "\t;ouvrePrinc " + nbOctet);
 		Ecriture.ecrireStringln(this.fichier,  "\tmov bp,sp");
-		Ecriture.ecrireStringln(this.fichier , "\tsub sp," + offset);
+		Ecriture.ecrireStringln(this.fichier , "\tsub sp," + nbOctet);
 		/*Ecriture.ecrireInt(this.fichier,offset);
 		Ecriture.ecrireString(this.fichier , "] \n");*/
 	}
@@ -289,13 +289,13 @@ public class YVMasm extends YVM {
 	public void ecrireEnt() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireEnt");
-		Ecriture.ecrireString(this.fichier,"\tcall ecrent");
+		Ecriture.ecrireStringln(this.fichier,"\tcall ecrent");
 	}
 
 	public void ecrireChaine(String x) {
 		Ecriture.ecrireStringln(this.fichier,  "");
-		Ecriture.ecrireStringln(this.fichier,  ";ecrireChaine");
-		Ecriture.ecrireStringln(this.fichier, ".DATA\n\tmess" + this.comptString + " DB " + x + "$");
+		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireChaine " + x);
+		Ecriture.ecrireStringln(this.fichier, ".DATA\n\tmess" + this.comptString + " DB \"" + x.substring(1, x.length() - 1) + "$\""); /* enlever le dernier guillemet afin d'ajouter $ */
 		Ecriture.ecrireStringln(this.fichier, ".CODE\n\tlea dx,mess" + this.comptString + "\n\tpush dx\n\tcall ecrch");
 		this.comptString++;
 	}
@@ -308,7 +308,7 @@ public class YVMasm extends YVM {
 
 	public void lireEnt(int x) {
 		Ecriture.ecrireStringln(this.fichier,  "");
-		Ecriture.ecrireStringln(this.fichier,  "\t;lireEnt");
+		Ecriture.ecrireStringln(this.fichier,  "\t;lireEnt " + x);
 		Ecriture.ecrireStringln(this.fichier,  "\tlea dx,[bp" + x + "]");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush dx");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall lirent");

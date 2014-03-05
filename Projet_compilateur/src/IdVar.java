@@ -10,10 +10,14 @@ public class IdVar extends Ident {
 		this.offset = offset;
 	}
 
+	public boolean isVar() {
+		return true;
+	}
+
 	@Override
 	public String toString() {
 		return "IdVar [offset=" + offset + " Type="+ getType() +"]";
 	}
-	
-	
+
+
 }
