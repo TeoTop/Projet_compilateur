@@ -1,7 +1,18 @@
 PROGRAMME prog
-CONST a=1,b=VRAI;
-VAR ENTIER c,d;
-VAR BOOLEEN e;
-c = a+-2*a-d;
-e = c > 5*d;
+CONST e=2;
+VAR ENTIER x,y,z;
+VAR BOOLEEN a;
+ECRIRE(" x = ");
+LIRE(x);
+ALALIGNE;
+ECRIRE(" y = ");
+LIRE(y);
+ALALIGNE;
+ECRIRE(" x + y = ");
+ECRIRE(x+y);
+ALALIGNE;
+z = - (x+y/2)/5;
+x = y + 3*y - 4;
+a = x < z;
+a = NON  (a OU VRAI);
 FPROGRAMME
