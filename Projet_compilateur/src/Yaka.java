@@ -21,7 +21,7 @@ public class Yaka implements YakaConstants {
                         System.out.println("Lecture sur l'entree standard...");
                         input = System.in;
                 } else {
-                        System.out.println("Usage: java Yaka [fichier entr\u00e9e] [fichier sortie] ou java Yaka [fichier sortie]");
+                        System.out.println("Usage: java Yaka [fichier entr\u00c3\u00a9e] [fichier sortie] ou java Yaka [fichier sortie]");
                         return;
                 }
                 try {
@@ -41,7 +41,7 @@ public class Yaka implements YakaConstants {
                                         e.printStackTrace();
                                 }
                                 output = Ecriture.ouvrir(fichierOut);
-                                YakaTokenManager.yvm.entete();
+                                Ecriture.ecrireFichier(output,tmp);
                                 Ecriture.fermer(output);
                                 Lecture.fermer(tmp);
                                 System.out.println("Le fichier `" + fichierOut + "` a \u00e9t\u00e9 g\u00e9n\u00e9r\u00e9 avec succ\u00e8s");
@@ -58,9 +58,7 @@ public class Yaka implements YakaConstants {
 /********debut de la grammaire ********/
 /**************************************/
   static final public void analyse() throws ParseException {
-                YakaTokenManager.tabident = new TabIdent();
-                YakaTokenManager.tabident = new TabIdent();
-                YakaTokenManager.tabident = new TabIdent();
+                YakaTokenManager.yvm.entete();
     jj_consume_token(PROGRAMME);
     jj_consume_token(ident);
     bloc();

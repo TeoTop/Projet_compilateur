@@ -22,6 +22,10 @@ debut:
 	push dx
 	call lirent
 
+	;istore -2
+	pop ax
+	mov word ptr [bp-2],ax
+
 	;aLaLigne
 	call ligsuiv
 
@@ -37,6 +41,10 @@ debut:
 	lea dx,[bp-4]
 	push dx
 	call lirent
+
+	;istore -4
+	pop ax
+	mov word ptr [bp-4],ax
 
 	;aLaLigne
 	call ligsuiv

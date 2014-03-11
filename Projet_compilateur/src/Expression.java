@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 
@@ -6,13 +7,18 @@ public class Expression implements YakaConstants{
 	private Stack<String> opera;
 	private String lasOpRel; /* dernier operateur Rel utilisé */
 	private String lasOpMul;/* dernier operateur Mul utilisé */
-	//private Stack<Integer> valeur;
+	private ArrayList<String> var;
 	private String lasOpAdd;/* dernier operateur Add utilisé */
 	private String lasOpNeg;/* dernier operateur Neg utilisé */
 
 	public Expression() {
+		int nbVar = YakaTokenManager.tabident.nbVar();
 		this.type = new Stack<String>();
 		this.opera = new Stack<String>();
+		this.var = new ArrayList<String>(nbVar);
+		for (int i = 0 ; i < nbVar ; i++) {
+			this.var.add(null);
+		}
 	}
 	public void empileTypeAvecIdent(String id) {
 		if (identExiste(id)){
@@ -180,7 +186,12 @@ public class Expression implements YakaConstants{
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
 		if (ident != null) {
 			if (ident.isVar()) {
-				YakaTokenManager.yvm.iload(((IdVar) ident).getOffset());
+				if (this.var.contains(id)) {
+					YakaTokenManager.yvm.iload(((IdVar) ident).getOffset());
+				}
+				else {
+					Erreur.message("La variable '" + id + "' n'est pas encore d�finie");
+				}
 			}
 			else {
 				YakaTokenManager.yvm.iconst(((IdConst) ident).getValeur());
@@ -198,7 +209,11 @@ public class Expression implements YakaConstants{
 				String type = this.type.peek();
 				if (type.equals(ident.getType().toLowerCase())) {
 					int offset = ((IdVar) ident).getOffset();
+					int index = -1 * offset / 2 - 1;
 					YakaTokenManager.yvm.istore(offset);
+					if (!this.var.contains(id)) {
+						this.var.add(index, id);
+					}
 				}
 				else if (!type.equals("erreur")){
 					Erreur.message("La variable '" + id + "' doit être de type " + type);
@@ -282,7 +297,13 @@ public class Expression implements YakaConstants{
 		if (ident != null) {
 			if (ident.isVar()) {
 				if (ident.getType().equals("ENTIER")) {
-					YakaTokenManager.yvm.lireEnt(((IdVar) ident).getOffset());
+					int offset = ((IdVar) ident).getOffset();
+					YakaTokenManager.yvm.lireEnt(offset);
+					int index = -1 * offset / 2 - 1;
+					YakaTokenManager.yvm.istore(offset);
+					if (!this.var.contains(id)) {
+						this.var.add(index, id);
+					}
 				}
 				else {
 					Erreur.message("La variable '" + id +"' doit être un entier");
