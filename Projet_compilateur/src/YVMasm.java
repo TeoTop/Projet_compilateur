@@ -17,7 +17,6 @@ public class YVMasm extends YVM {
 		this.fichier = Ecriture.ouvrir("yvm.tmp"); /* ecrire dans un fichier tmp et puis le copier dans l'autre fichier ssi il n'y a pas d'erreur */
 		this.comptString = 0;
 		this.extern = new ArrayList<String>();
-		this.ite = extern.iterator();
 	}
 
 	@Override
@@ -232,13 +231,15 @@ public class YVMasm extends YVM {
 		// TODO Auto-generated method stub
 		this.fichier = Ecriture.ouvrir(fichierOut);
 		Ecriture.ecrireStringln(this.fichier,  ";entete");
+		Ecriture.ecrireString(this.fichier, "extrn ");
 		
+		this.ite = extern.iterator();
 		while(ite.hasNext()){
 			String fonction = ite.next();
 			if(ite.hasNext())
-				Ecriture.ecrireString(this.fichier,  "extrn " + fonction + ", ");
+				Ecriture.ecrireString(this.fichier, fonction + ":proc, ");
 			else
-				Ecriture.ecrireStringln(this.fichier,  "extrn " + fonction);
+				Ecriture.ecrireStringln(this.fichier, fonction + ":proc");
 		}
 
 		Ecriture.ecrireStringln(this.fichier,  ".MODEL SMALL");
@@ -306,7 +307,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireEnt");
 		Ecriture.ecrireStringln(this.fichier,"\tcall ecrent");
-		this.extern.add("ecrent");
+		if(!extern.contains("ecrent")) this.extern.add("ecrent");
 	}
 
 	public void ecrireChaine(String x) {
@@ -315,14 +316,14 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier, ".DATA\n\tmess" + this.comptString + " DB \"" + x.substring(1, x.length() - 1) + "$\""); /* enlever le dernier guillemet afin d'ajouter $ */
 		Ecriture.ecrireStringln(this.fichier, ".CODE\n\tlea dx,mess" + this.comptString + "\n\tpush dx\n\tcall ecrch");
 		this.comptString++;
-		this.extern.add("ecrch");
+		if(!extern.contains("ecrch")) this.extern.add("ecrch");
 	}
 
 	public void ecrireBool() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireBool");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ecrbool");
-		this.extern.add("ecrbool");
+		if(!extern.contains("ecrbool")) this.extern.add("ecrbool");
 	}
 
 	public void lireEnt(int x) {
@@ -331,14 +332,14 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tlea dx,[bp" + x + "]");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush dx");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall lirent");
-		this.extern.add("lirent");
+		if(!extern.contains("lirent")) this.extern.add("lirent");
 	}
 
 	public void aLaLigne() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;aLaLigne");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ligsuiv");
-		this.extern.add("ligsuiv");
+		if(!extern.contains("ligsuiv")) this.extern.add("ligsuiv");
 	}
 
 

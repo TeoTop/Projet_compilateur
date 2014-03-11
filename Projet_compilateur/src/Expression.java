@@ -16,6 +16,7 @@ public class Expression implements YakaConstants{
 		this.type = new Stack<String>();
 		this.opera = new Stack<String>();
 		this.var = new ArrayList<String>(nbVar);
+		System.out.println("Nb var" + nbVar);
 		for (int i = 0 ; i < nbVar ; i++) {
 			this.var.add(null);
 		}

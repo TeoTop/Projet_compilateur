@@ -40,7 +40,7 @@ public class Yaka implements YakaConstants {
                                 } catch (java.io.FileNotFoundException e) {
                                         e.printStackTrace();
                                 }
-                                output = Ecriture.ouvrir(fichierOut);
+                                output = Ecriture.ouvrirSuite(fichierOut);
                                 Ecriture.ecrireFichier(output,tmp);
                                 Ecriture.fermer(output);
                                 Lecture.fermer(tmp);
