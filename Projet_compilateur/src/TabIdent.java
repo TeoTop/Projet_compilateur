@@ -1,13 +1,16 @@
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.Stack;
 
 
 public class TabIdent {
 	private HashMap<String,Ident> table;
+	public Stack<Integer> var;/*pile des variables */
 
 	public TabIdent(){
 		table = new HashMap<String,Ident>();
+		var = new Stack<Integer>();
 	}
 
 	public Ident chercheIdent(String clef){
@@ -26,9 +29,9 @@ public class TabIdent {
 				((IdVar) id).setOffset(offset);;
 			}
 			table.put(clef, id);
+			var.push(-1);
 		}
 		else {
-			//Erreur.erreurDeclarationDouble(clef);
 			Erreur.message("Déclaration double pour : " + clef);
 		}
 

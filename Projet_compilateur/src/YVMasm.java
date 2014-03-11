@@ -10,7 +10,7 @@ public class YVMasm extends YVM {
 	private int comptString;
 	private ArrayList<String> extern;
 	private Iterator<String> ite;
-	// liste qui contiendra les fonctions nécessaires : lirent, ecrent, ecrbool, ecrch, ligsuiv.
+	// liste qui contiendra les fonctions nï¿½cessaires : lirent, ecrent, ecrbool, ecrch, ligsuiv.
 	
 	public YVMasm() {
 		super();

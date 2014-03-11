@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Stack;
 
 
@@ -7,19 +6,12 @@ public class Expression implements YakaConstants{
 	private Stack<String> opera;
 	private String lasOpRel; /* dernier operateur Rel utilisé */
 	private String lasOpMul;/* dernier operateur Mul utilisé */
-	private ArrayList<String> var;
 	private String lasOpAdd;/* dernier operateur Add utilisé */
 	private String lasOpNeg;/* dernier operateur Neg utilisé */
 
 	public Expression() {
-		int nbVar = YakaTokenManager.tabident.nbVar();
 		this.type = new Stack<String>();
 		this.opera = new Stack<String>();
-		this.var = new ArrayList<String>(nbVar);
-		System.out.println("Nb var" + nbVar);
-		for (int i = 0 ; i < nbVar ; i++) {
-			this.var.add(null);
-		}
 	}
 	public void empileTypeAvecIdent(String id) {
 		if (identExiste(id)){
@@ -187,11 +179,13 @@ public class Expression implements YakaConstants{
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
 		if (ident != null) {
 			if (ident.isVar()) {
-				if (this.var.contains(id)) {
-					YakaTokenManager.yvm.iload(((IdVar) ident).getOffset());
+				int offset =((IdVar) ident).getOffset();
+				int index=-1*offset/2-1;
+				if (YakaTokenManager.tabident.var.get(index)!=-1) {
+					YakaTokenManager.yvm.iload(offset);
 				}
 				else {
-					Erreur.message("La variable '" + id + "' n'est pas encore d�finie");
+					Erreur.message("La variable '" + id + "' n'est pas encore d�finie");
 				}
 			}
 			else {
@@ -200,6 +194,7 @@ public class Expression implements YakaConstants{
 		}
 		else {
 			Erreur.message("La variable ou la constante '" + id + "' n'existe pas");
+			this.type.push("erreur");
 		}
 	}
 
@@ -210,11 +205,9 @@ public class Expression implements YakaConstants{
 				String type = this.type.peek();
 				if (type.equals(ident.getType().toLowerCase())) {
 					int offset = ((IdVar) ident).getOffset();
-					int index = -1 * offset / 2 - 1;
-					YakaTokenManager.yvm.istore(offset);
-					if (!this.var.contains(id)) {
-						this.var.add(index, id);
-					}
+					int index = -1 * offset / 2-1;
+					YakaTokenManager.yvm.iload(offset);
+					YakaTokenManager.tabident.var.set(index, 1);
 				}
 				else if (!type.equals("erreur")){
 					Erreur.message("La variable '" + id + "' doit être de type " + type);
@@ -302,9 +295,7 @@ public class Expression implements YakaConstants{
 					YakaTokenManager.yvm.lireEnt(offset);
 					int index = -1 * offset / 2 - 1;
 					YakaTokenManager.yvm.istore(offset);
-					if (!this.var.contains(id)) {
-						this.var.add(index, id);
-					}
+					YakaTokenManager.tabident.var.set(index, 1);
 				}
 				else {
 					Erreur.message("La variable '" + id +"' doit être un entier");
