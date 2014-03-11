@@ -1,4 +1,6 @@
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class YVMasm extends YVM {
@@ -6,11 +8,16 @@ public class YVMasm extends YVM {
 	private OutputStream fichier;
 	/* compteur de nombre de message pour la creation de variable pour la fonction ecrireChaine */
 	private int comptString;
-
+	private ArrayList<String> extern;
+	private Iterator<String> ite;
+	// liste qui contiendra les fonctions nécessaires : lirent, ecrent, ecrbool, ecrch, ligsuiv.
+	
 	public YVMasm() {
 		super();
 		this.fichier = Ecriture.ouvrir("yvm.tmp");; /* ecrire dans un fichier tmp et puis le copier dans l'autre fichier ssi il n'y a pas d'erreur */
 		this.comptString = 0;
+		this.extern = new ArrayList<String>();
+		this.ite = extern.iterator();
 	}
 
 	@Override
@@ -224,7 +231,15 @@ public class YVMasm extends YVM {
 	public void entete() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  ";entete");
-		/* il faut ajouter les fonctions externes => biblio.obj */
+		
+		while(ite.hasNext()){
+			String fonction = ite.next();
+			if(ite.hasNext())
+				Ecriture.ecrireString(this.fichier,  "extrn " + fonction + ", ");
+			else
+				Ecriture.ecrireStringln(this.fichier,  "extrn " + fonction);
+		}
+
 		Ecriture.ecrireStringln(this.fichier,  ".MODEL SMALL");
 		Ecriture.ecrireStringln(this.fichier,  ".586");
 		Ecriture.ecrireStringln(this.fichier,  ".CODE");
@@ -290,6 +305,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireEnt");
 		Ecriture.ecrireStringln(this.fichier,"\tcall ecrent");
+		this.extern.add("ecrent");
 	}
 
 	public void ecrireChaine(String x) {
@@ -298,12 +314,14 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier, ".DATA\n\tmess" + this.comptString + " DB \"" + x.substring(1, x.length() - 1) + "$\""); /* enlever le dernier guillemet afin d'ajouter $ */
 		Ecriture.ecrireStringln(this.fichier, ".CODE\n\tlea dx,mess" + this.comptString + "\n\tpush dx\n\tcall ecrch");
 		this.comptString++;
+		this.extern.add("ecrch");
 	}
 
 	public void ecrireBool() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireBool");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ecrbool");
+		this.extern.add("ecrbool");
 	}
 
 	public void lireEnt(int x) {
@@ -312,12 +330,14 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tlea dx,[bp" + x + "]");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush dx");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall lirent");
+		this.extern.add("lirent");
 	}
 
 	public void aLaLigne() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;aLaLigne");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ligsuiv");
+		this.extern.add("ligsuiv");
 	}
 
 

@@ -1,8 +1,6 @@
 
 public abstract class YVM {
 
-	public abstract void entete();
-
 	public abstract void ouvrePrinc(int offset);
 
 	public abstract void isub();
@@ -44,6 +42,8 @@ public abstract class YVM {
 	public abstract void iffaux(String etiq);
 
 	public abstract void Goto(String etiq);
+	
+	public abstract void entete();
 
 	public abstract void queue();
 
@@ -56,4 +56,5 @@ public abstract class YVM {
 	public abstract void lireEnt(int x);
 	
 	public abstract void aLaLigne();
+	
 }

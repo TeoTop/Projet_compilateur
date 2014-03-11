@@ -41,7 +41,7 @@ public class Yaka implements YakaConstants {
                                         e.printStackTrace();
                                 }
                                 output = Ecriture.ouvrir(fichierOut);
-                                Ecriture.ecrireFichier(output,tmp);
+                                YakaTokenManager.yvm.entete();
                                 Ecriture.fermer(output);
                                 Lecture.fermer(tmp);
                                 System.out.println("Le fichier `" + fichierOut + "` a \u00e9t\u00e9 g\u00e9n\u00e9r\u00e9 avec succ\u00e8s");
@@ -61,7 +61,6 @@ public class Yaka implements YakaConstants {
                 YakaTokenManager.tabident = new TabIdent();
                 YakaTokenManager.tabident = new TabIdent();
                 YakaTokenManager.tabident = new TabIdent();
-                YakaTokenManager.yvm.entete();
     jj_consume_token(PROGRAMME);
     jj_consume_token(ident);
     bloc();
