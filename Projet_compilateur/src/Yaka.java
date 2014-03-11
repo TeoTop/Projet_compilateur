@@ -34,7 +34,7 @@ public class Yaka implements YakaConstants {
                                 System.out.println("La g\u00e9n\u00e9ration du fichier a \u00e9chou\u00e9");
                         }
                         else {
-                                output = Ecriture.ouvrir(fichierOut);
+                        		YakaTokenManager.yvm.recopierEntete(fichierOut);
                                 try {
                                         tmp = new java.io.FileInputStream(temp);
                                 } catch (java.io.FileNotFoundException e) {
@@ -58,7 +58,6 @@ public class Yaka implements YakaConstants {
 /********debut de la grammaire ********/
 /**************************************/
   static final public void analyse() throws ParseException {
-                YakaTokenManager.yvm.entete();
     jj_consume_token(PROGRAMME);
     jj_consume_token(ident);
     bloc();

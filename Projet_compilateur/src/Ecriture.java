@@ -12,7 +12,7 @@ public class Ecriture {
 	public static OutputStream ouvrir(String nomFich) {
 		//d�livre un pointeur sur le fichier de nom nomFich (null si erreur)
 		OutputStream f;
-		try {f=new DataOutputStream(new FileOutputStream(nomFich));
+		try {f=new DataOutputStream(new FileOutputStream(nomFich,true));
 		}
 		catch (IOException e) {f=null;}
 		return f;

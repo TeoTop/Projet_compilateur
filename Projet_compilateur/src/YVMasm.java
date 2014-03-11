@@ -14,7 +14,7 @@ public class YVMasm extends YVM {
 	
 	public YVMasm() {
 		super();
-		this.fichier = Ecriture.ouvrir("yvm.tmp");; /* ecrire dans un fichier tmp et puis le copier dans l'autre fichier ssi il n'y a pas d'erreur */
+		this.fichier = Ecriture.ouvrir("yvm.tmp"); /* ecrire dans un fichier tmp et puis le copier dans l'autre fichier ssi il n'y a pas d'erreur */
 		this.comptString = 0;
 		this.extern = new ArrayList<String>();
 		this.ite = extern.iterator();
@@ -228,8 +228,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
-	public void entete() {
+	public void recopierEntete(String fichierOut) {
 		// TODO Auto-generated method stub
+		this.fichier = Ecriture.ouvrir(fichierOut);
 		Ecriture.ecrireStringln(this.fichier,  ";entete");
 		
 		while(ite.hasNext()){

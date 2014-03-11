@@ -43,7 +43,7 @@ public abstract class YVM {
 
 	public abstract void Goto(String etiq);
 	
-	public abstract void entete();
+	public abstract void recopierEntete(String fichierOut);
 
 	public abstract void queue();
 
