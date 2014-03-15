@@ -1,14 +1,14 @@
 PROGRAMME prog
-VAR ENTIER x,y,z;
-ECRIRE(" x = ");
-LIRE(x);
+VAR ENTIER i,j,max;
+LIRE(i);
 ALALIGNE;
-ECRIRE(" y = ");
-LIRE(y);
+LIRE(j);
 ALALIGNE;
-ECRIRE(" x + y = ");
-ECRIRE(x+y);
-ALALIGNE;
-z = (x+y/2)/5;
-x = y + 3*y - 4;
+max=j;
+SI i>j ALORS
+	max = i
+SINON
+	max = j
+FSI;
+ECRIRE(max);
 FPROGRAMME

@@ -115,7 +115,11 @@ public class YVMasm extends YVM {
 	@Override
 	public void iffaux(String etiq) {
 		// TODO Auto-generated method stub
-		ifeq(etiq);
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;iffaux " + etiq);
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tcmp ax,0");
+		Ecriture.ecrireStringln(this.fichier,  "\tje " + etiq);
 
 	}
 
@@ -341,6 +345,16 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ligsuiv");
 		if(!extern.contains("ligsuiv")) this.extern.add("ligsuiv");
 	}
-
-
+	/* conditionnelle */
+	public void condition() {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;condition");
+		
+	}
+	
+	public void ecrireEtiqu(String etiq){
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t" + etiq + " :");
+		
+	}
 }

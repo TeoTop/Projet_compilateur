@@ -8,10 +8,12 @@ public class Expression implements YakaConstants{
 	private String lasOpMul;/* dernier operateur Mul utilis√© */
 	private String lasOpAdd;/* dernier operateur Add utilis√© */
 	private String lasOpNeg;/* dernier operateur Neg utilis√© */
+	private int comptSi; /* compteur du nombre de condition */
 
 	public Expression() {
 		this.type = new Stack<String>();
 		this.opera = new Stack<String>();
+		this.comptSi = 0;
 	}
 	public void empileTypeAvecIdent(String id) {
 		if (identExiste(id)){
@@ -206,7 +208,7 @@ public class Expression implements YakaConstants{
 				if (type.equals(ident.getType().toLowerCase())) {
 					int offset = ((IdVar) ident).getOffset();
 					int index = -1 * offset / 2-1;
-					YakaTokenManager.yvm.iload(offset);
+					YakaTokenManager.yvm.istore(offset);
 					YakaTokenManager.tabident.var.set(index, 1);
 				}
 				else if (!type.equals("erreur")){
@@ -292,9 +294,8 @@ public class Expression implements YakaConstants{
 			if (ident.isVar()) {
 				if (ident.getType().equals("ENTIER")) {
 					int offset = ((IdVar) ident).getOffset();
-					YakaTokenManager.yvm.lireEnt(offset);
 					int index = -1 * offset / 2 - 1;
-					YakaTokenManager.yvm.istore(offset);
+					YakaTokenManager.yvm.lireEnt(offset);
 					YakaTokenManager.tabident.var.set(index, 1);
 				}
 				else {
@@ -320,4 +321,32 @@ public class Expression implements YakaConstants{
 		}
 	}
 
+	public void testBool() {
+		String type = this.type.peek();
+		if (!type.equals("booleen")) {
+			Erreur.message("Le type de l'expression dans une conditionnelle doit Ítre boolÈen");
+		}
+	}
+	public void ecrireCondtion() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void ecrireIffaux() {
+		YakaTokenManager.yvm.iffaux("SINON" + this.comptSi);
+	}
+	public void ecrireGoto() {
+		YakaTokenManager.yvm.Goto("FSI" + this.comptSi);
+	}
+	public void ecrireSinon() {
+		YakaTokenManager.yvm.ecrireEtiqu("SINON" + this.comptSi);
+	}
+	public void ecrireFsi() {
+		YakaTokenManager.yvm.ecrireEtiqu("FSI" + this.comptSi);
+	}
+	public void addSi() {
+		this.comptSi++;
+	}
+	public void removeSi() {
+		this.comptSi--;
+	}
 }

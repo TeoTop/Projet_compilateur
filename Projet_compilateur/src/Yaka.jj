@@ -286,7 +286,27 @@ void suiteInstr() : {}
 
 void instruction() : {}
 {
-	affectation() | lecture() | ecriture()
+	affectation() | lecture() | ecriture() | conditionnelle()
+}
+
+void conditionnelle():{}
+{
+	<SI> expression()
+	{
+		YakaTokenManager.expression.addSi();
+		YakaTokenManager.expression.testBool();
+		YakaTokenManager.expression.ecrireIffaux();
+	}
+	/*bool*/ <ALORS> suiteInstr() 
+	{
+		YakaTokenManager.expression.ecrireGoto();
+		YakaTokenManager.expression.ecrireSinon();	
+	}
+	(<SINON> suiteInstr())? <FSI>
+	{
+		YakaTokenManager.expression.ecrireFsi();
+		YakaTokenManager.expression.removeSi();
+	}
 }
 
 void affectation() : {}
@@ -338,6 +358,7 @@ void ecriture() : {}
 /*
  * Expression .
  */
+ 
 void expression() : {}
 {
   simpleExpr() 

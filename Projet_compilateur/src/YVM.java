@@ -56,5 +56,7 @@ public abstract class YVM {
 	public abstract void lireEnt(int x);
 	
 	public abstract void aLaLigne();
+
+	public abstract void ecrireEtiqu(String string);
 	
 }
