@@ -65,12 +65,39 @@ debut:
 
 	SINON1 :
 
+	FSI1 :
+
+	;iload -2
+	push word ptr [bp-2]
+
 	;iload -4
 	push word ptr [bp-4]
+
+	;isup
+	pop bx
+	pop ax
+	cmp ax,bx
+	jle $+6
+	push -1
+	jmp $+4
+	push 0
+
+	;iffaux SINON1
+	pop ax
+	cmp ax,0
+	je SINON1
+
+	;iload -2
+	push word ptr [bp-2]
 
 	;istore -6
 	pop ax
 	mov word ptr [bp-6],ax
+
+	;goto FSI1
+	jmp FSI1
+
+	SINON1 :
 
 	FSI1 :
 

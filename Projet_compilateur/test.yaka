@@ -7,8 +7,9 @@ ALALIGNE;
 max=j;
 SI i>j ALORS
 	max = i
-SINON
-	max = j
+FSI;
+SI i>j ALORS
+	max = i
 FSI;
 ECRIRE(max);
 FPROGRAMME

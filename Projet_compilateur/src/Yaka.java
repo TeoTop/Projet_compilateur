@@ -21,7 +21,7 @@ public class Yaka implements YakaConstants {
                         System.out.println("Lecture sur l'entree standard...");
                         input = System.in;
                 } else {
-                        System.out.println("Usage: java Yaka [fichier entr\u00c3\u00a9e] [fichier sortie] ou java Yaka [fichier sortie]");
+                        System.out.println("Usage: java Yaka [fichier entr\u00e9e] [fichier sortie] ou java Yaka [fichier sortie]");
                         return;
                 }
                 try {
@@ -207,6 +207,7 @@ public class Yaka implements YakaConstants {
       jj_consume_token(54);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SI:
+      case TANTQUE:
       case ECRIRE:
       case LIRE:
       case ALALIGNE:
@@ -235,6 +236,9 @@ public class Yaka implements YakaConstants {
     case SI:
       conditionnelle();
       break;
+    case TANTQUE:
+      iteration();
+      break;
     default:
       jj_la1[8] = jj_gen;
       jj_consume_token(-1);
@@ -242,15 +246,30 @@ public class Yaka implements YakaConstants {
     }
   }
 
+  static final public void iteration() throws ParseException {
+    jj_consume_token(TANTQUE);
+                YakaTokenManager.expression.addTantQue();
+                YakaTokenManager.expression.ecrireFaire();
+    expression();
+                YakaTokenManager.expression.testBool();
+                YakaTokenManager.expression.ecrireIffauxFait();
+    jj_consume_token(FAIRE);
+    suiteInstr();
+                YakaTokenManager.expression.ecrireGotoFaire();
+    jj_consume_token(FAIT);
+                YakaTokenManager.expression.ecrireFait();
+                YakaTokenManager.expression.removeTantQue();
+  }
+
   static final public void conditionnelle() throws ParseException {
     jj_consume_token(SI);
-    expression();
                 YakaTokenManager.expression.addSi();
+    expression();
                 YakaTokenManager.expression.testBool();
-                YakaTokenManager.expression.ecrireIffaux();
+                YakaTokenManager.expression.ecrireIffauxSinon();
     jj_consume_token(ALORS);
     suiteInstr();
-                YakaTokenManager.expression.ecrireGoto();
+                YakaTokenManager.expression.ecrireGotoFSI();
                 YakaTokenManager.expression.ecrireSinon();
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SINON:
@@ -585,7 +604,7 @@ public class Yaka implements YakaConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x80000,0x200,0x0,0x120000,0x0,0x8100,0x0,0x2000,0x2000,0x800,0x1120000,0x0,0x0,0x400000,0x800000,0x1120000,0x120000,0x120000,0x0,0x400000,0x800000,0x1000000,};
+      jj_la1_0 = new int[] {0x80000,0x200,0x0,0x120000,0x0,0x8100,0x0,0x42000,0x42000,0x800,0x1120000,0x0,0x0,0x400000,0x800000,0x1120000,0x120000,0x120000,0x0,0x400000,0x800000,0x1000000,};
    }
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {0x0,0x0,0x200000,0xa0010,0x200000,0x0,0x400000,0x80007,0x80007,0x0,0x9a0010,0x5,0xfc00,0x18,0xc0,0x8a0010,0x8a0000,0xa0000,0xfc00,0x18,0xc0,0x10,};

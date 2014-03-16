@@ -8,12 +8,14 @@ public class Expression implements YakaConstants{
 	private String lasOpMul;/* dernier operateur Mul utilisé */
 	private String lasOpAdd;/* dernier operateur Add utilisé */
 	private String lasOpNeg;/* dernier operateur Neg utilisé */
-	private int comptSi; /* compteur du nombre de condition */
+	private int comptSi; /* compteur du nombre de condition !erreur si on fait 2 si non imbriqués*/
+	private int comptTantQue; /* compteur du nombre d'iteration !erreur si on fait 2 tantque non imbriqués*/
 
 	public Expression() {
 		this.type = new Stack<String>();
 		this.opera = new Stack<String>();
 		this.comptSi = 0;
+		this.comptTantQue = 0;
 	}
 	public void empileTypeAvecIdent(String id) {
 		if (identExiste(id)){
@@ -324,18 +326,20 @@ public class Expression implements YakaConstants{
 	public void testBool() {
 		String type = this.type.peek();
 		if (!type.equals("booleen")) {
-			Erreur.message("Le type de l'expression dans une conditionnelle doit �tre bool�en");
+			Erreur.message("Le type de l'expression dans une conditionnelle doit �tre bool�en");
 		}
 	}
-	public void ecrireCondtion() {
-		// TODO Auto-generated method stub
-		
-	}
-	public void ecrireIffaux() {
+	public void ecrireIffauxSinon() {
 		YakaTokenManager.yvm.iffaux("SINON" + this.comptSi);
 	}
-	public void ecrireGoto() {
+	public void ecrireIffauxFait() {
+		YakaTokenManager.yvm.iffaux("FAIT" + this.comptTantQue);
+	}
+	public void ecrireGotoFSI() {
 		YakaTokenManager.yvm.Goto("FSI" + this.comptSi);
+	}
+	public void ecrireGotoFaire() {
+		YakaTokenManager.yvm.Goto("FAIRE" + this.comptTantQue);
 	}
 	public void ecrireSinon() {
 		YakaTokenManager.yvm.ecrireEtiqu("SINON" + this.comptSi);
@@ -348,5 +352,17 @@ public class Expression implements YakaConstants{
 	}
 	public void removeSi() {
 		this.comptSi--;
+	}
+	public void ecrireFaire() {
+		YakaTokenManager.yvm.ecrireEtiqu("Faire" + this.comptTantQue);
+	}
+	public void addTantQue() {
+		this.comptTantQue++;
+	}
+	public void ecrireFait() {
+		YakaTokenManager.yvm.ecrireEtiqu("FAIT" + this.comptTantQue);
+	}
+	public void removeTantQue() {
+		this.comptTantQue--;
 	}
 }

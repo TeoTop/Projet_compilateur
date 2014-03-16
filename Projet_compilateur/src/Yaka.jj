@@ -286,21 +286,47 @@ void suiteInstr() : {}
 
 void instruction() : {}
 {
-	affectation() | lecture() | ecriture() | conditionnelle()
+	affectation() | lecture() | ecriture() | conditionnelle() | iteration()
+}
+
+void iteration():{}
+{
+	<TANTQUE>
+	{
+		YakaTokenManager.expression.addTantQue();
+		YakaTokenManager.expression.ecrireFaire();
+	}
+	expression()
+	{
+		YakaTokenManager.expression.testBool();
+		YakaTokenManager.expression.ecrireIffauxFait();
+	}
+	<FAIRE> suiteInstr()
+	{
+		YakaTokenManager.expression.ecrireGotoFaire();
+	}
+	<FAIT>
+	{
+		YakaTokenManager.expression.ecrireFait();
+		YakaTokenManager.expression.removeTantQue();
+	}
 }
 
 void conditionnelle():{}
 {
-	<SI> expression()
+	<SI>
 	{
 		YakaTokenManager.expression.addSi();
-		YakaTokenManager.expression.testBool();
-		YakaTokenManager.expression.ecrireIffaux();
 	}
-	/*bool*/ <ALORS> suiteInstr() 
+	expression()
 	{
-		YakaTokenManager.expression.ecrireGoto();
-		YakaTokenManager.expression.ecrireSinon();	
+		YakaTokenManager.expression.testBool();
+		YakaTokenManager.expression.ecrireIffauxSinon();
+	}
+	<ALORS> suiteInstr() 
+	{
+		YakaTokenManager.expression.ecrireGotoFSI();
+		YakaTokenManager.expression.ecrireSinon();
 	}
 	(<SINON> suiteInstr())? <FSI>
 	{
