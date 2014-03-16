@@ -8,14 +8,18 @@ public class Expression implements YakaConstants{
 	private String lasOpMul;/* dernier operateur Mul utilisé */
 	private String lasOpAdd;/* dernier operateur Add utilisé */
 	private String lasOpNeg;/* dernier operateur Neg utilisé */
-	private int comptSi; /* compteur du nombre de condition !erreur si on fait 2 si non imbriqués*/
-	private int comptTantQue; /* compteur du nombre d'iteration !erreur si on fait 2 tantque non imbriqués*/
-
+	private Stack<Integer> pileSI;/* empilement des si imbriqués */
+	private int comptSI; /* compteur du nombre de conditions*/
+	private Stack<Integer> pileTQ;/* empilement des TQ imbriqués */
+	private int comptTQ; /* compteur du nombre d'iterations*/
+	
 	public Expression() {
 		this.type = new Stack<String>();
 		this.opera = new Stack<String>();
-		this.comptSi = 0;
-		this.comptTantQue = 0;
+		this.pileSI = new Stack<Integer>();
+		this.comptSI = 1;
+		this.pileTQ = new Stack<Integer>();
+		this.comptTQ = 1;
 	}
 	public void empileTypeAvecIdent(String id) {
 		if (identExiste(id)){
@@ -329,40 +333,41 @@ public class Expression implements YakaConstants{
 			Erreur.message("Le type de l'expression dans une conditionnelle doit �tre bool�en");
 		}
 	}
-	public void ecrireIffauxSinon() {
-		YakaTokenManager.yvm.iffaux("SINON" + this.comptSi);
+	public void addSi() {
+		this.pileSI.push(this.comptSI++);
 	}
-	public void ecrireIffauxFait() {
-		YakaTokenManager.yvm.iffaux("FAIT" + this.comptTantQue);
+	public void ecrireIffauxSinon() {
+		YakaTokenManager.yvm.iffaux("SINON" + this.pileSI.peek());
 	}
 	public void ecrireGotoFSI() {
-		YakaTokenManager.yvm.Goto("FSI" + this.comptSi);
-	}
-	public void ecrireGotoFaire() {
-		YakaTokenManager.yvm.Goto("FAIRE" + this.comptTantQue);
+		YakaTokenManager.yvm.Goto("FSI" + this.pileSI.peek());
 	}
 	public void ecrireSinon() {
-		YakaTokenManager.yvm.ecrireEtiqu("SINON" + this.comptSi);
+		YakaTokenManager.yvm.ecrireEtiqu("SINON" + this.pileSI.peek());
 	}
 	public void ecrireFsi() {
-		YakaTokenManager.yvm.ecrireEtiqu("FSI" + this.comptSi);
-	}
-	public void addSi() {
-		this.comptSi++;
+		YakaTokenManager.yvm.ecrireEtiqu("FSI" + this.pileSI.peek());
 	}
 	public void removeSi() {
-		this.comptSi--;
+		this.pileSI.pop();
+	}
+	/* iteration */
+	public void addTantQue() {
+		this.pileTQ.push(this.comptTQ++);
 	}
 	public void ecrireFaire() {
-		YakaTokenManager.yvm.ecrireEtiqu("Faire" + this.comptTantQue);
+		YakaTokenManager.yvm.ecrireEtiqu("Faire" + this.pileTQ.peek());
 	}
-	public void addTantQue() {
-		this.comptTantQue++;
+	public void ecrireIffauxFait() {
+		YakaTokenManager.yvm.iffaux("FAIT" + this.pileTQ.peek());
+	}
+	public void ecrireGotoFaire() {
+		YakaTokenManager.yvm.Goto("FAIRE" + this.pileTQ.peek());
 	}
 	public void ecrireFait() {
-		YakaTokenManager.yvm.ecrireEtiqu("FAIT" + this.comptTantQue);
+		YakaTokenManager.yvm.ecrireEtiqu("FAIT" + this.pileTQ.peek());
 	}
 	public void removeTantQue() {
-		this.comptTantQue--;
+		this.pileTQ.pop();
 	}
 }

@@ -323,12 +323,13 @@ void conditionnelle():{}
 		YakaTokenManager.expression.testBool();
 		YakaTokenManager.expression.ecrireIffauxSinon();
 	}
-	<ALORS> suiteInstr() 
+	<ALORS> suiteInstr()
 	{
 		YakaTokenManager.expression.ecrireGotoFSI();
 		YakaTokenManager.expression.ecrireSinon();
 	}
-	(<SINON> suiteInstr())? <FSI>
+	(<SINON> suiteInstr())?
+	 <FSI>
 	{
 		YakaTokenManager.expression.ecrireFsi();
 		YakaTokenManager.expression.removeSi();

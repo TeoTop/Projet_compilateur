@@ -5,11 +5,13 @@ ALALIGNE;
 LIRE(j);
 ALALIGNE;
 max=j;
-SI i>j ALORS
-	max = i
-FSI;
-SI i>j ALORS
-	max = i
-FSI;
+TANTQUE i<=max FAIRE
+	TANTQUE i<=max FAIRE
+		i=i+1;
+	FAIT;
+	TANTQUE i<=max FAIRE
+		i=i+1;
+	FAIT;
+FAIT;
 ECRIRE(max);
 FPROGRAMME
