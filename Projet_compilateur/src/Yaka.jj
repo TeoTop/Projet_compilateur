@@ -478,32 +478,32 @@ void opRel() : {}
    "=" 	
   {
 	  YakaTokenManager.expression.empileOpera("=");
-	  YakaTokenManager.expression.setLastOpRel("=");
+	  YakaTokenManager.expression.setLastOpRel(YakaConstants.EGAL);
 	}
  | "<>" 
   {
 	  YakaTokenManager.expression.empileOpera("<>");
-	  YakaTokenManager.expression.setLastOpRel("<>");
+	  YakaTokenManager.expression.setLastOpRel(YakaConstants.DIFF);
   }
  | "<" 	
   {
 	  YakaTokenManager.expression.empileOpera("<");
-	  YakaTokenManager.expression.setLastOpRel("<");
+	  YakaTokenManager.expression.setLastOpRel(YakaConstants.INF);
   }
  | "<=" 
   {
 	  YakaTokenManager.expression.empileOpera("<=");
-	  YakaTokenManager.expression.setLastOpRel("<=");
+	  YakaTokenManager.expression.setLastOpRel(YakaConstants.INFEGAL);
   }
  | ">" 	
   {
 	  YakaTokenManager.expression.empileOpera(">");
-	  YakaTokenManager.expression.setLastOpRel(">");
+	  YakaTokenManager.expression.setLastOpRel(YakaConstants.SUP);
   }
  | ">=" 
   {
 	  YakaTokenManager.expression.empileOpera(">=");
-	  YakaTokenManager.expression.setLastOpRel(">=");
+	  YakaTokenManager.expression.setLastOpRel(YakaConstants.SUPEGAL);
   }
 } 
 
@@ -512,17 +512,17 @@ void opAdd() : {}
     "+"
   {
 	  YakaTokenManager.expression.empileOpera("+");
-	  YakaTokenManager.expression.setLastOpAdd("+");
+	  YakaTokenManager.expression.setLastOpAdd(YakaConstants.ADD);
 	}
   |  "-" 
   {
 	  YakaTokenManager.expression.empileOpera("-");
-	  YakaTokenManager.expression.setLastOpAdd("-");
+	  YakaTokenManager.expression.setLastOpAdd(YakaConstants.SUBNEG);
 	}
   | <OU> 
   {
 	  YakaTokenManager.expression.empileOpera("ou");
-	  YakaTokenManager.expression.setLastOpAdd("OR");
+	  YakaTokenManager.expression.setLastOpAdd(YakaConstants.OR);
 	}
 }
 
@@ -531,17 +531,17 @@ void opMul() : {}
   "*"	
   {
 	YakaTokenManager.expression.empileOpera("*");
-	  YakaTokenManager.expression.setLastOpMul("*");
+	  YakaTokenManager.expression.setLastOpMul(YakaConstants.MUL);
   }
   | "/"	
   {
 	YakaTokenManager.expression.empileOpera("/");
-	  YakaTokenManager.expression.setLastOpMul("/");
+	  YakaTokenManager.expression.setLastOpMul(YakaConstants.DIV);
   }
   | <ET>	
   {
 	  YakaTokenManager.expression.empileOpera("et");
-	  YakaTokenManager.expression.setLastOpMul("AND");
+	  YakaTokenManager.expression.setLastOpMul(YakaConstants.AND);
 	}
 } 
 
@@ -549,12 +549,12 @@ void opNeg() : {}
 { "-" 
   {
 	  YakaTokenManager.expression.empileOpera("-");
-	  YakaTokenManager.expression.setLastOpNeg("-");
+	  YakaTokenManager.expression.setLastOpNeg(YakaConstants.SUBNEG);
   }
  | <NON>
   {
 	  YakaTokenManager.expression.empileOpera("non");
-	  YakaTokenManager.expression.setLastOpNeg("NOT");
+	  YakaTokenManager.expression.setLastOpNeg(YakaConstants.NOT);
   }
 }
 /* on ne peut pas faire opneg pour une expression */

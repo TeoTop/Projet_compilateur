@@ -4,15 +4,15 @@ import java.util.Stack;
 public class Expression implements YakaConstants{
 	private Stack<String> type;
 	private Stack<String> opera;
-	private String lasOpRel; /* dernier operateur Rel utilisé */
-	private String lasOpMul;/* dernier operateur Mul utilisé */
-	private String lasOpAdd;/* dernier operateur Add utilisé */
-	private String lasOpNeg;/* dernier operateur Neg utilisé */
+	private int lasOpRel; /* dernier operateur Rel utilisé */
+	private int lasOpMul;/* dernier operateur Mul utilisé */
+	private int lasOpAdd;/* dernier operateur Add utilisé */
+	private int lasOpNeg;/* dernier operateur Neg utilisé */
 	private Stack<Integer> pileSI;/* empilement des si imbriqués */
 	private int comptSI; /* compteur du nombre de conditions*/
 	private Stack<Integer> pileTQ;/* empilement des TQ imbriqués */
 	private int comptTQ; /* compteur du nombre d'iterations*/
-	
+
 	public Expression() {
 		this.type = new Stack<String>();
 		this.opera = new Stack<String>();
@@ -46,7 +46,7 @@ public class Expression implements YakaConstants{
 
 	public void testMul() {
 		String type1,type2,op = "";
-		int p = position(YakaConstants.tokenImage,this.lasOpMul);
+		int p = this.lasOpMul;
 		switch(p) {
 		case MUL : op="multiplication";break;
 		case DIV : op="division";break;
@@ -73,7 +73,6 @@ public class Expression implements YakaConstants{
 			this.opera.pop();
 		}
 		else {
-			//Erreur.errOp("multiplication");
 			Erreur.message("L'opération '" + op + "' ne peut s'effectuer");
 			empileType("erreur");
 		}
@@ -81,7 +80,7 @@ public class Expression implements YakaConstants{
 
 	public void testAdd() {
 		String type1,type2,op = "";
-		int p = position(YakaConstants.tokenImage,this.lasOpAdd);
+		int p = this.lasOpAdd;
 		switch(p) {
 		case ADD : op="addtion";break;
 		case SUBNEG : op="soustration";break;
@@ -101,7 +100,6 @@ public class Expression implements YakaConstants{
 			}
 			else {
 				if (!(type1.equals("erreur") || type2.equals("erreur"))) {
-					//Erreur.erreurType(type1,type2,"addition");
 					Erreur.message("Impossible d'effectuer l'opération '" + op + "' entre les types " + type1 + " et " + type2);
 				}
 				empileType("erreur");
@@ -109,7 +107,6 @@ public class Expression implements YakaConstants{
 			this.opera.pop();
 		}
 		else {
-			//Erreur.errOp("addition");
 			empileType("erreur");
 			Erreur.message("L'opération '" + op + "' ne peut s'effectuer");
 		}
@@ -118,7 +115,7 @@ public class Expression implements YakaConstants{
 
 	public void testRel() {
 		String op = "";
-		int p = position(YakaConstants.tokenImage,this.lasOpRel);
+		int p = this.lasOpRel;
 		switch(p) {
 		case EGAL : op="égal";break;
 		case DIFF : op="différent";break;
@@ -135,7 +132,6 @@ public class Expression implements YakaConstants{
 			}
 			else {
 				if (!(type1.equals("erreur") || type2.equals("erreur"))) {
-					//Erreur.erreurType(type1,type2,"addition");
 					Erreur.message("Impossible d'effectuer l'opération de comparaison '" + op + "' entre les types " + type1 + " et " + type2);
 					empileType("erreur");
 				}
@@ -143,14 +139,13 @@ public class Expression implements YakaConstants{
 			this.opera.pop();
 		}
 		else {
-			//Erreur.erreurRel();
 			Erreur.message("L'opération de comparaison '" + op + "' ne peut s'effectuer");
 		}
 	}
 
 	public void testNeg() {
 		String op = "";
-		int p = position(YakaConstants.tokenImage,this.lasOpNeg);
+		int p = this.lasOpNeg;
 		switch(p) {
 		case NOT : op="non logique";break;
 		case SUBNEG : op="moins unaire";break;
@@ -188,7 +183,7 @@ public class Expression implements YakaConstants{
 		if (ident != null) {
 			if (ident.isVar()) {
 				int offset =((IdVar) ident).getOffset();
-				int index=-1*offset/2-1;
+				int index=-1*offset/2 - 1;
 				if (YakaTokenManager.tabident.var.get(index)!=-1) {
 					YakaTokenManager.yvm.iload(offset);
 				}
@@ -213,7 +208,7 @@ public class Expression implements YakaConstants{
 				String type = this.type.peek();
 				if (type.equals(ident.getType().toLowerCase())) {
 					int offset = ((IdVar) ident).getOffset();
-					int index = -1 * offset / 2-1;
+					int index = -1 * offset / 2 - 1;
 					YakaTokenManager.yvm.istore(offset);
 					YakaTokenManager.tabident.var.set(index, 1);
 				}
@@ -231,8 +226,7 @@ public class Expression implements YakaConstants{
 	}
 
 	public void executerOpRel() {
-		int p = position(YakaConstants.tokenImage,this.lasOpRel);
-		switch(p) {
+		switch(this.lasOpRel) {
 		case EGAL : YakaTokenManager.yvm.iegal();break;
 		case DIFF : YakaTokenManager.yvm.idiff();break;
 		case INFEGAL : YakaTokenManager.yvm.iinfegal();break;
@@ -243,8 +237,7 @@ public class Expression implements YakaConstants{
 	}
 
 	public void executerOpAdd() {
-		int p = position(YakaConstants.tokenImage,this.lasOpAdd);
-		switch(p) {
+		switch(this.lasOpAdd) {
 		case ADD : YakaTokenManager.yvm.iadd();break;
 		case SUBNEG : YakaTokenManager.yvm.isub();break;
 		case OR : YakaTokenManager.yvm.ior();break;
@@ -252,8 +245,7 @@ public class Expression implements YakaConstants{
 
 	}
 	public void executerOpMul() {
-		int p = position(YakaConstants.tokenImage,this.lasOpMul);
-		switch(p) {
+		switch(this.lasOpMul) {
 		case MUL : YakaTokenManager.yvm.imul();break;
 		case DIV : YakaTokenManager.yvm.idiv();break;
 		case AND : YakaTokenManager.yvm.iand();break;
@@ -261,37 +253,23 @@ public class Expression implements YakaConstants{
 
 	}
 	public void executerOpNeg() {
-		int p = position(YakaConstants.tokenImage,this.lasOpNeg);
-		switch(p) {
+		switch(this.lasOpNeg) {
 		case SUBNEG : YakaTokenManager.yvm.ineg();break;
 		case NOT : YakaTokenManager.yvm.inot();break;
 		}
-
 	}
 
-	public void setLastOpMul(String op) {
+	public void setLastOpMul(int op) {
 		this.lasOpMul = op;
 	}
-	public void setLastOpAdd(String op) {
+	public void setLastOpAdd(int op) {
 		this.lasOpAdd = op;
 	}
-	public void setLastOpNeg(String op) {
+	public void setLastOpNeg(int op) {
 		this.lasOpNeg = op;
 	}
-	public void setLastOpRel(String op) {
+	public void setLastOpRel(int op) {
 		this.lasOpRel = op;
-	}
-
-	/* fonction qui cherche la position de op dans tokenimage; changer de class */
-	private int position(String[] tokenimage, String op) {
-		for (int i = 0;i < tokenimage.length;i++) {
-			//			System.out.println(tokenimage[i]);
-			//			System.out.println(op);
-			if (tokenimage[i].equals("\"" + op + "\"")) {
-				return i;
-			}
-		}
-		return -1;
 	}
 
 	public void lire(String id) {

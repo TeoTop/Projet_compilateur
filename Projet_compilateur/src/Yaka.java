@@ -485,32 +485,32 @@ public class Yaka implements YakaConstants {
     case EGAL:
       jj_consume_token(EGAL);
           YakaTokenManager.expression.empileOpera("=");
-          YakaTokenManager.expression.setLastOpRel("=");
+          YakaTokenManager.expression.setLastOpRel(YakaConstants.EGAL);
       break;
     case DIFF:
       jj_consume_token(DIFF);
           YakaTokenManager.expression.empileOpera("<>");
-          YakaTokenManager.expression.setLastOpRel("<>");
+          YakaTokenManager.expression.setLastOpRel(YakaConstants.DIFF);
       break;
     case INF:
       jj_consume_token(INF);
           YakaTokenManager.expression.empileOpera("<");
-          YakaTokenManager.expression.setLastOpRel("<");
+          YakaTokenManager.expression.setLastOpRel(YakaConstants.INF);
       break;
     case INFEGAL:
       jj_consume_token(INFEGAL);
           YakaTokenManager.expression.empileOpera("<=");
-          YakaTokenManager.expression.setLastOpRel("<=");
+          YakaTokenManager.expression.setLastOpRel(YakaConstants.INFEGAL);
       break;
     case SUP:
       jj_consume_token(SUP);
           YakaTokenManager.expression.empileOpera(">");
-          YakaTokenManager.expression.setLastOpRel(">");
+          YakaTokenManager.expression.setLastOpRel(YakaConstants.SUP);
       break;
     case SUPEGAL:
       jj_consume_token(SUPEGAL);
           YakaTokenManager.expression.empileOpera(">=");
-          YakaTokenManager.expression.setLastOpRel(">=");
+          YakaTokenManager.expression.setLastOpRel(YakaConstants.SUPEGAL);
       break;
     default:
       jj_la1[18] = jj_gen;
@@ -524,17 +524,17 @@ public class Yaka implements YakaConstants {
     case ADD:
       jj_consume_token(ADD);
           YakaTokenManager.expression.empileOpera("+");
-          YakaTokenManager.expression.setLastOpAdd("+");
+          YakaTokenManager.expression.setLastOpAdd(YakaConstants.ADD);
       break;
     case SUBNEG:
       jj_consume_token(SUBNEG);
           YakaTokenManager.expression.empileOpera("-");
-          YakaTokenManager.expression.setLastOpAdd("-");
+          YakaTokenManager.expression.setLastOpAdd(YakaConstants.SUBNEG);
       break;
     case OU:
       jj_consume_token(OU);
           YakaTokenManager.expression.empileOpera("ou");
-          YakaTokenManager.expression.setLastOpAdd("OR");
+          YakaTokenManager.expression.setLastOpAdd(YakaConstants.OR);
       break;
     default:
       jj_la1[19] = jj_gen;
@@ -548,17 +548,17 @@ public class Yaka implements YakaConstants {
     case MUL:
       jj_consume_token(MUL);
         YakaTokenManager.expression.empileOpera("*");
-          YakaTokenManager.expression.setLastOpMul("*");
+          YakaTokenManager.expression.setLastOpMul(YakaConstants.MUL);
       break;
     case DIV:
       jj_consume_token(DIV);
         YakaTokenManager.expression.empileOpera("/");
-          YakaTokenManager.expression.setLastOpMul("/");
+          YakaTokenManager.expression.setLastOpMul(YakaConstants.DIV);
       break;
     case ET:
       jj_consume_token(ET);
           YakaTokenManager.expression.empileOpera("et");
-          YakaTokenManager.expression.setLastOpMul("AND");
+          YakaTokenManager.expression.setLastOpMul(YakaConstants.AND);
       break;
     default:
       jj_la1[20] = jj_gen;
@@ -572,12 +572,12 @@ public class Yaka implements YakaConstants {
     case SUBNEG:
       jj_consume_token(SUBNEG);
           YakaTokenManager.expression.empileOpera("-");
-          YakaTokenManager.expression.setLastOpNeg("-");
+          YakaTokenManager.expression.setLastOpNeg(YakaConstants.SUBNEG);
       break;
     case NON:
       jj_consume_token(NON);
           YakaTokenManager.expression.empileOpera("non");
-          YakaTokenManager.expression.setLastOpNeg("NOT");
+          YakaTokenManager.expression.setLastOpNeg(YakaConstants.NOT);
       break;
     default:
       jj_la1[21] = jj_gen;
