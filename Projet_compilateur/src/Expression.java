@@ -9,21 +9,96 @@
  * @version 1.0
  */
 import java.util.Stack;
-
+/**
+ * 
+ * 
+ * 
+ * @see Yaka
+ */
 public class Expression implements YakaConstants{
+	
+	/**
+     * La pile des types
+     * @see Expression#Expression()
+     * @see Expression#empileTypeAvecIdent(String)
+     * @see Expression#empileType(String)
+     */
 	private Stack<String> type;
+	
+	/**
+     * La pile des opérateurs
+     * @see Expression#Expression()
+     * @see Expression#empileOpera(String)
+     */
 	private Stack<String> opera;
-	private int lasOpRel; /* dernier operateur Rel utilisÃ© */
-	private int lasOpMul;/* dernier operateur Mul utilisÃ© */
-	private int lasOpAdd;/* dernier operateur Add utilisÃ© */
-	private int lasOpNeg;/* dernier operateur Neg utilisÃ© */
-	private Stack<Integer> pileSI;/* empilement des si imbriquÃ©s */
-	private int comptSI; /* compteur du nombre de conditions*/
-	private Stack<Integer> pileTQ;/* empilement des TQ imbriquÃ©s */
-	private int comptTQ; /* compteur du nombre d'iterations*/
+	
+	/**
+	 * Le dernier operateur de relation de comparaison utilisé
+	 * @see Expression#setLastOpRel(int)
+	 */
+	private int lasOpRel;
+	
+	/**
+	 * Le dernier operateur de multiplication utilisé (multiplication, division
+	 * ET)
+	 * @see Expression#setLastOpMul(int)
+	 */
+	private int lasOpMul;
+	
+	/**
+	 * Le dernier operateur d'addition utilisé (addition, soustraction, OR)
+	 * @see Expression#setLastOpAdd(int)
+	 */
+	private int lasOpAdd;
+	
+	/**
+	 * Le dernier operateur de négation utilisé (moins unaire, NON)
+	 * @see Expression#setLastOpNeg(int)
+	 */
+	private int lasOpNeg;
+	
+	/**
+	 * La piles des conditionnelles
+     * @see Expression#Expression()
+     * @see Expression#addSi()
+     * @see Expression#removeSi()
+	 */
+	private Stack<Integer> pileSI;
+	
+	/**
+	 * Compteur de conditionnelles
+     * @see Expression#Expression()
+     * @see Expression#addSi()
+	 */
+	private int comptSI;
+	
+	/**
+	 * La piles des boucles
+     * @see Expression#Expression()
+     * @see Expression#addTantQue()
+     * @see Expression#removeTantQue()
+	 */
+	private Stack<Integer> pileTQ;
+	
+	/**
+	 * Compteur de boucles
+     * @see Expression#Expression()
+     * @see Expression#addTantQue()
+	 */
+	private int comptTQ;
 
 	/**
+	 * Constructeur Expression
+	 * Création de la pile des types, des opérateurs ainsi que 
+	 * la piles des conditionnalles et des itérations. La valeur des
+	 * compteurs de conditionnelles et de boucles est mise à 1
 	 * 
+	 * @see Expression#type
+	 * @see Expression#opera
+	 * @see Expression#pileSI
+	 * @see Expression#comptSI
+	 * @see Expression#pileTQ
+	 * @see Expression#comptTQ
 	 */
 	public Expression() {
 		this.type = new Stack<String>();
@@ -35,17 +110,23 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
+	 * Empile un type grâce à son ident
 	 * 
+	 * @see Expression#type
+	 * @see TabIdent
 	 * @param id
 	 */
 	public void empileTypeAvecIdent(String id) {
+		/* tester si l'ident existe avant de l'empiler */
 		if (identExiste(id)){
 			this.type.push((YakaTokenManager.tabident.chercheIdent(id)).getType().toLowerCase());
 		}
 	}
 	
 	/**
+	 * Empile un type
 	 * 
+	 * @see Expression#type
 	 * @param type
 	 */
 	public void empileType(String type) {
@@ -53,7 +134,9 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Empiler un opérateur
 	 * 
+	 * @see Expression#opera
 	 * @param opera
 	 */
 	public void empileOpera(String opera) {
@@ -61,9 +144,11 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Teste si un ident existe dans la table des identificateurs
 	 * 
+	 * @see TabIdent
 	 * @param id
-	 * @return
+	 * @return true si l'ident existe, false sinon
 	 */
 	public boolean identExiste(String id){
 		if (!YakaTokenManager.tabident.existeIdent(id)) {
@@ -74,7 +159,9 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé 
 	 * 
+	 * @see Expression#lasOpMul
 	 */
 	public void testMul() {
 		String type1,type2,op = "";
@@ -111,7 +198,9 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé 
 	 * 
+	 * @see Expression#lasOpAdd
 	 */
 	public void testAdd() {
 		String type1,type2,op = "";
@@ -148,7 +237,9 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé 
 	 * 
+	 * @see Expression#lasOpRel
 	 */
 	public void testRel() {
 		String op = "";
@@ -181,7 +272,9 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
+	 * Teste si le type en sommet de pile correspond à l'opérande utilisé
 	 * 
+	 * @see Expression#lasOpNeg
 	 */
 	public void testNeg() {
 		String op = "";
@@ -206,49 +299,59 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Vider la pile type
 	 * 
+	 * @see Expression#type
 	 */
 	public void clearType() {
 		this.type.clear();
 	}
 
 	/**
+	 * Vider la pile type
 	 * 
+	 * @see Expression#opera
 	 */
 	public void clearOp() {
 		this.opera.clear();
 	}
 
-	@Override
 	/**
 	 * 
 	 */
+	@Override
 	public String toString() {
 		return "Expression [type=" + type + ", opera=" + opera + "]";
 	}
 
 	/**
 	 * 
+	 * Appel à la méthode iload de YVMasm si l'ident est une variable et iconst si c'est une constante
+	 * 
+	 * @see Expression#type
+	 * @see YVMasm
+	 * @see TabIdent
+	 * @see Ident
 	 * @param id
 	 */
 	public void loadIdent(String id) {
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
-		if (ident != null) {
-			if (ident.isVar()) {
+		if (ident != null) {// l'ident existe
+			if (ident.isVar()) {// ident est une variable
 				int offset =((IdVar) ident).getOffset();
-				int index=-1*offset/2 - 1;
-				if (YakaTokenManager.tabident.var.get(index)!=-1) {
+				int index=-1*offset/2 - 1;// index de la variable dans la pile des variables
+				if (YakaTokenManager.tabident.var.get(index)!=-1) {// la variable a été déjà définie
 					YakaTokenManager.yvm.iload(offset);
 				}
-				else {
+				else {// variable non définie
 					Erreur.message("La variable '" + id + "' n'est pas encore dï¿½finie");
 				}
 			}
-			else {
+			else {// ident est une constante
 				YakaTokenManager.yvm.iconst(((IdConst) ident).getValeur());
 			}
 		}
-		else {
+		else {// l'ident n'existe pas
 			Erreur.message("La variable ou la constante '" + id + "' n'existe pas");
 			this.type.push("erreur");
 		}
@@ -256,34 +359,43 @@ public class Expression implements YakaConstants{
 
 	/**
 	 * 
+	 * Appel à la méthode istore de YVMasm si l'ident est une variable
+	 * 
+	 * @see Expression#type
+	 * @see YVMasm
+	 * @see TabIdent
+	 * @see Ident
 	 * @param id
 	 */
 	public void store(String id) {
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
-		if (ident != null) {
-			if (ident.isVar()) {
+		if (ident != null) {// l'ident existe
+			if (ident.isVar()) {// ident est une variable
 				String type = this.type.peek();
-				if (type.equals(ident.getType().toLowerCase())) {
+				if (type.equals(ident.getType().toLowerCase())) {// teste si l'expression a le même type que l'ident à affecter
 					int offset = ((IdVar) ident).getOffset();
 					int index = -1 * offset / 2 - 1;
 					YakaTokenManager.yvm.istore(offset);
 					YakaTokenManager.tabident.var.set(index, 1);
 				}
-				else if (!type.equals("erreur")){
+				else if (!type.equals("erreur")){// si le type en sommet de la pile est erreur, on écrit pas le msg d'erreur
 					Erreur.message("La variable '" + id + "' doit Ãªtre de type " + type);
 				}
 			}
-			else {
+			else {// ident est une constante
 				Erreur.message("L'identificateur '" + id + "' n'est pas une variable");
 			}
 		}
-		else {
+		else {// l'ident n'existe pas
 			Erreur.message("La variable '" + id + "' n'existe pas");
 		}
 	}
 
 	/**
+	 * Appel à une des méthodes de comparaison de YVMasm
 	 * 
+	 * @see Expression#lasOpRel
+	 * @see YVMasm
 	 */
 	public void executerOpRel() {
 		switch(this.lasOpRel) {
@@ -297,7 +409,10 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Appel à une des méthodes d'addition de YVMasm
 	 * 
+	 * @see Expression#lasOpAdd
+	 * @see YVMasm
 	 */
 	public void executerOpAdd() {
 		switch(this.lasOpAdd) {
@@ -309,7 +424,10 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
+	 * Appel à une des méthodes de multiplication de YVMasm
 	 * 
+	 * @see Expression#lasOpMul
+	 * @see YVMasm
 	 */
 	public void executerOpMul() {
 		switch(this.lasOpMul) {
@@ -321,7 +439,10 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
+	 * Appel à une des méthodes de négation de YVMasm
 	 * 
+	 * @see Expression#lasOpNeg
+	 * @see YVMasm
 	 */
 	public void executerOpNeg() {
 		switch(this.lasOpNeg) {
@@ -331,7 +452,9 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Met à jour le dernier opérateur de multiplication utilisé
 	 * 
+	 * @see Expression#lasOpMul
 	 * @param op
 	 */
 	public void setLastOpMul(int op) {
@@ -339,7 +462,9 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
+	 * Met à jour le dernier opérateur d'addition utilisé
 	 * 
+	 * @see Expression#lasOpAdd
 	 * @param op
 	 */
 	public void setLastOpAdd(int op) {
@@ -347,7 +472,9 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
+	 * Met à jour le dernier opérateur de négation utilisé
 	 * 
+	 * @see Expression#lasOpNeg
 	 * @param op
 	 */
 	public void setLastOpNeg(int op) {
@@ -355,7 +482,9 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
+	 * Met à jour le dernier opérateur de comparaison utilisé
 	 * 
+	 * @see Expression#lasOpRel
 	 * @param op
 	 */
 	public void setLastOpRel(int op) {
@@ -363,34 +492,42 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Appel à la méthode lirEnt de YVMasm ssi la variable est de type entier
 	 * 
+	 * @see TabIdent
+	 * @see YVMasm
+	 * @see Ident
 	 * @param id
 	 */
 	public void lire(String id) {
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
-		if (ident != null) {
-			if (ident.isVar()) {
-				if (ident.getType().equals("ENTIER")) {
+		if (ident != null) {// l'ident existe
+			if (ident.isVar()) {// ident est une variable
+				if (ident.getType().equals("ENTIER")) {// la variable est de type entier
 					int offset = ((IdVar) ident).getOffset();
 					int index = -1 * offset / 2 - 1;
 					YakaTokenManager.yvm.lireEnt(offset);
 					YakaTokenManager.tabident.var.set(index, 1);
 				}
-				else {
+				else {// la variable n'est pa de type entier
 					Erreur.message("La variable '" + id +"' doit Ãªtre un entier");
 				}
 			}
-			else {
+			else {// l'ident est une constante
 				Erreur.message("L'identificateur '" + id + "' n'est pas une variable");
 			}
 		}
-		else {
+		else {// l'ident n'existe pas
 			Erreur.message("La variable '" + id + "' n'existe pas");
 		}
 	}
 
 	/**
+	 * Appel à la méthode ecrireEnt si le type en sommet de pile est entier sinon si le type est booleen, on fait
+	 * appel à la méthode ecrireBool de YVMasm
 	 * 
+	 * @see Expression#type
+	 * @see YVMasm
 	 */
 	public void ecrire() {
 		String type = this.type.peek();
@@ -403,7 +540,9 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Si le type en sommet de pile n'est pas booléen, un message d'erreur est affiché
 	 * 
+	 * @see Expression#type
 	 */
 	public void testBool() {
 		String type = this.type.peek();
@@ -413,85 +552,110 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
+	 * Empiler les conditionnelles et d'incrementer le nombre de conditionnelles présentes dans le code YAKA 
 	 * 
+	 * @see Expression#pileSI
+	 * @see Expression#comptSI
 	 */
 	public void addSi() {
 		this.pileSI.push(this.comptSI++);
 	}
 	
 	/**
+	 * Appel à la méthode iffaux de YVMasm
 	 * 
+	 * @see YVMasm
 	 */
 	public void ecrireIffauxSinon() {
 		YakaTokenManager.yvm.iffaux("SINON" + this.pileSI.peek());
 	}
 	
 	/**
+	 * Appel à la méthode Goto de YVMasm
 	 * 
+	 * @see YVMasm
 	 */
 	public void ecrireGotoFSI() {
 		YakaTokenManager.yvm.Goto("FSI" + this.pileSI.peek());
 	}
 	
 	/**
+	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette sinon
 	 * 
+	 * @see YVMasm
 	 */
 	public void ecrireSinon() {
 		YakaTokenManager.yvm.ecrireEtiqu("SINON" + this.pileSI.peek());
 	}
 	
 	/**
+	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette fsi
 	 * 
+	 * @see YVMasm 
 	 */
 	public void ecrireFsi() {
 		YakaTokenManager.yvm.ecrireEtiqu("FSI" + this.pileSI.peek());
 	}
 	
 	/**
+	 * Dépiler la pile des conditionnelles
 	 * 
+	 * @see Expression#pileSI
 	 */
 	public void removeSi() {
 		this.pileSI.pop();
 	}
 	
-	/* iteration */
 	/**
+	 * Empiler les itérations et d'incrementer le nombre d'itérations présentes dans le code YAKA 
 	 * 
+	 * @see Expression#pileTQ
+	 * @see Expression#comptTQ
 	 */
 	public void addTantQue() {
 		this.pileTQ.push(this.comptTQ++);
 	}
 	
 	/**
+	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette faire
 	 * 
+	 * @see YVMasm 
 	 */
 	public void ecrireFaire() {
 		YakaTokenManager.yvm.ecrireEtiqu("Faire" + this.pileTQ.peek());
 	}
 	
 	/**
+	 * Appel à la méthode iffaux de YVMasm
 	 * 
+	 * @see YVMasm 
 	 */
 	public void ecrireIffauxFait() {
 		YakaTokenManager.yvm.iffaux("FAIT" + this.pileTQ.peek());
 	}
 	
 	/**
+	 * Appel à la méthode Goto de YVMasm
 	 * 
+	 * @see YVMasm 
 	 */
 	public void ecrireGotoFaire() {
 		YakaTokenManager.yvm.Goto("FAIRE" + this.pileTQ.peek());
 	}
 	
 	/**
+	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette fait
 	 * 
+	 * @see YVMasm 
 	 */
 	public void ecrireFait() {
 		YakaTokenManager.yvm.ecrireEtiqu("FAIT" + this.pileTQ.peek());
 	}
 	
 	/**
+	 * Dépiler la pile des itérations
 	 * 
+	 * @see Expression#pileTQ
 	 */
 	public void removeTantQue() {
 		this.pileTQ.pop();

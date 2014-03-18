@@ -1,5 +1,5 @@
 ;entete
-extrn lirent:proc, ligsuiv:proc, ecrent:proc
+extrn ecrch:proc, lirent:proc, ligsuiv:proc, ecrent:proc
 .MODEL SMALL
 .586
 .CODE
@@ -10,6 +10,14 @@ debut:
 	mov bp,sp
 	sub sp,6
 
+	;ecrireChaine "x = "
+.DATA
+	mess0 DB "x = $"
+.CODE
+	lea dx,mess0
+	push dx
+	call ecrch
+
 	;lireEnt -2
 	lea dx,[bp-2]
 	push dx
@@ -17,6 +25,14 @@ debut:
 
 	;aLaLigne
 	call ligsuiv
+
+	;ecrireChaine "y = "
+.DATA
+	mess1 DB "y = $"
+.CODE
+	lea dx,mess1
+	push dx
+	call ecrch
 
 	;lireEnt -4
 	lea dx,[bp-4]
@@ -26,62 +42,56 @@ debut:
 	;aLaLigne
 	call ligsuiv
 
+	;iload -2
+	push word ptr [bp-2]
+
 	;iload -4
 	push word ptr [bp-4]
+
+	;iconst 2
+	push 2
+
+	;idiv
+	pop bx
+	pop ax
+	cwd
+	div bx
+	push ax
+
+	;iadd
+	pop bx
+	pop ax
+	add ax,bx
+	push ax
+
+	;iconst 5
+	push 5
+
+	;idiv
+	pop bx
+	pop ax
+	cwd
+	div bx
+	push ax
 
 	;istore -6
 	pop ax
 	mov word ptr [bp-6],ax
 
-	Faire1 :
+	;iload -4
+	push word ptr [bp-4]
 
-	;iload -2
-	push word ptr [bp-2]
+	;iconst 3
+	push 3
 
-	;iload -6
-	push word ptr [bp-6]
+	;iload -4
+	push word ptr [bp-4]
 
-	;iinfegal
+	;imul
 	pop bx
 	pop ax
-	cmp ax,bx
-	jg $+6
-	push -1
-	jmp $+4
-	push 0
-
-	;iffaux FAIT1
-	pop ax
-	cmp ax,0
-	je FAIT1
-
-	Faire2 :
-
-	;iload -2
-	push word ptr [bp-2]
-
-	;iload -6
-	push word ptr [bp-6]
-
-	;iinfegal
-	pop bx
-	pop ax
-	cmp ax,bx
-	jg $+6
-	push -1
-	jmp $+4
-	push 0
-
-	;iffaux FAIT2
-	pop ax
-	cmp ax,0
-	je FAIT2
-
-	;iload -2
-	push word ptr [bp-2]
-
-	;iconst 1
-	push 1
+	mul bx
+	push ax
 
 	;iadd
 	pop bx
@@ -89,65 +99,63 @@ debut:
 	add ax,bx
 	push ax
 
-	;istore -2
-	pop ax
-	mov word ptr [bp-2],ax
+	;iconst 4
+	push 4
 
-	;goto FAIRE2
-	jmp FAIRE2
-
-	FAIT2 :
-
-	Faire3 :
-
-	;iload -2
-	push word ptr [bp-2]
-
-	;iload -6
-	push word ptr [bp-6]
-
-	;iinfegal
+	;isub
 	pop bx
 	pop ax
-	cmp ax,bx
-	jg $+6
-	push -1
-	jmp $+4
-	push 0
-
-	;iffaux FAIT3
-	pop ax
-	cmp ax,0
-	je FAIT3
-
-	;iload -2
-	push word ptr [bp-2]
-
-	;iconst 1
-	push 1
-
-	;iadd
-	pop bx
-	pop ax
-	add ax,bx
+	sub ax,bx
 	push ax
 
 	;istore -2
 	pop ax
 	mov word ptr [bp-2],ax
 
-	;goto FAIRE3
-	jmp FAIRE3
+	;ecrireChaine "x = "
+.DATA
+	mess2 DB "x = $"
+.CODE
+	lea dx,mess2
+	push dx
+	call ecrch
 
-	FAIT3 :
+	;iload -2
+	push word ptr [bp-2]
 
-	;goto FAIRE1
-	jmp FAIRE1
+	;ecrireEnt
+	call ecrent
 
-	FAIT1 :
+	;aLaLigne
+	call ligsuiv
+
+	;ecrireChaine "z = "
+.DATA
+	mess3 DB "z = $"
+.CODE
+	lea dx,mess3
+	push dx
+	call ecrch
 
 	;iload -6
 	push word ptr [bp-6]
+
+	;ecrireEnt
+	call ecrent
+
+	;aLaLigne
+	call ligsuiv
+
+	;ecrireChaine "a = "
+.DATA
+	mess4 DB "a = $"
+.CODE
+	lea dx,mess4
+	push dx
+	call ecrch
+
+	;iconst -6
+	push -6
 
 	;ecrireEnt
 	call ecrent

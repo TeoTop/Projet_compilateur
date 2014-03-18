@@ -13,53 +13,82 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Stack;
 
-
+/**
+ * 
+ * 
+ * 
+ *
+ */
 public class TabIdent {
+	
+	/**
+	 * Table des identificateurs
+	 * 
+	 * @see TabIdent#TabIdent()
+	 */
 	private HashMap<String,Ident> table;
-	public Stack<Integer> var;/*pile des variables */
+	
+	/**
+	 * Pile des variables
+	 * 
+	 * @see TabIdent#TabIdent()
+	 */
+	public Stack<Integer> var;
 
 	/**
+	 * Constructeur TabIdent
+	 * Création de la table des identificateurs et de la pile des variables
 	 * 
+	 *  @see TabIdent#table
+	 *  @see TabIdent#var
 	 */
 	public TabIdent(){
-		table = new HashMap<String,Ident>();
-		var = new Stack<Integer>();
+		this.table = new HashMap<String,Ident>();
+		this.var = new Stack<Integer>();
 	}
 
 	/**
+	 * Retourne l'ident correspondant à la clef
 	 * 
+	 * @see TabIdent#table
 	 * @param clef
-	 * @return
+	 * @return ident 
 	 */
 	public Ident chercheIdent(String clef){
-		return table.get(clef);
+		return this.table.get(clef);
 	}
 
 	/**
+	 * Retourne true si la clef existe dans la table des identificateurs, false sinon
 	 * 
+	 * @see TabIdent#table
 	 * @param clef
-	 * @return
+	 * @return true si la clef existe, false sinon
 	 */
 	public boolean existeIdent(String clef){
-		return table.get(clef) != null;
+		return this.table.get(clef) != null;
 
 	}
 
 	/**
+	 * Ajouter les variables et les constantes dans la table des identificateurs
 	 * 
+	 * @see Ident
+	 * @see TabIdent#table
+	 * @see TabIdent#var
 	 * @param clef
 	 * @param id
 	 */
 	public void rangeIdent(String clef, Ident id){
-		if (!existeIdent(YakaTokenManager.identLu)) { /* identLu = id ? */
-			if (id.isVar()){
+		if (!existeIdent(clef)) { // clef n'existe pas
+			if (id.isVar()){// id est une varialble
 				int offset = ( -2 * nbVar() ) - 2;
 				((IdVar) id).setOffset(offset);;
+				this.var.push(-1);// on empile -1 pour dire que la variable n'a pas encore de valeur
 			}
-			table.put(clef, id);
-			var.push(-1);
+			this.table.put(clef, id);
 		}
-		else {
+		else {// clef existe déjà
 			Erreur.message("DÃ©claration double pour : " + clef);
 		}
 
@@ -67,11 +96,11 @@ public class TabIdent {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Retourne le nombre de variable
+	 * @return nombre de variable
 	 */
 	public int nbVar() {
-		int nb = 0;
+		/*int nb = 0;
 		Set<String> cles = table.keySet();
 		Iterator<String> it = cles.iterator();
 		while (it.hasNext()){
@@ -81,7 +110,8 @@ public class TabIdent {
 				nb ++;
 			}
 		}
-		return nb;
+		return nb;*/
+		return (this.var.size());
 	}
 
 	/**
