@@ -34,7 +34,7 @@ public class Declaration {
 	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
 	public void ajoutNomVariable(String ident){
-		YakaTokenManager.tabident.rangeIdent(ident,id);
+		YakaTokenManager.tabident.rangeIdent(ident,this.id);
 	}
 	
 	/**
@@ -45,9 +45,9 @@ public class Declaration {
 	 * @see IdVar#setType(String)
 	 */
 	public void ajoutVariableParTYPE(String type){
-		id = new IdVar();
+		this.id = new IdVar();
 		this.type = type;
-	  	id.setType(type);
+	  	this.id.setType(type);
 	}
 	
 	/**
@@ -60,9 +60,9 @@ public class Declaration {
 	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
 	public void ajoutNomVariableSecondaire(String ident){
-		id = new IdVar();
-		id.setType(this.type);
-		YakaTokenManager.tabident.rangeIdent(ident,id);
+		this.id = new IdVar();
+		this.id.setType(this.type);
+		YakaTokenManager.tabident.rangeIdent(ident,this.id);
 	}
 	
 	/**
@@ -72,8 +72,8 @@ public class Declaration {
 	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
 	public void ajoutNomConstante(String ident){
-		id = new IdConst();
-		YakaTokenManager.tabident.rangeIdent(ident,id);
+		this.id = new IdConst();
+		YakaTokenManager.tabident.rangeIdent(ident,this.id);
 	}
 	
 	/**
@@ -90,12 +90,11 @@ public class Declaration {
 	public void ajoutConstanteParConstante(String ident){
 	  	IdConst idConst = (IdConst) YakaTokenManager.tabident.chercheIdent(ident);
 	  	if (idConst != null){
-	  		((IdConst) id).setValeur(idConst.getValeur());
-	  		id.setType(idConst.getType());
+	  		((IdConst) this.id).setValeur(idConst.getValeur());
+	  		this.id.setType(idConst.getType());
 	  	}
 	  	else {
-	  		id.setType("erreur");
-	  		//Erreur.erreurDeclarationConstante(ident);
+	  		this.id.setType("erreur");
 	  		Erreur.message("La constante `" + ident + "` n'existe pas");
 	  	}
 	}
@@ -108,8 +107,8 @@ public class Declaration {
 	 * @see IdConst#setType(String)
 	 */
 	public void ajoutConstanteParEntier(int entier){
-		((IdConst) id).setValeur(entier);
-	  	id.setType("ENTIER");
+		((IdConst) this.id).setValeur(entier);
+	  	this.id.setType("ENTIER");
 	}
 	
 	/**
@@ -120,8 +119,8 @@ public class Declaration {
 	 * @see IdConst#setType(String)
 	 */
 	public void ajoutConstanteParBooleen(int entier){
-		((IdConst) id).setValeur(entier);
-	  	id.setType("BOOLEEN");
+		((IdConst) this.id).setValeur(entier);
+	  	this.id.setType("BOOLEEN");
 	}
 	
 }

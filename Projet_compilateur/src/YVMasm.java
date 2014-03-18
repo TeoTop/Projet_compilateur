@@ -599,7 +599,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireEnt");
 		Ecriture.ecrireStringln(this.fichier,"\tcall ecrent");
-		if(!extern.contains("ecrent")) this.extern.add("ecrent");
+		if(!this.extern.contains("ecrent")) this.extern.add("ecrent");
 	}
 
 	
@@ -623,7 +623,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier, ".DATA\n\tmess" + this.comptString + " DB \"" + x.substring(1, x.length() - 1) + "$\""); /* enlever le dernier guillemet afin d'ajouter $ */
 		Ecriture.ecrireStringln(this.fichier, ".CODE\n\tlea dx,mess" + this.comptString + "\n\tpush dx\n\tcall ecrch");
 		this.comptString++;
-		if(!extern.contains("ecrch")) this.extern.add("ecrch");
+		if(!this.extern.contains("ecrch")) this.extern.add("ecrch");
 	}
 
 	
@@ -642,7 +642,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireBool");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ecrbool");
-		if(!extern.contains("ecrbool")) this.extern.add("ecrbool");
+		if(!this.extern.contains("ecrbool")) this.extern.add("ecrbool");
 	}
 
 	
@@ -666,7 +666,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tlea dx,[bp" + x + "]");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush dx");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall lirent");
-		if(!extern.contains("lirent")) this.extern.add("lirent");
+		if(!this.extern.contains("lirent")) this.extern.add("lirent");
 	}
 
 	
@@ -685,7 +685,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;aLaLigne");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ligsuiv");
-		if(!extern.contains("ligsuiv")) this.extern.add("ligsuiv");
+		if(!this.extern.contains("ligsuiv")) this.extern.add("ligsuiv");
 	}
 	
 	

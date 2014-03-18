@@ -32,7 +32,7 @@ public abstract class Ident {
 	 * @see type
 	 */
 	public String getType() {
-		return type;
+		return this.type;
 	}
 
 	/**
@@ -62,7 +62,7 @@ public abstract class Ident {
 	 */
 	@Override
 	public String toString() {
-		return "Ident [type=" + type + "]";
+		return "Ident [type=" + this.type + "]";
 	}
 
 

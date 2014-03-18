@@ -29,7 +29,7 @@ public class IdConst extends Ident {
 	 * @see valeur
 	 */
 	public int getValeur() {
-		return valeur;
+		return this.valeur;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class IdConst extends Ident {
 	 */
 	@Override
 	public String toString() {
-		return "IdConst [valeur=" + valeur + " type="+ this.getType() + "]";
+		return "IdConst [valeur=" + this.valeur + " type="+ this.getType() + "]";
 	}
 
 }

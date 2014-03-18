@@ -28,7 +28,7 @@ public class IdVar extends Ident {
 	 * @see offset
 	 */
 	public int getOffset() {
-		return offset;
+		return this.offset;
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class IdVar extends Ident {
 	 */
 	@Override
 	public String toString() {
-		return "IdVar [offset=" + offset + " Type="+ getType() +"]";
+		return "IdVar [offset=" + this.offset + " Type="+ getType() +"]";
 	}
 
 
