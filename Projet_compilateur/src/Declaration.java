@@ -7,30 +7,42 @@
  * @author Tuekam Sandjon Marlene
  * 
  * @version 1.0
+ * 
+ * Classe permettant de déclarer et d'ajouter les variables ou les constantes du code YAKA. 
+ * 
+ * @see Ident
  */
 public class Declaration {
-
+	/**
+	 * Objet de la classe Ident permettant de définir si c'est une constante ou une variable
+	 * de type entier ou booléen.
+	 * 
+	 * @see Ident
+	 * @see TabIdent
+	 */
 	Ident id;
+	/**
+	 * Correspond au type de la variable ou de la constante dans le code YAKA (soit entier
+	 * soit booléen).
+	 */
 	String type;
 	
 	/**
-	 * 
-	 */
-	public Declaration() {
-		super();
-	}
-	
-	/**
-	 * 
+	 * Permet d'ajouter une variable du code à la table des idents en fonction de son nom.
 	 * @param ident
+	 * 
+	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
 	public void ajoutNomVariable(String ident){
 		YakaTokenManager.tabident.rangeIdent(ident,id);
 	}
 	
 	/**
-	 * 
+	 * Permet de créer un nouvel objet de la classe IdVar correspondant à une variable du
+	 * code YAKA et d'initialiser le type de la variable.
 	 * @param type
+	 * 
+	 * @see IdVar#setType(String)
 	 */
 	public void ajoutVariableParTYPE(String type){
 		id = new IdVar();
@@ -39,8 +51,13 @@ public class Declaration {
 	}
 	
 	/**
-	 * 
+	 * Permet de créer un nouvel objet de la classe IdVar correspondant à une variable du
+	 * code YAKA et d'initialiser le type de la variable puis de la placer dans le tableau
+	 * des idents de la classe TabIdent.
 	 * @param ident
+	 * 
+	 * @see IdVar#setType(String)
+	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
 	public void ajoutNomVariableSecondaire(String ident){
 		id = new IdVar();
@@ -49,8 +66,10 @@ public class Declaration {
 	}
 	
 	/**
-	 * 
+	 * Permet d'ajouter une constante du code à la table des idents en fonction de son nom.
 	 * @param ident
+	 * 
+	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
 	public void ajoutNomConstante(String ident){
 		id = new IdConst();
@@ -58,8 +77,15 @@ public class Declaration {
 	}
 	
 	/**
-	 * 
+	 * Permet de créer un nouvel objet de la classe IdConst correspondant à partir d'une
+	 * constante déjà définie dont le nom est passé en paramètre. Pour ce faire, la méthode 
+	 * vérifie dans un premier temps que la constante existe dans la tableau de idents de 
+	 * la classe TabIdent.
 	 * @param ident
+	 * 
+	 * @see IdConst#setType(String)
+	 * @see IdConst#setValeur(int)
+	 * @see TabIdent#chercheIdent(String)
 	 */
 	public void ajoutConstanteParConstante(String ident){
 	  	IdConst idConst = (IdConst) YakaTokenManager.tabident.chercheIdent(ident);
@@ -75,8 +101,11 @@ public class Declaration {
 	}
 	
 	/**
-	 * 
+	 * Permet de créer une constante de type ENTIER dont la valeur est passé en paramètre.
 	 * @param entier
+	 * 
+	 * @see IdConst#setValeur(int)
+	 * @see IdConst#setType(String)
 	 */
 	public void ajoutConstanteParEntier(int entier){
 		((IdConst) id).setValeur(entier);
@@ -84,8 +113,11 @@ public class Declaration {
 	}
 	
 	/**
-	 * 
+	 * Permet de créer une constante de type ENTIER dont la valeur est passé en paramètre.
 	 * @param entier
+	 * 
+	 * @see IdConst#setValeur(int)
+	 * @see IdConst#setType(String)
 	 */
 	public void ajoutConstanteParBooleen(int entier){
 		((IdConst) id).setValeur(entier);

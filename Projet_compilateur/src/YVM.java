@@ -7,6 +7,10 @@
  * @author Tuekam Sandjon Marlene
  * 
  * @version 1.0
+ * 
+ * Classe permettant de regrouper les fonctions contenue dans le code YAKA
+ * 
+ * @see YVMasm
  */
 public abstract class YVM {
 

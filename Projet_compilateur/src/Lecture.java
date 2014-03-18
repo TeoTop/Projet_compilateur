@@ -23,7 +23,7 @@ public class Lecture {
 	 * @since 1.0
 	 */
     public static InputStream ouvrir(String nomFich) {
-		 //dï¿½livre un pointeur sur le fichier de nom nomFich (null si erreur)
+		 //délivre un pointeur sur le fichier de nom nomFich (null si erreur)
 		 InputStream f;
 		 try {f=new DataInputStream(new FileInputStream(nomFich));}
 		 catch (IOException e) {f=null;}

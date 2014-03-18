@@ -7,6 +7,11 @@
  * @author Tuekam Sandjon Marlene
  * 
  * @version 1.0
+ * 
+ * La classe YVMasm est étendue de la classe YVM et a pour but de traduire en assembleur
+ * les méthodes YAKA. 
+ * 
+ * @see YVM
  */
 
 import java.io.OutputStream;
@@ -14,27 +19,57 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class YVMasm extends YVM {
-	/* fichier de sortie */
+	
+	/**
+	 * Fichier de sortie temporaire
+	 * 
+	 * @see Ecriture#YVMasm
+	 */
 	private OutputStream fichier;
-	/* compteur de nombre de message pour la creation de variable pour la fonction ecrireChaine */
+	
+	/**
+	 *  Compteur permettant de spécifier le numéro du message affiché dans la focntion 
+	 *  ecrireChaine 
+	 *  
+	 *  @see YVMasm#YVMasm
+	 */
 	private int comptString;
-	/* liste qui contiendra les fonctions nï¿½cessaires : lirent, ecrent, ecrbool, ecrch, ligsuiv. */
+	
+	/** 
+	 * Liste qui contiendra les fonctions externes nécessaires : lirent, ecrent, ecrbool, 
+	 * ecrch, ligsuiv. 
+	 * 
+	 * @see YVMasm#YVMasm
+	 */
 	private ArrayList<String> extern;
 	
 	/**
+	 * Constructeur : permet de créer un fichier temporaire dans lequel sera stocké le code
+	 * assembleur avant la recopie dans le fichier final si il n'y a pas d'erreur.
 	 * 
+	 * @see fichier
+	 * @see comptString
+	 * @see extern
+	 * 
+	 * @since 1.0
 	 */
 	public YVMasm() {
 		super();
-		this.fichier = Ecriture.ouvrir("yvm.tmp"); /* ecrire dans un fichier tmp et puis le copier dans l'autre fichier ssi il n'y a pas d'erreur */
+		this.fichier = Ecriture.ouvrir("yvm.tmp");
 		this.comptString = 0;
 		this.extern = new ArrayList<String>();
 	}
 
-	@Override
+	
 	/**
 	 * Transformation d'un code YAKA de soustraction en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void isub() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;isub");
@@ -44,10 +79,16 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
-	@Override
+	
 	/**
 	 * Transformation d'un code YAKA de negation en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void ineg() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -60,10 +101,15 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
-	@Override
 	/**
 	 * Transformation d'un code YAKA conditionnel inférieur en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void iinf() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -78,10 +124,16 @@ public class YVMasm extends YVM {
 
 	}
 
-	@Override
+	
 	/**
 	 * Transformation d'un code YAKA conditionnel d'égalité en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void iegal() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -96,11 +148,19 @@ public class YVMasm extends YVM {
 
 	}
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant le chargement d'une variable à l'offset 'offset' en code ASM
+	 * Transformation d'un code YAKA permettant le chargement d'une variable à l'offset 
+	 * passé en paramètre en code ASM
+	 * 
 	 * @param offset
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void iload(int offset) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -108,11 +168,19 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp" + offset + "]");
 	}
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant le stockage d'une variable à l'offset 'offset' en code ASM
+	 * Transformation d'un code YAKA permettant le stockage d'une variable à l'offset 
+	 * passé en paramètre en code ASM
+	 * 
 	 * @param offset
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void istore(int offset) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -121,11 +189,19 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tmov word ptr [bp" + offset + "],ax");
 	}
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant le stockage d'une valeur avec la valeur 'valeur' en code ASM
+	 * Transformation d'un code YAKA permettant le stockage d'une constante passé en 
+	 * paramètre en code ASM
+	 * 
 	 * @param valeur
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void iconst(int valeur) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -134,12 +210,20 @@ public class YVMasm extends YVM {
 	}
 
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant de comparer la valeur se trouvant en sommet de pile à 0, si égale
+	 * Transformation d'un code YAKA permettant de comparer la valeur se trouvant en sommet 
+	 * de pile à 0, si égale
 	 * alors go to vers étiquette en code ASM
+	 * 
 	 * @param etiq
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void ifeq(String etiq) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -149,12 +233,20 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tje " + etiq);
 	}
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant de comparer la valeur se trouvant en sommet de pile à 0, si non égale
+	 * Transformation d'un code YAKA permettant de comparer la valeur se trouvant en sommet 
+	 * de pile à 0, si non égale
 	 * alors go to vers étiquette en code ASM
+	 * 
 	 * @param etiq
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void iffaux(String etiq) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -165,11 +257,19 @@ public class YVMasm extends YVM {
 
 	}
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant d'aller exécuter les instructions se trouvant juste après l'étiquette en code ASM
+	 * Transformation d'un code YAKA permettant d'aller exécuter les instructions se trouvant
+	 *  juste après l'étiquette en code ASM
+	 *  
 	 * @param etiq
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void Goto(String etiq) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -178,10 +278,16 @@ public class YVMasm extends YVM {
 	}
 
 
-	@Override
+	
 	/**
 	 * Transformation d'un code YAKA permettant de réaliser une addition en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void iadd() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -193,10 +299,16 @@ public class YVMasm extends YVM {
 
 	}
 
-	@Override
+	
 	/**
 	 * Transformation d'un code YAKA permettant de réaliser une multiplication en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void imul() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -208,10 +320,16 @@ public class YVMasm extends YVM {
 
 	}
 
-	@Override
+	
 	/**
 	 * Transformation d'un code YAKA permettant de réaliser une division en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void idiv() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -224,10 +342,17 @@ public class YVMasm extends YVM {
 
 	}
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une comparaison supérieur en code ASM
+	 * Transformation d'un code YAKA permettant de réaliser une comparaison supérieur en 
+	 * code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void isup() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -242,10 +367,17 @@ public class YVMasm extends YVM {
 
 	}
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une comparaison inférieur ou égale en code ASM
+	 * Transformation d'un code YAKA permettant de réaliser une comparaison inférieur ou 
+	 * égale en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void iinfegal() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -262,10 +394,17 @@ public class YVMasm extends YVM {
 
 	}
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une comparaison supérieur ou égale en code ASM
+	 * Transformation d'un code YAKA permettant de réaliser une comparaison supérieur ou 
+	 * égale en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void isupegal() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -280,10 +419,17 @@ public class YVMasm extends YVM {
 
 	}
 
-	@Override
+	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une comparaison de différence en code ASM
+	 * Transformation d'un code YAKA permettant de réaliser une comparaison de différence 
+	 * en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void idiff() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -297,11 +443,23 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush 0");
 	}
 
-	@Override
+	
 	/**
-	 * Permet d'écrire en ASM l'entete necessaire pour exécuter le code ASM
-	 * @ param fichierOut
+	 * Permet d'écrire en ASM l'entete necessaire pour exécuter le code ASM. Cette méthode
+	 * compléte l'entête avec les fonctions externes rassemblées dans un tableau de chaines. 
+	 * 
+	 * @param fichierOut
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see Ecriture#ecrireString(OutputStream, String)
+	 * @see Ecriture#ouvrir(String)
+	 * 
+	 * @see fichier
+	 * @see extern
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void recopierEntete(String fichierOut) {
 		// TODO Auto-generated method stub
 		this.fichier = Ecriture.ouvrir(fichierOut);
@@ -324,10 +482,18 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tSTARTUPCODE");
 	}
 
-	@Override
+	
 	/**
-	 * Permet d'écrire en ASM la fin du fichier ASM necessaire pour être exécuter
+	 * Permet d'écrire la fin type du fichier ASM necessaire à son exécution
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see Ecriture#fermer(OutputStream)
+	 * 
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void queue() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -338,11 +504,18 @@ public class YVMasm extends YVM {
 		Ecriture.fermer(this.fichier);
 	}
 
-	@Override
+	
 	/**
-	 * Permet de reserver nbOctets pour les variables
+	 * Permet de reserver nbOctets pour les variables dans la pile (assembleur)
+	 * 
 	 * @param nbOctet
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void ouvrePrinc(int nbOctet) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -351,10 +524,16 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier , "\tsub sp," + nbOctet);
 	}
 
-	@Override
+	
 	/**
 	 * Transformation d'un code YAKA permettant de réaliser un OU en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void ior() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -365,10 +544,16 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
-	@Override
+	
 	/**
 	 * Transformation d'un code YAKA permettant de réaliser un NON en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void inot() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -378,10 +563,16 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
-	@Override
+	
 	/**
 	 * Transformation d'un code YAKA permettant de réaliser un ET en code ASM
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void iand() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -392,11 +583,18 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
-	/* entrÃ©e, sortie */
-	@Override
+	
 	/**
-	 * Permet d'écrire un entier depuis le clavier
+	 * Permet d'écrire l'entier qui est en sommet de pile
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * 
+	 * @see fichier
+	 * @see extern
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void ecrireEnt() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireEnt");
@@ -404,11 +602,21 @@ public class YVMasm extends YVM {
 		if(!extern.contains("ecrent")) this.extern.add("ecrent");
 	}
 
-	@Override
+	
 	/**
-	 * Permet d'afficher une chaine sur la sortie courante
+	 * Permet d'afficher la chaine passé en paramètre
+	 * 
 	 * @param x
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * 
+	 * @see fichier
+	 * @see extern
+	 * @see comptString
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void ecrireChaine(String x) {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireChaine " + x);
@@ -418,10 +626,18 @@ public class YVMasm extends YVM {
 		if(!extern.contains("ecrch")) this.extern.add("ecrch");
 	}
 
-	@Override
+	
 	/**
-	 * Permet d'écrire un booleen depuis le clavier
+	 * Permet d'écrire le booléen qui est en sommet de pile
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * 
+	 * @see fichier
+	 * @see extern
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void ecrireBool() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireBool");
@@ -429,11 +645,21 @@ public class YVMasm extends YVM {
 		if(!extern.contains("ecrbool")) this.extern.add("ecrbool");
 	}
 
-	@Override
+	
 	/**
-	 * Permet d'afficher un entier sur la sortie courante
+	 * Permet de lire un entier placé à l'offset x en faisant appel à la fonction 
+	 * lirent (prédéfini en assembleur)
+	 * 
 	 * @param x
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * 
+	 * @see fichier
+	 * @see extern
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void lireEnt(int x) {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;lireEnt " + x);
@@ -443,10 +669,18 @@ public class YVMasm extends YVM {
 		if(!extern.contains("lirent")) this.extern.add("lirent");
 	}
 
-	@Override
+	
 	/**
 	 * Permet de réaliser un retour à la ligne
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * 
+	 * @see fichier
+	 * @see extern
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void aLaLigne() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;aLaLigne");
@@ -455,11 +689,18 @@ public class YVMasm extends YVM {
 	}
 	
 	
-	@Override
+	
 	/**
-	 * Permet d'écrire une étiquette 'etiq'
+	 * Permet d'écrire une étiquette de la chaine passé en paramètre
+	 * 
 	 * @param etiq
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see fichier
+	 * 
+	 * @since 1.0
 	 */
+	@Override
 	public void ecrireEtiqu(String etiq){
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t" + etiq + " :");
