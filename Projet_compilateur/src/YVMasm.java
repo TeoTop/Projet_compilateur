@@ -33,7 +33,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA de soustraction en code ASM
 	 */
 	public void isub() {
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -46,20 +46,23 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA de negation en code ASM
 	 */
 	public void ineg() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ineg");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
-		Ecriture.ecrireStringln(this.fichier,  "\tmul -1");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush dx");
+		Ecriture.ecrireStringln(this.fichier,  "\tmov dx,-1");
+		Ecriture.ecrireStringln(this.fichier,  "\tmul dx");
+		Ecriture.ecrireStringln(this.fichier,  "\tpop dx");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA conditionnel inférieur en code ASM
 	 */
 	public void iinf() {
 		// TODO Auto-generated method stub
@@ -77,7 +80,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA conditionnel d'égalité en code ASM
 	 */
 	public void iegal() {
 		// TODO Auto-generated method stub
@@ -95,6 +98,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Transformation d'un code YAKA permettant le chargement d'une variable à l'offset 'offset' en code ASM
 	 * @param offset
 	 */
 	public void iload(int offset) {
@@ -106,6 +110,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Transformation d'un code YAKA permettant le stockage d'une variable à l'offset 'offset' en code ASM
 	 * @param offset
 	 */
 	public void istore(int offset) {
@@ -118,6 +123,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Transformation d'un code YAKA permettant le stockage d'une valeur avec la valeur 'valeur' en code ASM
 	 * @param valeur
 	 */
 	public void iconst(int valeur) {
@@ -130,6 +136,8 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Transformation d'un code YAKA permettant de comparer la valeur se trouvant en sommet de pile à 0, si égale
+	 * alors go to vers étiquette en code ASM
 	 * @param etiq
 	 */
 	public void ifeq(String etiq) {
@@ -143,6 +151,8 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Transformation d'un code YAKA permettant de comparer la valeur se trouvant en sommet de pile à 0, si non égale
+	 * alors go to vers étiquette en code ASM
 	 * @param etiq
 	 */
 	public void iffaux(String etiq) {
@@ -157,6 +167,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Transformation d'un code YAKA permettant d'aller exécuter les instructions se trouvant juste après l'étiquette en code ASM
 	 * @param etiq
 	 */
 	public void Goto(String etiq) {
@@ -169,7 +180,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser une addition en code ASM
 	 */
 	public void iadd() {
 		// TODO Auto-generated method stub
@@ -184,7 +195,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser une multiplication en code ASM
 	 */
 	public void imul() {
 		// TODO Auto-generated method stub
@@ -199,7 +210,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser une division en code ASM
 	 */
 	public void idiv() {
 		// TODO Auto-generated method stub
@@ -215,7 +226,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser une comparaison supérieur en code ASM
 	 */
 	public void isup() {
 		// TODO Auto-generated method stub
@@ -233,7 +244,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser une comparaison inférieur ou égale en code ASM
 	 */
 	public void iinfegal() {
 		// TODO Auto-generated method stub
@@ -253,7 +264,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser une comparaison supérieur ou égale en code ASM
 	 */
 	public void isupegal() {
 		// TODO Auto-generated method stub
@@ -271,7 +282,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser une comparaison de différence en code ASM
 	 */
 	public void idiff() {
 		// TODO Auto-generated method stub
@@ -288,6 +299,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Permet d'écrire en ASM l'entete necessaire pour exécuter le code ASM
 	 * @ param fichierOut
 	 */
 	public void recopierEntete(String fichierOut) {
@@ -314,7 +326,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Permet d'écrire en ASM la fin du fichier ASM necessaire pour être exécuter
 	 */
 	public void queue() {
 		// TODO Auto-generated method stub
@@ -328,6 +340,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Permet de reserver nbOctets pour les variables
 	 * @param nbOctet
 	 */
 	public void ouvrePrinc(int nbOctet) {
@@ -340,7 +353,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser un OU en code ASM
 	 */
 	public void ior() {
 		// TODO Auto-generated method stub
@@ -354,7 +367,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser un NON en code ASM
 	 */
 	public void inot() {
 		// TODO Auto-generated method stub
@@ -367,7 +380,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Transformation d'un code YAKA permettant de réaliser un ET en code ASM
 	 */
 	public void iand() {
 		// TODO Auto-generated method stub
@@ -382,7 +395,7 @@ public class YVMasm extends YVM {
 	/* entrÃ©e, sortie */
 	@Override
 	/**
-	 * 
+	 * Permet d'écrire un entier depuis le clavier
 	 */
 	public void ecrireEnt() {
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -393,6 +406,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Permet d'afficher une chaine sur la sortie courante
 	 * @param x
 	 */
 	public void ecrireChaine(String x) {
@@ -406,7 +420,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 *
+	 * Permet d'écrire un booleen depuis le clavier
 	 */
 	public void ecrireBool() {
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -417,6 +431,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
+	 * Permet d'afficher un entier sur la sortie courante
 	 * @param x
 	 */
 	public void lireEnt(int x) {
@@ -430,7 +445,7 @@ public class YVMasm extends YVM {
 
 	@Override
 	/**
-	 * 
+	 * Permet de réaliser un retour à la ligne
 	 */
 	public void aLaLigne() {
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -442,6 +457,7 @@ public class YVMasm extends YVM {
 	
 	@Override
 	/**
+	 * Permet d'écrire une étiquette 'etiq'
 	 * @param etiq
 	 */
 	public void ecrireEtiqu(String etiq){
