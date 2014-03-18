@@ -1,4 +1,13 @@
-
+/**
+ * 
+ * @author CHAPON Theo
+ * @author El Omari Alaoui Hassan
+ * @author Marchais Julien
+ * @author Mesdouri Marouan 
+ * @author Tuekam Sandjon Marlene
+ * 
+ * @version 1.0
+ */
 public abstract class YVM {
 
 	public abstract void ouvrePrinc(int offset);

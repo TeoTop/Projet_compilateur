@@ -1,4 +1,13 @@
-
+/**
+ * 
+ * @author CHAPON Theo
+ * @author El Omari Alaoui Hassan
+ * @author Marchais Julien
+ * @author Mesdouri Marouan 
+ * @author Tuekam Sandjon Marlene
+ * 
+ * @version 1.0
+ */
 public class Erreur {
 	public static boolean err;
 
@@ -37,6 +46,10 @@ public class Erreur {
 		err = true;
 	}*/
 
+	/**
+	 * 
+	 * @param erreur
+	 */
 	public static void message(String erreur) {
 		System.out.println(erreur);
 		err = true;

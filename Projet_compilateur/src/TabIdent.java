@@ -1,3 +1,13 @@
+/**
+ * 
+ * @author CHAPON Theo
+ * @author El Omari Alaoui Hassan
+ * @author Marchais Julien
+ * @author Mesdouri Marouan 
+ * @author Tuekam Sandjon Marlene
+ * 
+ * @version 1.0
+ */
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -8,20 +18,38 @@ public class TabIdent {
 	private HashMap<String,Ident> table;
 	public Stack<Integer> var;/*pile des variables */
 
+	/**
+	 * 
+	 */
 	public TabIdent(){
 		table = new HashMap<String,Ident>();
 		var = new Stack<Integer>();
 	}
 
+	/**
+	 * 
+	 * @param clef
+	 * @return
+	 */
 	public Ident chercheIdent(String clef){
 		return table.get(clef);
 	}
 
+	/**
+	 * 
+	 * @param clef
+	 * @return
+	 */
 	public boolean existeIdent(String clef){
 		return table.get(clef) != null;
 
 	}
 
+	/**
+	 * 
+	 * @param clef
+	 * @param id
+	 */
 	public void rangeIdent(String clef, Ident id){
 		if (!existeIdent(YakaTokenManager.identLu)) { /* identLu = id ? */
 			if (id.isVar()){
@@ -37,6 +65,11 @@ public class TabIdent {
 
 
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public int nbVar() {
 		int nb = 0;
 		Set<String> cles = table.keySet();
@@ -51,6 +84,9 @@ public class TabIdent {
 		return nb;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public String toString() {
 		return "TabIdent [table=" + table + "]";

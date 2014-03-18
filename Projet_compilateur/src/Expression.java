@@ -1,5 +1,14 @@
+/**
+ * 
+ * @author CHAPON Theo
+ * @author El Omari Alaoui Hassan
+ * @author Marchais Julien
+ * @author Mesdouri Marouan 
+ * @author Tuekam Sandjon Marlene
+ * 
+ * @version 1.0
+ */
 import java.util.Stack;
-
 
 public class Expression implements YakaConstants{
 	private Stack<String> type;
@@ -13,6 +22,9 @@ public class Expression implements YakaConstants{
 	private Stack<Integer> pileTQ;/* empilement des TQ imbriqués */
 	private int comptTQ; /* compteur du nombre d'iterations*/
 
+	/**
+	 * 
+	 */
 	public Expression() {
 		this.type = new Stack<String>();
 		this.opera = new Stack<String>();
@@ -21,21 +33,38 @@ public class Expression implements YakaConstants{
 		this.pileTQ = new Stack<Integer>();
 		this.comptTQ = 1;
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 */
 	public void empileTypeAvecIdent(String id) {
 		if (identExiste(id)){
 			this.type.push((YakaTokenManager.tabident.chercheIdent(id)).getType().toLowerCase());
 		}
 	}
+	
+	/**
+	 * 
+	 * @param type
+	 */
 	public void empileType(String type) {
 		this.type.push(type);
 	}
 
-
+	/**
+	 * 
+	 * @param opera
+	 */
 	public void empileOpera(String opera) {
 		this.opera.push(opera);
 	}
 
-
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public boolean identExiste(String id){
 		if (!YakaTokenManager.tabident.existeIdent(id)) {
 			Erreur.message("L'identificateur '" + id + "' n'a pas été déclaré");
@@ -44,6 +73,9 @@ public class Expression implements YakaConstants{
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void testMul() {
 		String type1,type2,op = "";
 		int p = this.lasOpMul;
@@ -78,6 +110,9 @@ public class Expression implements YakaConstants{
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void testAdd() {
 		String type1,type2,op = "";
 		int p = this.lasOpAdd;
@@ -112,7 +147,9 @@ public class Expression implements YakaConstants{
 		}
 	}
 
-
+	/**
+	 * 
+	 */
 	public void testRel() {
 		String op = "";
 		int p = this.lasOpRel;
@@ -142,7 +179,10 @@ public class Expression implements YakaConstants{
 			Erreur.message("L'opération de comparaison '" + op + "' ne peut s'effectuer");
 		}
 	}
-
+	
+	/**
+	 * 
+	 */
 	public void testNeg() {
 		String op = "";
 		int p = this.lasOpNeg;
@@ -165,19 +205,32 @@ public class Expression implements YakaConstants{
 
 	}
 
+	/**
+	 * 
+	 */
 	public void clearType() {
 		this.type.clear();
 	}
 
+	/**
+	 * 
+	 */
 	public void clearOp() {
 		this.opera.clear();
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public String toString() {
 		return "Expression [type=" + type + ", opera=" + opera + "]";
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void loadIdent(String id) {
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
 		if (ident != null) {
@@ -201,6 +254,10 @@ public class Expression implements YakaConstants{
 		}
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void store(String id) {
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
 		if (ident != null) {
@@ -225,6 +282,9 @@ public class Expression implements YakaConstants{
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void executerOpRel() {
 		switch(this.lasOpRel) {
 		case EGAL : YakaTokenManager.yvm.iegal();break;
@@ -236,6 +296,9 @@ public class Expression implements YakaConstants{
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void executerOpAdd() {
 		switch(this.lasOpAdd) {
 		case ADD : YakaTokenManager.yvm.iadd();break;
@@ -244,6 +307,10 @@ public class Expression implements YakaConstants{
 		}
 
 	}
+	
+	/**
+	 * 
+	 */
 	public void executerOpMul() {
 		switch(this.lasOpMul) {
 		case MUL : YakaTokenManager.yvm.imul();break;
@@ -252,6 +319,10 @@ public class Expression implements YakaConstants{
 		}
 
 	}
+	
+	/**
+	 * 
+	 */
 	public void executerOpNeg() {
 		switch(this.lasOpNeg) {
 		case SUBNEG : YakaTokenManager.yvm.ineg();break;
@@ -259,19 +330,42 @@ public class Expression implements YakaConstants{
 		}
 	}
 
+	/**
+	 * 
+	 * @param op
+	 */
 	public void setLastOpMul(int op) {
 		this.lasOpMul = op;
 	}
+	
+	/**
+	 * 
+	 * @param op
+	 */
 	public void setLastOpAdd(int op) {
 		this.lasOpAdd = op;
 	}
+	
+	/**
+	 * 
+	 * @param op
+	 */
 	public void setLastOpNeg(int op) {
 		this.lasOpNeg = op;
 	}
+	
+	/**
+	 * 
+	 * @param op
+	 */
 	public void setLastOpRel(int op) {
 		this.lasOpRel = op;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 */
 	public void lire(String id) {
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
 		if (ident != null) {
@@ -295,6 +389,9 @@ public class Expression implements YakaConstants{
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void ecrire() {
 		String type = this.type.peek();
 		if (type.equals("entier")) {
@@ -305,46 +402,97 @@ public class Expression implements YakaConstants{
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void testBool() {
 		String type = this.type.peek();
 		if (!type.equals("booleen")) {
 			Erreur.message("Le type de l'expression dans une conditionnelle doit �tre bool�en");
 		}
 	}
+	
+	/**
+	 * 
+	 */
 	public void addSi() {
 		this.pileSI.push(this.comptSI++);
 	}
+	
+	/**
+	 * 
+	 */
 	public void ecrireIffauxSinon() {
 		YakaTokenManager.yvm.iffaux("SINON" + this.pileSI.peek());
 	}
+	
+	/**
+	 * 
+	 */
 	public void ecrireGotoFSI() {
 		YakaTokenManager.yvm.Goto("FSI" + this.pileSI.peek());
 	}
+	
+	/**
+	 * 
+	 */
 	public void ecrireSinon() {
 		YakaTokenManager.yvm.ecrireEtiqu("SINON" + this.pileSI.peek());
 	}
+	
+	/**
+	 * 
+	 */
 	public void ecrireFsi() {
 		YakaTokenManager.yvm.ecrireEtiqu("FSI" + this.pileSI.peek());
 	}
+	
+	/**
+	 * 
+	 */
 	public void removeSi() {
 		this.pileSI.pop();
 	}
+	
 	/* iteration */
+	/**
+	 * 
+	 */
 	public void addTantQue() {
 		this.pileTQ.push(this.comptTQ++);
 	}
+	
+	/**
+	 * 
+	 */
 	public void ecrireFaire() {
 		YakaTokenManager.yvm.ecrireEtiqu("Faire" + this.pileTQ.peek());
 	}
+	
+	/**
+	 * 
+	 */
 	public void ecrireIffauxFait() {
 		YakaTokenManager.yvm.iffaux("FAIT" + this.pileTQ.peek());
 	}
+	
+	/**
+	 * 
+	 */
 	public void ecrireGotoFaire() {
 		YakaTokenManager.yvm.Goto("FAIRE" + this.pileTQ.peek());
 	}
+	
+	/**
+	 * 
+	 */
 	public void ecrireFait() {
 		YakaTokenManager.yvm.ecrireEtiqu("FAIT" + this.pileTQ.peek());
 	}
+	
+	/**
+	 * 
+	 */
 	public void removeTantQue() {
 		this.pileTQ.pop();
 	}

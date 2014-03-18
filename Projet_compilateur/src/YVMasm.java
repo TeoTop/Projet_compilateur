@@ -1,7 +1,17 @@
+/**
+ * 
+ * @author CHAPON Theo
+ * @author El Omari Alaoui Hassan
+ * @author Marchais Julien
+ * @author Mesdouri Marouan 
+ * @author Tuekam Sandjon Marlene
+ * 
+ * @version 1.0
+ */
+
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 
 public class YVMasm extends YVM {
 	/* fichier de sortie */
@@ -11,6 +21,9 @@ public class YVMasm extends YVM {
 	/* liste qui contiendra les fonctions n�cessaires : lirent, ecrent, ecrbool, ecrch, ligsuiv. */
 	private ArrayList<String> extern;
 	
+	/**
+	 * 
+	 */
 	public YVMasm() {
 		super();
 		this.fichier = Ecriture.ouvrir("yvm.tmp"); /* ecrire dans un fichier tmp et puis le copier dans l'autre fichier ssi il n'y a pas d'erreur */
@@ -19,6 +32,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void isub() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;isub");
@@ -29,6 +45,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void ineg() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -39,6 +58,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void iinf() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -54,6 +76,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void iegal() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -69,6 +94,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * @param offset
+	 */
 	public void iload(int offset) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -77,6 +105,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * @param offset
+	 */
 	public void istore(int offset) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -86,6 +117,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * @param valeur
+	 */
 	public void iconst(int valeur) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -95,6 +129,9 @@ public class YVMasm extends YVM {
 
 
 	@Override
+	/**
+	 * @param etiq
+	 */
 	public void ifeq(String etiq) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -105,6 +142,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * @param etiq
+	 */
 	public void iffaux(String etiq) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -116,6 +156,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * @param etiq
+	 */
 	public void Goto(String etiq) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -125,6 +168,9 @@ public class YVMasm extends YVM {
 
 
 	@Override
+	/**
+	 * 
+	 */
 	public void iadd() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -137,6 +183,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void imul() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -149,6 +198,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void idiv() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -162,6 +214,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void isup() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -177,6 +232,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void iinfegal() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -194,6 +252,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void isupegal() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -209,6 +270,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void idiff() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -223,6 +287,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * @ param fichierOut
+	 */
 	public void recopierEntete(String fichierOut) {
 		// TODO Auto-generated method stub
 		this.fichier = Ecriture.ouvrir(fichierOut);
@@ -246,6 +313,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void queue() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -257,6 +327,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * @param nbOctet
+	 */
 	public void ouvrePrinc(int nbOctet) {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -266,6 +339,9 @@ public class YVMasm extends YVM {
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public void ior() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -276,6 +352,10 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
+	@Override
+	/**
+	 * 
+	 */
 	public void inot() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -285,6 +365,10 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tpush ax");
 	}
 
+	@Override
+	/**
+	 * 
+	 */
 	public void iand() {
 		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -296,7 +380,10 @@ public class YVMasm extends YVM {
 	}
 
 	/* entrée, sortie */
-
+	@Override
+	/**
+	 * 
+	 */
 	public void ecrireEnt() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireEnt");
@@ -304,6 +391,10 @@ public class YVMasm extends YVM {
 		if(!extern.contains("ecrent")) this.extern.add("ecrent");
 	}
 
+	@Override
+	/**
+	 * @param x
+	 */
 	public void ecrireChaine(String x) {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireChaine " + x);
@@ -313,6 +404,10 @@ public class YVMasm extends YVM {
 		if(!extern.contains("ecrch")) this.extern.add("ecrch");
 	}
 
+	@Override
+	/**
+	 *
+	 */
 	public void ecrireBool() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireBool");
@@ -320,6 +415,10 @@ public class YVMasm extends YVM {
 		if(!extern.contains("ecrbool")) this.extern.add("ecrbool");
 	}
 
+	@Override
+	/**
+	 * @param x
+	 */
 	public void lireEnt(int x) {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;lireEnt " + x);
@@ -329,19 +428,22 @@ public class YVMasm extends YVM {
 		if(!extern.contains("lirent")) this.extern.add("lirent");
 	}
 
+	@Override
+	/**
+	 * 
+	 */
 	public void aLaLigne() {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;aLaLigne");
 		Ecriture.ecrireStringln(this.fichier,  "\tcall ligsuiv");
 		if(!extern.contains("ligsuiv")) this.extern.add("ligsuiv");
 	}
-	/* conditionnelle / iteration */
-	public void condition() {
-		Ecriture.ecrireStringln(this.fichier,  "");
-		Ecriture.ecrireStringln(this.fichier,  "\t;condition");
-		
-	}
 	
+	
+	@Override
+	/**
+	 * @param etiq
+	 */
 	public void ecrireEtiqu(String etiq){
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t" + etiq + " :");
