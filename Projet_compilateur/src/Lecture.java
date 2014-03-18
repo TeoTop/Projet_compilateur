@@ -7,17 +7,20 @@
  * @author Tuekam Sandjon Marlene
  * 
  * @version 1.0
+ * 
+ * Lecture est une classe utilitaire permet de lire dans un fichier par l'intermédiaire 
+ * d'un pointeur de type InputStream..
  */
 
 import java.io.*;
 
-//quelques primitives de lecture au clavier ou dans un fichier 
-
 public class Lecture {   
 	/**
-	 * 
+	 * Cette méthode permet de lire dans un fichier.
 	 * @param nomFich
-	 * @return
+	 * @return Un pointeur de type InputStream pointant sur le fichier passé en paramètre.
+	 * 
+	 * @since 1.0
 	 */
     public static InputStream ouvrir(String nomFich) {
 		 //dï¿½livre un pointeur sur le fichier de nom nomFich (null si erreur)
@@ -28,12 +31,14 @@ public class Lecture {
     }
 
     /**
-     * 
+     * Cette méthode permet de tester si pointeur se trouve à la fin du fichier.
      * @param f
-     * @return
+     * @return true si la fin du fichier est atteinte, false sinon.
+     * 
+     * @since 1.0
      */
     public static boolean finFichier(InputStream f) {
-		//dï¿½termine si la fin de fichier est atteinte
+		//détermine si la fin de fichier est atteinte
 		try {return (f!=System.in && f.available()==0);}
         catch(IOException e) {System.out.println("pb test finFichier");
                        System.exit(1);
@@ -42,8 +47,10 @@ public class Lecture {
     }
 
     /**
-     * 
+     * Cette méthode permet de fermer le fichier (supprime le pointeur passé en paramètre). 
      * @param f
+     * 
+     * @since 1.0
      */
     public static void fermer(InputStream f) {
 		 //ferme un fichier (affiche un message si probleme)           
@@ -52,18 +59,17 @@ public class Lecture {
     }
 
 
-    //lecture d'un octet dans la chaï¿½ne d'entrï¿½e (avec capture de l'exception)
     /**
-     * 
+     * Cette méthode permet de lire un caractère depuis le fichier passé en paramètre.
      * @param f
-     * @return
+     * @return Le caractère lu
+     * 
+     * @since 1.0
      */
     public static char lireChar(InputStream f) {
     	char carSuiv=' ';
         try {int x=f.read();
         carSuiv=(char)x;
-      /*if (x==-1) {System.out.println("lecture aprï¿½s fin de fichier");
-                  System.exit(2);}*/
         }
         catch(IOException e) {
      System.out.println(e.getMessage());
@@ -73,23 +79,11 @@ public class Lecture {
     }
 
     /**
+     * Cette méthode permet de lire un caractère depuis la console.
+     * @return Le caractère lu
      * 
-     * @return
+     * @since 1.0
      */
     public static char lireChar() {return lireChar(System.in);}
+}
 
-
-/*public static void main(String args[]){
-    InputStream fichier;
-    char carLu;    
-    fichier=ouvrir("automate.xml");
-    while (!finFichier(fichier)){
-      carLu=lireChar(fichier);
-      System.out.print(carLu);
-        }
-    fermer(fichier);
-
-   // lecture au clavier
-    carLu= lireChar();
-  }*/
-}//class Lecture
