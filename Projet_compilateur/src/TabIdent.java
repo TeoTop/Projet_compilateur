@@ -1,3 +1,8 @@
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Stack;
+
 /**
  * 
  * @author CHAPON Theo
@@ -7,17 +12,9 @@
  * @author Tuekam Sandjon Marlene
  * 
  * @version 1.0
- */
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Stack;
-
-/**
  * 
- * 
- * 
- *
+ * @see Expression
+ * @see Ident
  */
 public class TabIdent {
 	
@@ -115,7 +112,10 @@ public class TabIdent {
 	}
 
 	/**
+	 * Permet d'afficher les attributs de la classe TabIdent
+	 * @return l'affichage du contenue de l'objet TabIdent
 	 * 
+	 * @see table
 	 */
 	@Override
 	public String toString() {

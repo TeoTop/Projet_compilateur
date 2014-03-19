@@ -8,6 +8,8 @@
  * 
  * @version 1.0
  * 
+ * @see Ecriture
+ * 
  * Lecture est une classe utilitaire permet de lire dans un fichier par l'intermédiaire 
  * d'un pointeur de type InputStream..
  */
@@ -19,8 +21,6 @@ public class Lecture {
 	 * Cette méthode permet de lire dans un fichier.
 	 * @param nomFich
 	 * @return Un pointeur de type InputStream pointant sur le fichier passé en paramètre.
-	 * 
-	 * @since 1.0
 	 */
     public static InputStream ouvrir(String nomFich) {
 		 //délivre un pointeur sur le fichier de nom nomFich (null si erreur)
@@ -34,8 +34,6 @@ public class Lecture {
      * Cette méthode permet de tester si pointeur se trouve à la fin du fichier.
      * @param f
      * @return true si la fin du fichier est atteinte, false sinon.
-     * 
-     * @since 1.0
      */
     public static boolean finFichier(InputStream f) {
 		//détermine si la fin de fichier est atteinte
@@ -49,8 +47,6 @@ public class Lecture {
     /**
      * Cette méthode permet de fermer le fichier (supprime le pointeur passé en paramètre). 
      * @param f
-     * 
-     * @since 1.0
      */
     public static void fermer(InputStream f) {
 		 //ferme un fichier (affiche un message si probleme)           
@@ -63,8 +59,6 @@ public class Lecture {
      * Cette méthode permet de lire un caractère depuis le fichier passé en paramètre.
      * @param f
      * @return Le caractère lu
-     * 
-     * @since 1.0
      */
     public static char lireChar(InputStream f) {
     	char carSuiv=' ';
@@ -81,8 +75,6 @@ public class Lecture {
     /**
      * Cette méthode permet de lire un caractère depuis la console.
      * @return Le caractère lu
-     * 
-     * @since 1.0
      */
     public static char lireChar() {return lireChar(System.in);}
 }

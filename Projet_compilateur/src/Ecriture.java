@@ -8,6 +8,9 @@
  * 
  * @version 1.0
  * 
+ * @see YVMasm
+ * @see Lecture
+ * 
  * Ecriture est une classe utilitaire permettant d'ecrire directement dans la console ou 
  * dans un fichier texte par l'intermédiaire d'un pointeur de type OutputStream.
  */
@@ -21,8 +24,6 @@ public class Ecriture {
 	 * Permet de renseigner l'erreur passé en paramètre sur la console 
 	 * (le message d'erreur est affiché)
 	 * @param e
-	 * 
-	 * @since 1.0
 	 */
 	private static void erreur(IOException e) {
 		System.out.println(e.getMessage());
@@ -35,8 +36,6 @@ public class Ecriture {
 	 * son contenu est remplacé, sinon le fichier est créé.
 	 * @param nomFich
 	 * @return Un pointeur de type OutputStream sur le fichier passé en paramétre.
-	 * 
-	 * @since 1.0
 	 */
 	public static OutputStream ouvrir(String nomFich) {
 		OutputStream f;
@@ -52,8 +51,6 @@ public class Ecriture {
 	 * sinon le fichier est créé.
 	 * @param nomFich
 	 * @return Un pointeur de type OutputStream sur le fichier passé en paramétre.
-	 * 
-	 * @since 1.0
 	 */
 	public static OutputStream ouvrirSuite(String nomFich) {
 		OutputStream f;
@@ -67,8 +64,6 @@ public class Ecriture {
 	 * Permet de fermer le fichier précédemment ouvert. On supprime le pointeur passé en 
 	 * paramètre.
 	 * @param f
-	 * 
-	 * @since 1.0
 	 */
 	public static void fermer(OutputStream f) {
 		//fermeture d'un fichier                                          
@@ -81,8 +76,6 @@ public class Ecriture {
 	 * Cette méthode permet d'écrire le caractère dans le fichier passé en paramètre.
 	 * @param f
 	 * @param c
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireChar(OutputStream f,char c) {
 		try {f.write(c);}
@@ -92,8 +85,6 @@ public class Ecriture {
 	/**
 	 * Cette méthode permet d'écrire le caractère dans la console.
 	 * @param c
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireChar(char c) {ecrireChar(System.out,c);}
 
@@ -103,8 +94,6 @@ public class Ecriture {
 	 * paramètre.
 	 * @param f
 	 * @param s
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireString(OutputStream f,String s) {
 		try {for (int i=0;i<s.length();i++) f.write(s.charAt(i));}
@@ -114,8 +103,6 @@ public class Ecriture {
 	/**
 	 * Cette méthode permet d'écrire la chaine de caractères dans la console.
 	 * @param s
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireString(String s) {
 		ecrireString(System.out,s);
@@ -126,8 +113,6 @@ public class Ecriture {
 	 * paramètre suivi d'un retour à la ligne.
 	 * @param f
 	 * @param s
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireStringln(OutputStream f,String s) {
 		ecrireString(f,s+"\r\n");
@@ -137,8 +122,6 @@ public class Ecriture {
 	 * Cette méthode permet d'écrire la chaine de caractères dans console suivi d'un retour
 	 * à la ligne.
 	 * @param s
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireStringln(String s) {
 		ecrireStringln(System.out,s);
@@ -148,8 +131,6 @@ public class Ecriture {
 	 * Cette méthode permet d'écrire un entier dans le fichier passé en paramètre.
 	 * @param f
 	 * @param x
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireInt(OutputStream f,int x) {
 		ecrireString(f,Integer.toString(x));
@@ -158,8 +139,6 @@ public class Ecriture {
 	/**
 	 * Cette méthode permet d'écrire un entier dans la console.
 	 * @param x
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireInt(int x) {ecrireInt(System.out,x);}
 
@@ -169,8 +148,6 @@ public class Ecriture {
 	 * @param f
 	 * @param x
 	 * @param longueur
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireInt(OutputStream f,int x,int longueur) {
 		String s=Integer.toString(x);
@@ -184,8 +161,6 @@ public class Ecriture {
 	 * spécifiée dans la console.
 	 * @param x
 	 * @param longueur
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireInt(int x,int longueur) {
 		ecrireInt(System.out,x,longueur);
@@ -195,8 +170,6 @@ public class Ecriture {
 	 * Cette méthode permet d'écrire un décimale dans le fichier passé en paramètre.
 	 * @param f
 	 * @param d
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireDouble(OutputStream f,double d) {
 		ecrireString(f,Double.toString(d));
@@ -205,8 +178,6 @@ public class Ecriture {
 	/**
 	 * Cette méthode permet d'écrire un décimale dans la console.
 	 * @param d
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireDouble(double d) {ecrireDouble(System.out,d);}
 
@@ -216,8 +187,6 @@ public class Ecriture {
 	 * @param f
 	 * @param d
 	 * @param longueur
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireDouble(OutputStream f,double d,int longueur) {
 		String s=Double.toString(d);
@@ -231,8 +200,6 @@ public class Ecriture {
 	 * spécifiée dans la console.
 	 * @param d
 	 * @param longueur
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireDouble(double d,int longueur) {
 		ecrireDouble(System.out,d,longueur);
@@ -243,8 +210,6 @@ public class Ecriture {
 	 * dans le fichier pointé par le pointeur input.
 	 * @param output
 	 * @param input
-	 * 
-	 * @since 1.0
 	 */
 	public static void ecrireFichier(OutputStream output, InputStream input) {     
 		char n = 0;               

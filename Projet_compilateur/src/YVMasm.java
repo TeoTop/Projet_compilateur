@@ -12,6 +12,7 @@
  * les méthodes YAKA. 
  * 
  * @see YVM
+ * @see Ecriture
  */
 
 import java.io.OutputStream;
@@ -50,8 +51,6 @@ public class YVMasm extends YVM {
 	 * @see fichier
 	 * @see comptString
 	 * @see extern
-	 * 
-	 * @since 1.0
 	 */
 	public YVMasm() {
 		super();
@@ -66,8 +65,6 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void isub() {
@@ -85,12 +82,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void ineg() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ineg");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
@@ -106,12 +100,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void iinf() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;iinf");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -130,12 +121,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void iegal() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;iegal");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -157,12 +145,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void iload(int offset) {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;iload " + offset + "");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp" + offset + "]");
@@ -177,12 +162,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void istore(int offset) {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;istore " + offset + "");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
@@ -198,12 +180,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void iconst(int valeur) {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;iconst " + valeur + "");
 		Ecriture.ecrireStringln(this.fichier,  "\tpush " + valeur + "");
@@ -220,12 +199,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void ifeq(String etiq) {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ifeq " + etiq);
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
@@ -243,12 +219,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void iffaux(String etiq) {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;iffaux " + etiq);
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
@@ -266,12 +239,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void Goto(String etiq) {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;goto " + etiq);
 		Ecriture.ecrireStringln(this.fichier,  "\tjmp " + etiq);
@@ -284,12 +254,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void iadd() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;iadd");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -305,12 +272,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void imul() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;imul");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -326,12 +290,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void idiv() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;idiv");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -349,12 +310,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void isup() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;isup");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -374,12 +332,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void iinfegal() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;iinfegal");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -401,12 +356,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void isupegal() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;isupegal");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -426,12 +378,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void idiff() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;idiff");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -456,25 +405,29 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see fichier
 	 * @see extern
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void recopierEntete(String fichierOut) {
-		// TODO Auto-generated method stub
+		// on crée un nouveau fichier (final)
 		this.fichier = Ecriture.ouvrir(fichierOut);
 		Ecriture.ecrireStringln(this.fichier,  ";entete");
-		Ecriture.ecrireString(this.fichier, "extrn ");
 		
-		Iterator<String> ite = this.extern.iterator();
-		while(ite.hasNext()){
-			String fonction = ite.next();
-			if(ite.hasNext())
-				Ecriture.ecrireString(this.fichier, fonction + ":proc, ");
-			else
-				Ecriture.ecrireStringln(this.fichier, fonction + ":proc");
+		//on vérifie que le tableau n'est pas vide
+		if(!extern.isEmpty()){
+			Ecriture.ecrireString(this.fichier, "extrn ");
+			
+			// on itère sur le tableau pour récupérer tous ses éléments et les écrire
+			Iterator<String> ite = this.extern.iterator();
+			while(ite.hasNext()){
+				String fonction = ite.next();
+				if(ite.hasNext())
+					Ecriture.ecrireString(this.fichier, fonction + ":proc, ");
+				else
+					Ecriture.ecrireStringln(this.fichier, fonction + ":proc");
+			}
 		}
 
+		//on renseigne le début type d'un fichier assembleur
 		Ecriture.ecrireStringln(this.fichier,  ".MODEL SMALL");
 		Ecriture.ecrireStringln(this.fichier,  ".586");
 		Ecriture.ecrireStringln(this.fichier,  ".CODE");
@@ -490,12 +443,9 @@ public class YVMasm extends YVM {
 	 * @see Ecriture#fermer(OutputStream)
 	 * 
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void queue() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;queue");
 		Ecriture.ecrireStringln(this.fichier,  "\tnop");
@@ -512,12 +462,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void ouvrePrinc(int nbOctet) {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ouvrePrinc " + nbOctet);
 		Ecriture.ecrireStringln(this.fichier,  "\tmov bp,sp");
@@ -530,12 +477,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void ior() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ior");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -550,12 +494,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void inot() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;inot");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
@@ -569,12 +510,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void iand() {
-		// TODO Auto-generated method stub
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;and");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop bx");
@@ -591,8 +529,6 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see fichier
 	 * @see extern
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void ecrireEnt() {
@@ -600,6 +536,8 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireEnt");
 		Ecriture.ecrireStringln(this.fichier,"\tcall ecrent");
 		if(!this.extern.contains("ecrent")) this.extern.add("ecrent");
+		/* on pense a enregistrer la fonction externe dans le tableau afin de la renseigner
+		dans l'entête*/
 	}
 
 	
@@ -613,8 +551,6 @@ public class YVMasm extends YVM {
 	 * @see fichier
 	 * @see extern
 	 * @see comptString
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void ecrireChaine(String x) {
@@ -622,7 +558,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireChaine " + x);
 		Ecriture.ecrireStringln(this.fichier, ".DATA\n\tmess" + this.comptString + " DB \"" + x.substring(1, x.length() - 1) + "$\""); /* enlever le dernier guillemet afin d'ajouter $ */
 		Ecriture.ecrireStringln(this.fichier, ".CODE\n\tlea dx,mess" + this.comptString + "\n\tpush dx\n\tcall ecrch");
-		this.comptString++;
+		this.comptString++;					// on incrémente pour les numéros de messages
 		if(!this.extern.contains("ecrch")) this.extern.add("ecrch");
 	}
 
@@ -634,8 +570,6 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see fichier
 	 * @see extern
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void ecrireBool() {
@@ -656,8 +590,6 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see fichier
 	 * @see extern
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void lireEnt(int x) {
@@ -677,8 +609,6 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see fichier
 	 * @see extern
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void aLaLigne() {
@@ -697,8 +627,6 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see fichier
-	 * 
-	 * @since 1.0
 	 */
 	@Override
 	public void ecrireEtiqu(String etiq){

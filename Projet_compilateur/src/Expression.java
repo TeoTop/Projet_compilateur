@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * 
  * @author CHAPON Theo
@@ -7,13 +9,10 @@
  * @author Tuekam Sandjon Marlene
  * 
  * @version 1.0
- */
-import java.util.Stack;
-/**
- * 
- * 
  * 
  * @see Yaka
+ * @see TabIdent
+ * @see Ident
  */
 public class Expression implements YakaConstants{
 	
@@ -159,21 +158,27 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé 
+	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
+	 * multiplication, une division et un ET booléen
 	 * 
 	 * @see Expression#lasOpMul
 	 */
 	public void testMul() {
 		String type1,type2,op = "";
 		int p = this.lasOpMul;
+		
+		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case MUL : op="multiplication";break;
 		case DIV : op="division";break;
 		case AND : op="et logique";break;
 		}
+		
+		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
+			//on vérifie que les deux arguments on le même type. Puis on vérifie que l'opérateur correspond.
 			if (type1.equals(type2)) {
 				if (type1.equals("entier") && (p == MUL || p == DIV) || type1.equals("booleen") && p == AND) {
 					empileType(type1);
@@ -198,21 +203,27 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé 
+	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
+	 * addition, une soustration et un OU booléen
 	 * 
 	 * @see Expression#lasOpAdd
 	 */
 	public void testAdd() {
 		String type1,type2,op = "";
 		int p = this.lasOpAdd;
+		
+		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case ADD : op="addtion";break;
 		case SUBNEG : op="soustration";break;
 		case OR : op="ou logique";break;
 		}
+		
+		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
+			//on vérifie que les deux arguments on le même type. Puis on vérifie que l'opérateur correspond.
 			if (type1.equals(type2)) {
 				if (type1.equals("entier") && (p == ADD || p == SUBNEG) || type1.equals("booleen") && p == OR) {
 					empileType(type1);
@@ -237,13 +248,16 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé 
+	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
+	 * comparaison entre deux entiers
 	 * 
 	 * @see Expression#lasOpRel
 	 */
 	public void testRel() {
 		String op = "";
 		int p = this.lasOpRel;
+		
+		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case EGAL : op="Ã©gal";break;
 		case DIFF : op="diffÃ©rent";break;
@@ -252,9 +266,12 @@ public class Expression implements YakaConstants{
 		case SUP : op="supÃ©rieur";break;
 		case SUPEGAL : op="supÃ©rieur ou Ã©gal";break;
 		}
+		
+		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			String type1 = this.type.pop();
 			String type2 = this.type.pop();
+			//on vérifie que les deux arguments on le même type.
 			if (type1.equals("entier") && type2.equals("entier")) {
 				empileType("booleen");
 			}
@@ -272,19 +289,24 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
-	 * Teste si le type en sommet de pile correspond à l'opérande utilisé
+	 * Teste si le type en sommet de pile correspond à l'opérande utilisé pour une négation
 	 * 
 	 * @see Expression#lasOpNeg
 	 */
 	public void testNeg() {
 		String op = "";
 		int p = this.lasOpNeg;
+		
+		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case NOT : op="non logique";break;
 		case SUBNEG : op="moins unaire";break;
 		}
+		
+		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 1) {
 			String type = this.type.peek();
+			//on vérifie que le type de l'argument correspond à l'opérateur.
 			if (!((type.equals("entier") && p == SUBNEG) || (type.equals("booleen") && p == NOT ))){
 				if (!type.equals("erreur")) {
 					empileType("erreur");
@@ -317,7 +339,11 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
+	 * Permet d'afficher les attributs de la classe Expression
+	 * @return l'affichage du contenue de l'objet Ident
 	 * 
+	 * @see type
+	 * @see opera
 	 */
 	@Override
 	public String toString() {

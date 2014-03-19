@@ -21,6 +21,7 @@ public class Declaration {
 	 * @see TabIdent
 	 */
 	Ident id;
+	
 	/**
 	 * Correspond au type de la variable ou de la constante dans le code YAKA (soit entier
 	 * soit booléen).
@@ -88,6 +89,8 @@ public class Declaration {
 	 * @see TabIdent#chercheIdent(String)
 	 */
 	public void ajoutConstanteParConstante(String ident){
+		/*on vérifie que la constante est dans le tableau puis on la récupère pour la copier,
+		sinon on déclenche une erreur.*/
 	  	IdConst idConst = (IdConst) YakaTokenManager.tabident.chercheIdent(ident);
 	  	if (idConst != null){
 	  		((IdConst) this.id).setValeur(idConst.getValeur());
