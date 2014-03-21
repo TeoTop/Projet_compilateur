@@ -342,8 +342,8 @@ public class Expression implements YakaConstants{
 	 * Permet d'afficher les attributs de la classe Expression
 	 * @return l'affichage du contenue de l'objet Ident
 	 * 
-	 * @see type
-	 * @see opera
+	 * @see Expression#type
+	 * @see Expression#opera
 	 */
 	@Override
 	public String toString() {

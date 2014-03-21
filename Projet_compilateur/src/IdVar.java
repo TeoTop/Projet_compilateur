@@ -25,7 +25,7 @@ public class IdVar extends Ident {
 	 * Retourne l'offset de la variable (où elle se situe dans la pile assembleur)
 	 * @return entier de l'attribut offset
 	 * 
-	 * @see offset
+	 * @see IdVar#offset
 	 */
 	public int getOffset() {
 		return this.offset;
@@ -35,7 +35,7 @@ public class IdVar extends Ident {
 	 * Mettre à jour l'attribut offset de la classe IdVar
 	 * @param offset
 	 * 
-	 * @see offset
+	 * @see IdVar#offset
 	 */
 	public void setOffset(int offset) {
 		this.offset = offset;
@@ -53,7 +53,7 @@ public class IdVar extends Ident {
 	 * Permet d'afficher les attributs de la classe IdVar et celui de la classe Ident
 	 * @return l'affichage du contenue de l'objet IdVar
 	 * 
-	 * @see offset
+	 * @see IdVar#offset
 	 */
 	@Override
 	public String toString() {

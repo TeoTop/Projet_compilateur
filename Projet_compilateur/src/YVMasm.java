@@ -24,7 +24,7 @@ public class YVMasm extends YVM {
 	/**
 	 * Fichier de sortie temporaire
 	 * 
-	 * @see Ecriture#YVMasm
+	 * @see Ecriture
 	 */
 	private OutputStream fichier;
 	
@@ -48,9 +48,9 @@ public class YVMasm extends YVM {
 	 * Constructeur : permet de créer un fichier temporaire dans lequel sera stocké le code
 	 * assembleur avant la recopie dans le fichier final si il n'y a pas d'erreur.
 	 * 
-	 * @see fichier
-	 * @see comptString
-	 * @see extern
+	 * @see YVMasm#fichier
+	 * @see YVMasm#comptString
+	 * @see YVMasm#extern
 	 */
 	public YVMasm() {
 		super();
@@ -64,7 +64,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA de soustraction en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void isub() {
@@ -81,7 +81,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA de negation en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void ineg() {
@@ -99,7 +99,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA conditionnel inférieur en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void iinf() {
@@ -120,7 +120,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA conditionnel d'égalité en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void iegal() {
@@ -144,7 +144,7 @@ public class YVMasm extends YVM {
 	 * @param offset
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void iload(int offset) {
@@ -161,7 +161,7 @@ public class YVMasm extends YVM {
 	 * @param offset
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void istore(int offset) {
@@ -179,7 +179,7 @@ public class YVMasm extends YVM {
 	 * @param valeur
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void iconst(int valeur) {
@@ -198,7 +198,7 @@ public class YVMasm extends YVM {
 	 * @param etiq
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void ifeq(String etiq) {
@@ -218,7 +218,7 @@ public class YVMasm extends YVM {
 	 * @param etiq
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void iffaux(String etiq) {
@@ -238,7 +238,7 @@ public class YVMasm extends YVM {
 	 * @param etiq
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void Goto(String etiq) {
@@ -253,7 +253,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA permettant de réaliser une addition en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void iadd() {
@@ -271,7 +271,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA permettant de réaliser une multiplication en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void imul() {
@@ -289,7 +289,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA permettant de réaliser une division en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void idiv() {
@@ -309,7 +309,7 @@ public class YVMasm extends YVM {
 	 * code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void isup() {
@@ -331,7 +331,7 @@ public class YVMasm extends YVM {
 	 * égale en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void iinfegal() {
@@ -355,7 +355,7 @@ public class YVMasm extends YVM {
 	 * égale en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void isupegal() {
@@ -377,7 +377,7 @@ public class YVMasm extends YVM {
 	 * en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void idiff() {
@@ -403,8 +403,8 @@ public class YVMasm extends YVM {
 	 * @see Ecriture#ecrireString(OutputStream, String)
 	 * @see Ecriture#ouvrir(String)
 	 * 
-	 * @see fichier
-	 * @see extern
+	 * @see YVMasm#fichier
+	 * @see YVMasm#extern
 	 */
 	@Override
 	public void recopierEntete(String fichierOut) {
@@ -442,7 +442,7 @@ public class YVMasm extends YVM {
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see Ecriture#fermer(OutputStream)
 	 * 
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void queue() {
@@ -461,7 +461,7 @@ public class YVMasm extends YVM {
 	 * @param nbOctet
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void ouvrePrinc(int nbOctet) {
@@ -476,7 +476,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA permettant de réaliser un OU en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void ior() {
@@ -493,7 +493,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA permettant de réaliser un NON en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void inot() {
@@ -509,7 +509,7 @@ public class YVMasm extends YVM {
 	 * Transformation d'un code YAKA permettant de réaliser un ET en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void iand() {
@@ -527,8 +527,8 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * 
-	 * @see fichier
-	 * @see extern
+	 * @see YVMasm#fichier
+	 * @see YVMasm#extern
 	 */
 	@Override
 	public void ecrireEnt() {
@@ -548,9 +548,9 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * 
-	 * @see fichier
-	 * @see extern
-	 * @see comptString
+	 * @see YVMasm#fichier
+	 * @see YVMasm#extern
+	 * @see YVMasm#comptString
 	 */
 	@Override
 	public void ecrireChaine(String x) {
@@ -568,8 +568,8 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * 
-	 * @see fichier
-	 * @see extern
+	 * @see YVMasm#fichier
+	 * @see YVMasm#extern
 	 */
 	@Override
 	public void ecrireBool() {
@@ -588,8 +588,8 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * 
-	 * @see fichier
-	 * @see extern
+	 * @see YVMasm#fichier
+	 * @see YVMasm#extern
 	 */
 	@Override
 	public void lireEnt(int x) {
@@ -607,8 +607,8 @@ public class YVMasm extends YVM {
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * 
-	 * @see fichier
-	 * @see extern
+	 * @see YVMasm#fichier
+	 * @see YVMasm#extern
 	 */
 	@Override
 	public void aLaLigne() {
@@ -626,7 +626,7 @@ public class YVMasm extends YVM {
 	 * @param etiq
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void ecrireEtiqu(String etiq){

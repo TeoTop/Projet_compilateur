@@ -115,7 +115,7 @@ public class TabIdent {
 	 * Permet d'afficher les attributs de la classe TabIdent
 	 * @return l'affichage du contenue de l'objet TabIdent
 	 * 
-	 * @see table
+	 * @see TabIdent#table
 	 */
 	@Override
 	public String toString() {

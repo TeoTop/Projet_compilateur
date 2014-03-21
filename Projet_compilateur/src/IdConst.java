@@ -26,7 +26,7 @@ public class IdConst extends Ident {
 	 * Retourne l'offset de la variable (où elle se situe dans la pile assembleur)
 	 * @return entier de l'attribut valeur
 	 * 
-	 * @see valeur
+	 * @see IdConst#valeur
 	 */
 	public int getValeur() {
 		return this.valeur;
@@ -36,7 +36,7 @@ public class IdConst extends Ident {
 	 * Mettre  à jour l'attribut valeur de la classe IdConst
 	 * @param valeur
 	 * 
-	 * @see valeur
+	 * @see IdConst#valeur
 	 */
 	public void setValeur(int valeur) {
 		this.valeur = valeur;
@@ -54,7 +54,7 @@ public class IdConst extends Ident {
 	 * Permet d'afficher les attributs de la classe IdConst et celui de la classe Ident
 	 * @return l'affichage du contenue de l'objet IdConst
 	 * 
-	 * @see valeur
+	 * @see IdConst#valeur
 	 */
 	@Override
 	public String toString() {

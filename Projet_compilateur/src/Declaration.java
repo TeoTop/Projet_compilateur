@@ -43,6 +43,8 @@ public class Declaration {
 	 * code YAKA et d'initialiser le type de la variable.
 	 * @param type
 	 * 
+	 * @see Declaration#id
+	 * @see Declaration#type
 	 * @see IdVar#setType(String)
 	 */
 	public void ajoutVariableParTYPE(String type){
@@ -57,6 +59,8 @@ public class Declaration {
 	 * des idents de la classe TabIdent.
 	 * @param ident
 	 * 
+	 * @see Declaration#id
+	 * @see Declaration#type
 	 * @see IdVar#setType(String)
 	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
@@ -70,6 +74,7 @@ public class Declaration {
 	 * Permet d'ajouter une constante du code à la table des idents en fonction de son nom.
 	 * @param ident
 	 * 
+	 * @see Declaration#id
 	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
 	public void ajoutNomConstante(String ident){
@@ -84,6 +89,7 @@ public class Declaration {
 	 * la classe TabIdent.
 	 * @param ident
 	 * 
+	 * @see Declaration#id
 	 * @see IdConst#setType(String)
 	 * @see IdConst#setValeur(int)
 	 * @see TabIdent#chercheIdent(String)
@@ -106,6 +112,7 @@ public class Declaration {
 	 * Permet de créer une constante de type ENTIER dont la valeur est passé en paramètre.
 	 * @param entier
 	 * 
+	 * @see Declaration#id
 	 * @see IdConst#setValeur(int)
 	 * @see IdConst#setType(String)
 	 */
@@ -118,6 +125,7 @@ public class Declaration {
 	 * Permet de créer une constante de type ENTIER dont la valeur est passé en paramètre.
 	 * @param entier
 	 * 
+	 * @see Declaration#id
 	 * @see IdConst#setValeur(int)
 	 * @see IdConst#setType(String)
 	 */

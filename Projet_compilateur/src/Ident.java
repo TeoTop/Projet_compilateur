@@ -29,7 +29,7 @@ public abstract class Ident {
 	 * Retourne l'attribut type de la classe Ident
 	 * @return Le type est soit ENTIER, soit BOOLEEN
 	 * 
-	 * @see type
+	 * @see Ident#type
 	 */
 	public String getType() {
 		return this.type;
@@ -39,7 +39,7 @@ public abstract class Ident {
 	 * Mettre à jour l'attribut type de la classe Ident
 	 * @param type
 	 * 
-	 * @see type
+	 * @see Ident#type
 	 */
 	public void setType(String type) {
 		this.type = type;
@@ -58,7 +58,7 @@ public abstract class Ident {
 	 * Permet d'afficher les attributs de la classe Ident
 	 * @return l'affichage du contenue de l'objet Ident
 	 * 
-	 * @see type
+	 * @see Ident#type
 	 */
 	@Override
 	public String toString() {
