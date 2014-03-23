@@ -61,4 +61,9 @@ public class IdConst extends Ident {
 		return "IdConst [valeur=" + this.valeur + " type="+ this.getType() + "]";
 	}
 
+	@Override
+	public boolean isFonc() {
+		return false;
+	}
+
 }

@@ -50,8 +50,17 @@ public abstract class Ident {
 	 * @return true si c'est une variable, false sinon
 	 * @see IdVar#isVar()
 	 * @see IdConst#isVar()
+	 * @see IdFonc#isVar()
 	 */
 	public abstract boolean isVar();
+	/**
+	 * Méthode permettant de savoir si l'objet Ident est une fonction. 
+	 * @return true si c'est une variable, false sinon
+	 * @see IdVar#isFonc()
+	 * @see IdConst#isFonc()
+	 * @see IdFonc#isFonc()
+	 */
+	public abstract boolean isFonc();
 	
 	
 	/**

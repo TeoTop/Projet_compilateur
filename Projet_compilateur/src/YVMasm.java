@@ -148,9 +148,10 @@ public class YVMasm extends YVM {
 	 */
 	@Override
 	public void iload(int offset) {
+		String op = (offset>0) ? "+" : "";
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;iload " + offset + "");
-		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp" + offset + "]");
+		Ecriture.ecrireStringln(this.fichier,  "\tpush word ptr [bp" + op + offset + "]");
 	}
 
 	
@@ -165,10 +166,11 @@ public class YVMasm extends YVM {
 	 */
 	@Override
 	public void istore(int offset) {
+		String op = (offset>0) ? "+" : "";
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;istore " + offset + "");
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
-		Ecriture.ecrireStringln(this.fichier,  "\tmov word ptr [bp" + offset + "],ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tmov word ptr [bp" + op + offset + "],ax");
 	}
 
 	
@@ -431,8 +433,6 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  ".MODEL SMALL");
 		Ecriture.ecrireStringln(this.fichier,  ".586");
 		Ecriture.ecrireStringln(this.fichier,  ".CODE");
-		Ecriture.ecrireStringln(this.fichier,  "debut:");
-		Ecriture.ecrireStringln(this.fichier,  "\tSTARTUPCODE");
 	}
 
 	
@@ -464,11 +464,12 @@ public class YVMasm extends YVM {
 	 * @see YVMasm#fichier
 	 */
 	@Override
-	public void ouvrePrinc(int nbOctet) {
+	public void ouvbloc(int nbOctet) {
 		Ecriture.ecrireStringln(this.fichier,  "");
-		Ecriture.ecrireStringln(this.fichier,  "\t;ouvrePrinc " + nbOctet);
-		Ecriture.ecrireStringln(this.fichier,  "\tmov bp,sp");
-		Ecriture.ecrireStringln(this.fichier , "\tsub sp," + nbOctet);
+		Ecriture.ecrireStringln(this.fichier,  "\t;ouvbloc " + nbOctet);
+		/*Ecriture.ecrireStringln(this.fichier,  "\tmov bp,sp");
+		Ecriture.ecrireStringln(this.fichier , "\tsub sp," + nbOctet);*/
+		Ecriture.ecrireStringln(this.fichier , "\tenter " + nbOctet + ",0");
 	}
 
 	
@@ -631,7 +632,50 @@ public class YVMasm extends YVM {
 	@Override
 	public void ecrireEtiqu(String etiq){
 		Ecriture.ecrireStringln(this.fichier,  "");
-		Ecriture.ecrireStringln(this.fichier,  "\t" + etiq + " :");
+		Ecriture.ecrireStringln(this.fichier, etiq + ":");
 		
+	}
+
+
+	@Override
+	public void call(String id) {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;call " + id);
+		Ecriture.ecrireStringln(this.fichier,  "\tcall " + id);
+	}
+
+
+	@Override
+	public void reserveRetour() {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;reserveRetour");
+		Ecriture.ecrireStringln(this.fichier,  "\tsub sp,2");
+	}
+
+
+	@Override
+	public void ireturn(int offset) {
+		String op = (offset>0) ? "+" : "";
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;ireturn " + offset);
+		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
+		Ecriture.ecrireStringln(this.fichier,  "\tmov [bp" + op + offset + "]");
+	}
+
+
+	@Override
+	public void debut() {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "debut:");
+		Ecriture.ecrireStringln(this.fichier,  "\tSTARTUPCODE");
+	}
+
+
+	@Override
+	public void fermeBloc(int nbOctet) {
+		Ecriture.ecrireStringln(this.fichier,  "");
+		Ecriture.ecrireStringln(this.fichier,  "\t;fermeBloc " + nbOctet);
+		Ecriture.ecrireStringln(this.fichier , "\tleave");
+		Ecriture.ecrireStringln(this.fichier , "\tret " + nbOctet);
 	}
 }

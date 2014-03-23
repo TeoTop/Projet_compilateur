@@ -159,10 +159,10 @@ public interface YakaConstants {
     "<lettre>",
     "<ident>",
     "<chaine>",
-    "\",\"",
-    "\";\"",
     "\"(\"",
+    "\",\"",
     "\")\"",
+    "\";\"",
   };
 
 }

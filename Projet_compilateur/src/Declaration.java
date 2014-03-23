@@ -23,10 +23,20 @@ public class Declaration {
 	Ident id;
 	
 	/**
+	 * Objet de la classe IdFonc permettant de définir une fonction
+	 * 
+	 * @see IdFonc
+	 * @see TabIdent
+	 */
+	IdFonc idFonc;
+	
+	/**
 	 * Correspond au type de la variable ou de la constante dans le code YAKA (soit entier
 	 * soit booléen).
 	 */
 	String type;
+
+	boolean inFunc;
 	
 	/**
 	 * Permet d'ajouter une variable du code à la table des idents en fonction de son nom.
@@ -36,6 +46,24 @@ public class Declaration {
 	 */
 	public void ajoutNomVariable(String ident){
 		YakaTokenManager.tabident.rangeIdent(ident,this.id);
+	}
+	/**
+	 * Permet d'ajouter une fonction à la table des idents globaux.
+	 * @param ident
+	 * 
+	 * @see TabIdent#addFonction(String nom)
+	 */
+	public void ajoutNomFonction(String ident){
+		YakaTokenManager.tabident.addFonction(ident,this.idFonc);
+	}
+	/**
+	 * Permet d'ajouter un paramètre à la table des paramètres temporaires
+	 * @param ident
+	 * 
+	 * @see TabIdent#addParam(String, Ident)
+	 */
+	public void addParam(String ident){
+		YakaTokenManager.tabident.addParam(ident,this.id);
 	}
 	
 	/**
@@ -50,7 +78,21 @@ public class Declaration {
 	public void ajoutVariableParTYPE(String type){
 		this.id = new IdVar();
 		this.type = type;
-	  	this.id.setType(type);
+		this.id.setType(type);
+	}
+	/**
+	 * Permet de créer un nouvel objet de la classe IdFonc correspondant à une fonction du
+	 * code YAKA et d'initialiser le type de la fonction.
+	 * @param type
+	 * 
+	 * @see Declaration#id
+	 * @see Declaration#type
+	 * @see IdFonc#setType(String)
+	 */
+	public void ajoutFonction(String type){
+		this.idFonc = new IdFonc();
+		this.type = type;
+	  	this.idFonc.setType(type);
 	}
 	
 	/**
@@ -132,6 +174,9 @@ public class Declaration {
 	public void ajoutConstanteParBooleen(int entier){
 		((IdConst) this.id).setValeur(entier);
 	  	this.id.setType("BOOLEEN");
+	}
+	public void inFunction(boolean b) {
+		this.inFunc=b;
 	}
 	
 }

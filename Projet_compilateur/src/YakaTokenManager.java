@@ -127,22 +127,22 @@ static private int jjMoveStringLiteralDfa0_0()
    switch(curChar)
    {
       case 40:
-         jjmatchedKind = 55;
+         jjmatchedKind = 53;
          return jjMoveStringLiteralDfa1_0(0x20L);
       case 41:
-         return jjStopAtPos(0, 56);
+         return jjStopAtPos(0, 55);
       case 42:
          return jjStopAtPos(0, 38);
       case 43:
          return jjStopAtPos(0, 35);
       case 44:
-         return jjStopAtPos(0, 53);
+         return jjStopAtPos(0, 54);
       case 45:
          return jjStopAtPos(0, 36);
       case 47:
          return jjStopAtPos(0, 39);
       case 59:
-         return jjStopAtPos(0, 54);
+         return jjStopAtPos(0, 56);
       case 60:
          jjmatchedKind = 44;
          return jjMoveStringLiteralDfa1_0(0x280000000000L);
@@ -724,7 +724,7 @@ public static final String[] jjstrLiteralImages = {
 "\120\122\111\116\103\111\120\101\114", "\106\120\122\111\116\103\111\120\101\114", "\101\114\117\122\123", 
 "\105\103\122\111\122\105", "\114\111\122\105", "\101\114\101\114\111\107\116\105", "\53", "\55", 
 "\117\122", "\52", "\57", "\101\116\104", "\116\117\124", "\75", "\74\76", "\74", 
-"\74\75", "\76", "\76\75", null, null, null, null, null, "\54", "\73", "\50", "\51", };
+"\74\75", "\76", "\76\75", null, null, null, null, null, "\50", "\54", "\51", "\73", };
 
 /** Lexer state names. */
 public static final String[] lexStateNames = {

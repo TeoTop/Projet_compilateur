@@ -116,12 +116,22 @@ public class Expression implements YakaConstants{
 	 * @param id
 	 */
 	public void empileTypeAvecIdent(String id) {
+		Boolean existe = false;
 		/* tester si l'ident existe avant de l'empiler */
-		if (identExiste(id)){
+		if (YakaTokenManager.tabident.existeIdent(id)){
 			this.type.push((YakaTokenManager.tabident.chercheIdent(id)).getType().toLowerCase());
+			existe=true;
+		}
+		else if (YakaTokenManager.tabident.existeIdentG(id)){
+			this.type.push((YakaTokenManager.tabident.chercheIdentG(id)).getType().toLowerCase());
+			existe=true;
+		}
+		if(!existe){
+			Erreur.message("L'identificateur '" + id + "' n'a pas √©t√© d√©clar√©");
 		}
 	}
 	
+
 	/**
 	 * Empile un type
 	 * 
@@ -140,21 +150,6 @@ public class Expression implements YakaConstants{
 	 */
 	public void empileOpera(String opera) {
 		this.opera.push(opera);
-	}
-
-	/**
-	 * Teste si un ident existe dans la table des identificateurs
-	 * 
-	 * @see TabIdent
-	 * @param id
-	 * @return true si l'ident existe, false sinon
-	 */
-	public boolean identExiste(String id){
-		if (!YakaTokenManager.tabident.existeIdent(id)) {
-			Erreur.message("L'identificateur '" + id + "' n'a pas √©t√© d√©clar√©");
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -362,24 +357,35 @@ public class Expression implements YakaConstants{
 	 */
 	public void loadIdent(String id) {
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
-		if (ident != null) {// l'ident existe
-			if (ident.isVar()) {// ident est une variable
+		if (ident != null) {// l'ident existe var_param_const
+			if (ident.isVar()) {// ident est une variableOuParam
 				int offset =((IdVar) ident).getOffset();
-				int index=-1*offset/2 - 1;// index de la variable dans la pile des variables
-				if (YakaTokenManager.tabident.var.get(index)!=-1) {// la variable a ÈtÈ dÈj‡ dÈfinie
-					YakaTokenManager.yvm.iload(offset);
+				if(offset < 0){//ident_var
+					int index=-1*offset/2 - 1;// index de la variable dans la pile des variables
+					if (YakaTokenManager.tabident.var.get(index)!=-1) {// la variable a ÈtÈ dÈj‡ dÈfinie
+						YakaTokenManager.yvm.iload(offset);
+					}
+					else {// variable non dÈfinie
+						Erreur.message("La variable '" + id + "' n'est pas encore dÔøΩfinie");
+					}
 				}
-				else {// variable non dÈfinie
-					Erreur.message("La variable '" + id + "' n'est pas encore dÔøΩfinie");
+				else{//ident_param
+					YakaTokenManager.yvm.iload(offset);
 				}
 			}
 			else {// ident est une constante
 				YakaTokenManager.yvm.iconst(((IdConst) ident).getValeur());
 			}
 		}
-		else {// l'ident n'existe pas
-			Erreur.message("La variable ou la constante '" + id + "' n'existe pas");
-			this.type.push("erreur");
+		else {
+			ident = YakaTokenManager.tabident.chercheIdentG(id);
+			if(ident!=null){// ident existe fonc
+				YakaTokenManager.yvm.call(id);
+			}
+			else {// l'ident n'existe pas
+				Erreur.message("La variable ou la constante '" + id + "' n'existe pas");
+				this.type.push("erreur");
+			}
 		}
 	}
 
@@ -396,13 +402,18 @@ public class Expression implements YakaConstants{
 	public void store(String id) {
 		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
 		if (ident != null) {// l'ident existe
-			if (ident.isVar()) {// ident est une variable
+			if (ident.isVar()) {// ident est une variableOuParam
 				String type = this.type.peek();
 				if (type.equals(ident.getType().toLowerCase())) {// teste si l'expression a le mÍme type que l'ident ‡ affecter
 					int offset = ((IdVar) ident).getOffset();
-					int index = -1 * offset / 2 - 1;
-					YakaTokenManager.yvm.istore(offset);
-					YakaTokenManager.tabident.var.set(index, 1);
+					if(offset<0){//ident_var
+						int index = -1 * offset / 2 - 1;
+						YakaTokenManager.yvm.istore(offset);
+						YakaTokenManager.tabident.var.set(index, 1);
+					}
+					else{//ident_param
+						Erreur.message("L'identificateur '" + id + "' n'est pas une variable");
+					}
 				}
 				else if (!type.equals("erreur")){// si le type en sommet de la pile est erreur, on Ècrit pas le msg d'erreur
 					Erreur.message("La variable '" + id + "' doit √™tre de type " + type);
@@ -685,5 +696,51 @@ public class Expression implements YakaConstants{
 	 */
 	public void removeTantQue() {
 		this.pileTQ.pop();
+	}
+
+	
+
+
+
+	public void testParamFonc() {
+		String typeExpr=this.type.peek();
+		int index = YakaTokenManager.tabident.paramTest;
+		int nbParam = IdFonc.param.size();
+		if(index+1<=nbParam){//nbParam est encore >= nb expr entrees en param 
+			String typeParam=IdFonc.param.get(index).toLowerCase();
+			if (!typeExpr.equals(typeParam)){//types de param et expr sont differents
+				Erreur.message("Le type du paramËtre " + index + " doit Ítre de type " + typeParam);
+			}
+		}
+	}
+
+	public void testInFunc() {
+		if (!YakaTokenManager.declaration.inFunc){
+			Erreur.message("L'instruction RETOURNE ne s'applique que dans les fonctions");
+		}
+	}
+
+	public void testTypeExprFunc() {
+		String typeExpr = this.type.peek();
+		String typeFunc = YakaTokenManager.declaration.idFonc.getType().toLowerCase();
+		if(!typeExpr.equals(typeFunc)){
+			Erreur.message("La valeur ‡ retourner doit Ítre de type " + typeFunc);
+		}
+	}
+
+	public void returnFun(String id) {
+		if(YakaTokenManager.tabident.existeIdentG(id)){
+			IdFonc func=(IdFonc) YakaTokenManager.tabident.chercheIdentG(id);
+			int offset = func.nbParam*2+4;
+			YakaTokenManager.yvm.ireturn(offset);
+		}
+	}
+
+	public void fermeBloc(String id) {
+		if(YakaTokenManager.tabident.existeIdentG(id)){
+			IdFonc func=(IdFonc) YakaTokenManager.tabident.chercheIdentG(id);
+			int nbOctet = func.nbParam*2;
+			YakaTokenManager.yvm.fermeBloc(nbOctet);
+		}
 	}
 }

@@ -1,20 +1,9 @@
 PROGRAMME prog
-CONST a=-6;
-VAR ENTIER x,y,z;
-ECRIRE("x = ");
-LIRE(x);
-ALALIGNE;
-ECRIRE("y = ");
-LIRE(y);
-ALALIGNE;
-z = (x+y/2)/5;
-x = y+3*y-4;
-ECRIRE("x = ");
-ECRIRE(x);
-ALALIGNE;
-ECRIRE("z = ");
-ECRIRE(z);
-ALALIGNE;
-ECRIRE("a = ");
-ECRIRE(a);
+ENTIER FONCTION affect(ENTIER i)
+RETOURNE i;
+FFONCTION
+PRINCIPAL
+VAR ENTIER a;
+a=affect(1);
+FPRINCIPAL
 FPROGRAMME

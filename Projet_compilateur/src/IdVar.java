@@ -60,5 +60,10 @@ public class IdVar extends Ident {
 		return "IdVar [offset=" + this.offset + " Type="+ getType() +"]";
 	}
 
+	@Override
+	public boolean isFonc() {
+		return false;
+	}
+
 
 }

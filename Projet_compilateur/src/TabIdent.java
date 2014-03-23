@@ -1,6 +1,4 @@
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -19,11 +17,18 @@ import java.util.Stack;
 public class TabIdent {
 	
 	/**
-	 * Table des identificateurs
+	 * Table des identificateurs locaux
 	 * 
 	 * @see TabIdent#TabIdent()
 	 */
-	private HashMap<String,Ident> table;
+	private HashMap<String,Ident> locaux;//avant table 
+	
+	/**
+	 * Table des identificateurs globaux
+	 * 
+	 * @see TabIdent#TabIdent()
+	 */
+	private HashMap<String,Ident> globaux;//avant table 
 	
 	/**
 	 * Pile des variables
@@ -31,47 +36,83 @@ public class TabIdent {
 	 * @see TabIdent#TabIdent()
 	 */
 	public Stack<Integer> var;
+	/**
+	 * Pile temporaire des paramètres
+	 * 
+	 * @see TabIdent#TabIdent()
+	 * 
+	 */
+	private HashMap<Integer,HashMap<String,Ident>> param;
+	private int rang;
+
+	public int paramTest;
 
 	/**
 	 * Constructeur TabIdent
 	 * Création de la table des identificateurs et de la pile des variables
 	 * 
-	 *  @see TabIdent#table
+	 *  @see TabIdent#locaux
 	 *  @see TabIdent#var
 	 */
 	public TabIdent(){
-		this.table = new HashMap<String,Ident>();
+		this.locaux = new HashMap<String,Ident>();
+		this.globaux = new HashMap<String,Ident>();
 		this.var = new Stack<Integer>();
+		this.param = new HashMap<Integer,HashMap<String,Ident>>();
+		this.rang=0;
+		this.paramTest=-1;
 	}
 
 	/**
-	 * Retourne l'ident correspondant à la clef
+	 * Retourne l'ident dans la table des locaux correspondant à la clef
 	 * 
-	 * @see TabIdent#table
-	 * @param clef
+	 * @see TabIdent#locaux
+	 * @param clef(
 	 * @return ident 
 	 */
 	public Ident chercheIdent(String clef){
-		return this.table.get(clef);
+		return this.locaux.get(clef);
+	}
+	
+	/**
+	 * Retourne true si la clef existe dans la table des identificateurs locaux, false sinon
+	 * 
+	 * @see TabIdent#locaux
+	 * @param clef
+	 * @return true si la clef existe, false sinon
+	 */
+	public boolean existeIdentG(String clef){
+		return this.globaux.get(clef) != null;
+		
+	}
+	/**
+	 * Retourne l'ident dans la table des globaux correspondant à la clef
+	 * 
+	 * @see TabIdent#locaux
+	 * @param clef(
+	 * @return ident 
+	 */
+	public Ident chercheIdentG(String clef){
+		return this.globaux.get(clef);
 	}
 
 	/**
-	 * Retourne true si la clef existe dans la table des identificateurs, false sinon
+	 * Retourne true si la clef existe dans la table des identificateurs globaux, false sinon
 	 * 
-	 * @see TabIdent#table
+	 * @see TabIdent#locaux
 	 * @param clef
 	 * @return true si la clef existe, false sinon
 	 */
 	public boolean existeIdent(String clef){
-		return this.table.get(clef) != null;
+		return this.locaux.get(clef) != null;
 
 	}
 
 	/**
-	 * Ajouter les variables et les constantes dans la table des identificateurs
+	 * Ajouter les variables et les constantes dans la table des identificateurs locaux
 	 * 
 	 * @see Ident
-	 * @see TabIdent#table
+	 * @see TabIdent#locaux
 	 * @see TabIdent#var
 	 * @param clef
 	 * @param id
@@ -83,15 +124,97 @@ public class TabIdent {
 				((IdVar) id).setOffset(offset);;
 				this.var.push(-1);// on empile -1 pour dire que la variable n'a pas encore de valeur
 			}
-			this.table.put(clef, id);
+			this.locaux.put(clef, id);
 		}
 		else {// clef existe déjà
 			Erreur.message("DÃ©claration double pour : " + clef);
 		}
-
-
 	}
 	
+	/**
+	 * Ajouter les paramètres dans la pile temporaire param
+	 * 
+	 * @see TabIdent#param
+	 * @param ident
+	 */
+	public void addParam(String ident,Ident id){//appelee a partir de addparam_declaration
+		HashMap<String,Ident> tmp = new HashMap<String, Ident>();
+		tmp.put(ident, id);
+		this.param.put(this.rang,tmp);
+		this.rang++;
+	}	
+	/**
+	 * Ajouter les paramètres dans la table des identificateurs locaux
+	 * 
+	 * @see TabIdent#param
+	 */
+	public void rangeParam(){
+		int nbParam =this.nbParam();
+		String clef;
+		for (int i = 0; i < nbParam; i++){
+			int offset = nbParam*2+4-((i+1)*2);
+			clef=(String) this.param.get(i).keySet().toArray()[0];
+			IdVar id = (IdVar) this.param.get(i).get(clef);
+			id.setOffset(offset);
+			this.locaux.put(clef, id);
+		}
+	}	
+	/**
+	 * Vider la table des identificateurs locaux
+	 * Vider la hashMap param
+	 * Vider la pile des variables
+	 * Remettre le rang à 0
+	 * 
+	 * @see TabIdent#locaux
+	 * @see TabIdent#param
+	 * @see TabIdent#var
+	 * @see TabIdent#rang
+	 */
+	public void clearFun(){
+		this.locaux.clear();
+		this.param.clear();
+		this.var.clear();
+		this.rang=0;
+	}	
+	/**
+	 * Ajouter une fonction
+	 * @param nom
+	 */
+	public void addFonction(String nom,IdFonc id){
+		if (!existeIdentG(nom)) { // fonction n'existe pas
+			int nbParam =this.nbParam();
+			for (int i = 0; i < nbParam; i++){
+				String clef = (String) this.param.get(i).keySet().toArray()[0];
+				IdVar var = (IdVar) this.param.get(i).get(clef);
+				id.ajoutTypeParam(var.getType());
+				id.nbParam=nbParam();
+			}
+			this.globaux.put(nom, id);
+		}
+		else {// fonction existe déjà
+			Erreur.message("Déclaration double pour la fonction : " + nom);
+		}
+	}	
+	
+	public void identIsFunction(String identLu) {
+		if (!existeIdentG(identLu))	{// fonction n'existe pas
+			Erreur.message("L'identificateur '" + identLu + "' doit être une fonction");
+		}
+	}
+	
+	public void testNbParam(String nom) {
+		IdFonc func = (IdFonc) chercheIdentG(nom);
+		if (func!=null){//fonction existe
+			int nbParam = func.nbParam;
+			if (nbParam!=this.paramTest+1){
+				Erreur.message("La fonction '" + nom + "' n'est pas appliquée au nombre exact d'arguments");
+			}
+		}
+		else{//fonction n'existe pas
+			Erreur.message("La fonction '" + nom + "' n'est pas définie");
+		}
+	}
+
 	/**
 	 * Retourne le nombre de variable
 	 * @return nombre de variable
@@ -110,15 +233,32 @@ public class TabIdent {
 		return nb;*/
 		return (this.var.size());
 	}
+	
+	/**
+	 * Retourne le nombre de paramètres
+	 * @return nombre de paramètres
+	 */
+	public int nbParam() {
+		return (this.param.size());
+	}
 
 	/**
 	 * Permet d'afficher les attributs de la classe TabIdent
 	 * @return l'affichage du contenue de l'objet TabIdent
 	 * 
-	 * @see TabIdent#table
+	 * @see TabIdent#locaux
 	 */
 	@Override
 	public String toString() {
-		return "TabIdent [table=" + table + "]";
+		return "TabIdent [locaux=" + locaux + ", globaux=" + globaux + ", var="
+				+ var + ", param=" + param + ", rang=" + rang + "]";
+	}
+
+	public void addParamForTest() {
+		this.paramTest++;
+	}
+
+	public void resetParamTest() {
+		this.paramTest=-1;
 	}
 }

@@ -186,18 +186,75 @@ TOKEN  :
 void analyse() : {}
 {
    <PROGRAMME>
-   <ident>	
+   <ident>
+   (declFonction())*
+   <PRINCIPAL>
+	{
+		YakaTokenManager.yvm.debut();
+		YakaTokenManager.yvm.ecrireEtiqu("main");
+	}
    bloc()
+   <FPRINCIPAL>
    <FPROGRAMME>
    {
 		YakaTokenManager.yvm.queue();
 	}
 }
 
+void declFonction():{}
+{
+	{
+		YakaTokenManager.declaration.inFunction(true);
+	}
+	typeF() <FONCTION> <ident>
+	{
+		String ident = YakaTokenManager.identLu;
+		YakaTokenManager.yvm.ecrireEtiqu(ident);
+	}
+	paramForms()
+	{
+		YakaTokenManager.tabident.rangeParam();
+	}
+	bloc()
+	<FFONCTION>
+	{
+		YakaTokenManager.declaration.ajoutNomFonction(ident);
+		YakaTokenManager.expression.returnFun(ident);
+		YakaTokenManager.expression.fermeBloc(ident);
+		YakaTokenManager.tabident.clearFun();
+		YakaTokenManager.declaration.inFunction(false);
+	}
+}
+
+void typeF():{}
+{
+	<ENTIER>
+  	{
+  		YakaTokenManager.declaration.ajoutFonction("ENTIER");
+  	}		
+ | <BOOLEEN>
+  	{
+  		YakaTokenManager.declaration.ajoutFonction("BOOLEEN");
+  	}
+}
+
+void paramForms():{}
+{
+	"("(paramForm() ("," paramForm())*)?")"
+}
+
+void paramForm():{}
+{
+	type() <ident>
+	{
+		YakaTokenManager.declaration.addParam(YakaTokenManager.identLu);
+	}
+}
+
 void bloc() : {}{
  (declConst())*
  (declVar())*
-	{YakaTokenManager.yvm.ouvrePrinc(YakaTokenManager.tabident.nbVar() * 2);}
+	{YakaTokenManager.yvm.ouvbloc(YakaTokenManager.tabident.nbVar() * 2);}
    suiteInstr() 
 }
 
@@ -265,7 +322,7 @@ void type() :{}
   	{
   		YakaTokenManager.declaration.ajoutVariableParTYPE("ENTIER");
   	}		
- | <BOOLEEN>	
+ | <BOOLEEN>
   	{
   		YakaTokenManager.declaration.ajoutVariableParTYPE("BOOLEEN");
   	}
@@ -286,7 +343,16 @@ void suiteInstr() : {}
 
 void instruction() : {}
 {
-	affectation() | lecture() | ecriture() | conditionnelle() | iteration()
+	affectation() | lecture() | ecriture() | conditionnelle() | iteration() | retourne()
+}
+
+void retourne():{}
+{
+	<RETOURNE> expression()
+	{
+		YakaTokenManager.expression.testInFunc();
+		YakaTokenManager.expression.testTypeExprFunc();
+	}
 }
 
 void iteration():{}
@@ -348,9 +414,9 @@ void affectation() : {}
 	expression()
 	{
 		YakaTokenManager.expression.store(id);
-	/* Vider les piles pour évaluer une autre expression */
-	YakaTokenManager.expression.clearType();
-	YakaTokenManager.expression.clearOp();
+		/* Vider les piles pour évaluer une autre expression */
+		YakaTokenManager.expression.clearType();
+		YakaTokenManager.expression.clearOp();
 	}
 }
 
@@ -456,9 +522,21 @@ void valeur () : {}
 		YakaTokenManager.yvm.iconst(YakaTokenManager.entierLu);
 	}
  | <ident>
+	(
+		{
+			String id = YakaTokenManager.identLu;
+			YakaTokenManager.tabident.identIsFunction(id);
+			YakaTokenManager.yvm.reserveRetour();
+		}
+		argumentsFonction()
+		{
+			YakaTokenManager.tabident.testNbParam(id);
+		}
+	)?
 	 {
 		YakaTokenManager.expression.empileTypeAvecIdent(YakaTokenManager.identLu);
 		YakaTokenManager.expression.loadIdent(YakaTokenManager.identLu);
+		YakaTokenManager.tabident.resetParamTest();
 	 }
  | <VRAI> 
 	{
@@ -471,6 +549,23 @@ void valeur () : {}
 		YakaTokenManager.yvm.iconst(0);
 	}
  
+}
+
+void argumentsFonction():{}
+{
+	"("(
+	expression()
+	{
+		YakaTokenManager.tabident.addParamForTest();
+		YakaTokenManager.expression.testParamFonc();
+	}
+	("," 
+	expression()
+	{
+		YakaTokenManager.tabident.addParamForTest();
+		YakaTokenManager.expression.testParamFonc();
+	}
+	)*)?")"
 }
 
 void opRel() : {}

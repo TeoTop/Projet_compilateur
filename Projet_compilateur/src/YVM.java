@@ -14,8 +14,6 @@
  */
 public abstract class YVM {
 
-	public abstract void ouvrePrinc(int offset);
-
 	public abstract void isub();
 
 	public abstract void iadd();
@@ -71,5 +69,17 @@ public abstract class YVM {
 	public abstract void aLaLigne();
 
 	public abstract void ecrireEtiqu(String string);
+	
+	public abstract void ouvbloc(int nbOctet);
+
+	public abstract void fermeBloc(int nbOctet);
+
+	public abstract void call(String id);
+
+	public abstract void reserveRetour();
+	
+	public abstract void ireturn(int offset);
+
+	public abstract void debut();
 	
 }
