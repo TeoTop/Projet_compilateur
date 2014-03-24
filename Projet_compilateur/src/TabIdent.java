@@ -21,14 +21,14 @@ public class TabIdent {
 	 * 
 	 * @see TabIdent#TabIdent()
 	 */
-	private HashMap<String,Ident> locaux;//avant table 
+	private HashMap<String,Ident> locaux;
 	
 	/**
 	 * Table des identificateurs globaux
 	 * 
 	 * @see TabIdent#TabIdent()
 	 */
-	private HashMap<String,Ident> globaux;//avant table 
+	private HashMap<String,Ident> globaux;
 	
 	/**
 	 * Pile des variables
@@ -42,10 +42,13 @@ public class TabIdent {
 	 * @see TabIdent#TabIdent()
 	 * 
 	 */
-	private HashMap<Integer,HashMap<String,Ident>> param;
+	private HashMap<Integer,HashMap<String,Ident>> param;// a changer en class
 	private int rang;
-
-	public int paramTest;
+	/**
+	 * Pile des arguments
+	 * 
+	 */
+	public Stack<Integer> paramTest;
 
 	/**
 	 * Constructeur TabIdent
@@ -60,7 +63,7 @@ public class TabIdent {
 		this.var = new Stack<Integer>();
 		this.param = new HashMap<Integer,HashMap<String,Ident>>();
 		this.rang=0;
-		this.paramTest=-1;
+		this.paramTest= new Stack<Integer>();
 	}
 
 	/**
@@ -206,7 +209,8 @@ public class TabIdent {
 		IdFonc func = (IdFonc) chercheIdentG(nom);
 		if (func!=null){//fonction existe
 			int nbParam = func.nbParam;
-			if (nbParam!=this.paramTest+1){
+			int paramTest = this.paramTest.peek();
+			if (nbParam!=paramTest+1){
 				Erreur.message("La fonction '" + nom + "' n'est pas appliquée au nombre exact d'arguments");
 			}
 		}
@@ -255,10 +259,14 @@ public class TabIdent {
 	}
 
 	public void addParamForTest() {
-		this.paramTest++;
+		this.paramTest.push(this.paramTest.pop()+1);
+	}
+	
+	public void newFun() {
+		this.paramTest.push(-1);
 	}
 
 	public void resetParamTest() {
-		this.paramTest=-1;
+		this.paramTest.pop();
 	}
 }

@@ -704,7 +704,7 @@ public class Expression implements YakaConstants{
 
 	public void testParamFonc() {
 		String typeExpr=this.type.peek();
-		int index = YakaTokenManager.tabident.paramTest;
+		int index = YakaTokenManager.tabident.paramTest.peek();
 		int nbParam = IdFonc.param.size();
 		if(index+1<=nbParam){//nbParam est encore >= nb expr entrees en param 
 			String typeParam=IdFonc.param.get(index).toLowerCase();

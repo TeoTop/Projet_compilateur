@@ -525,18 +525,19 @@ void valeur () : {}
 	(
 		{
 			String id = YakaTokenManager.identLu;
+			YakaTokenManager.tabident.newFun();
 			YakaTokenManager.tabident.identIsFunction(id);
 			YakaTokenManager.yvm.reserveRetour();
 		}
 		argumentsFonction()
 		{
 			YakaTokenManager.tabident.testNbParam(id);
+			YakaTokenManager.tabident.resetParamTest();
 		}
 	)?
 	 {
 		YakaTokenManager.expression.empileTypeAvecIdent(YakaTokenManager.identLu);
 		YakaTokenManager.expression.loadIdent(YakaTokenManager.identLu);
-		YakaTokenManager.tabident.resetParamTest();
 	 }
  | <VRAI> 
 	{
@@ -565,7 +566,9 @@ void argumentsFonction():{}
 		YakaTokenManager.tabident.addParamForTest();
 		YakaTokenManager.expression.testParamFonc();
 	}
-	)*)?")"
+	)*
+	)?
+	")"
 }
 
 void opRel() : {}

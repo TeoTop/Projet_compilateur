@@ -21,7 +21,7 @@ public class Yaka implements YakaConstants {
                         System.out.println("Lecture sur l'entree standard...");
                         input = System.in;
                 } else {
-                        System.out.println("Usage: java Yaka [fichier entr\u00e9e] [fichier sortie] ou java Yaka [fichier sortie]");
+                        System.out.println("Usage: java Yaka [fichier entr\u00c3\u00a9e] [fichier sortie] ou java Yaka [fichier sortie]");
                         return;
                 }
                 try {
@@ -559,10 +559,12 @@ public class Yaka implements YakaConstants {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 53:
                         String id = YakaTokenManager.identLu;
+                        YakaTokenManager.tabident.newFun();
                         YakaTokenManager.tabident.identIsFunction(id);
                         YakaTokenManager.yvm.reserveRetour();
         argumentsFonction();
-                        YakaTokenManager.tabident.testNbParam(id);
+                        YakaTokenManager.tabident.testNbParam(id);//erreur
+                        YakaTokenManager.tabident.resetParamTest();
         break;
       default:
         jj_la1[21] = jj_gen;
@@ -570,7 +572,6 @@ public class Yaka implements YakaConstants {
       }
                 YakaTokenManager.expression.empileTypeAvecIdent(YakaTokenManager.identLu);
                 YakaTokenManager.expression.loadIdent(YakaTokenManager.identLu);
-                YakaTokenManager.tabident.resetParamTest();
       break;
     case VRAI:
       jj_consume_token(VRAI);
