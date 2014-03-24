@@ -5,10 +5,6 @@ public class YakaTokenManager implements YakaConstants
 {
 public static String identLu,chaineLue;
 public static int entierLu;
-public static Declaration declaration= new Declaration();
-public static TabIdent tabident = new TabIdent();
-public static Expression expression = new Expression();
-public static YVM yvm = new YVMasm();
 
   /** Debug output. */
   public static  java.io.PrintStream debugStream = System.out;
