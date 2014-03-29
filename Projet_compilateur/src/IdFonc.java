@@ -7,7 +7,7 @@ public class IdFonc extends Ident {
 	public int nbParam;
 	@Override
 	public String toString() {
-		return "IdFonc [param=" + param + "]";
+		return "IdFonc [param=" + param + ", nbParam=" + nbParam + "]";
 	}
 
 	public IdFonc(){

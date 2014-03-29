@@ -94,7 +94,6 @@ public class Yaka implements YakaConstants {
     bloc();
     jj_consume_token(FFONCTION);
                 YakaTokenManager.declaration.ajoutNomFonction(ident);
-                YakaTokenManager.expression.returnFun(ident);
                 YakaTokenManager.expression.fermeBloc(ident);
                 YakaTokenManager.tabident.clearFun();
                 YakaTokenManager.declaration.inFunction(false);
@@ -340,6 +339,7 @@ public class Yaka implements YakaConstants {
     expression();
                 YakaTokenManager.expression.testInFunc();
                 YakaTokenManager.expression.testTypeExprFunc();
+                YakaTokenManager.expression.returnFun();
   }
 
   static final public void iteration() throws ParseException {
@@ -563,7 +563,7 @@ public class Yaka implements YakaConstants {
                         YakaTokenManager.tabident.identIsFunction(id);
                         YakaTokenManager.yvm.reserveRetour();
         argumentsFonction();
-                        YakaTokenManager.tabident.testNbParam(id);//erreur
+                        YakaTokenManager.tabident.testNbParam(id);
                         YakaTokenManager.tabident.resetParamTest();
         break;
       default:

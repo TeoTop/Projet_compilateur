@@ -219,7 +219,6 @@ void declFonction():{}
 	<FFONCTION>
 	{
 		YakaTokenManager.declaration.ajoutNomFonction(ident);
-		YakaTokenManager.expression.returnFun(ident);
 		YakaTokenManager.expression.fermeBloc(ident);
 		YakaTokenManager.tabident.clearFun();
 		YakaTokenManager.declaration.inFunction(false);
@@ -352,6 +351,7 @@ void retourne():{}
 	{
 		YakaTokenManager.expression.testInFunc();
 		YakaTokenManager.expression.testTypeExprFunc();
+		YakaTokenManager.expression.returnFun();
 	}
 }
 

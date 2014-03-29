@@ -728,12 +728,10 @@ public class Expression implements YakaConstants{
 		}
 	}
 
-	public void returnFun(String id) {
-		if(YakaTokenManager.tabident.existeIdentG(id)){
-			IdFonc func=(IdFonc) YakaTokenManager.tabident.chercheIdentG(id);
-			int offset = func.nbParam*2+4;
-			YakaTokenManager.yvm.ireturn(offset);
-		}
+	public void returnFun() {
+		int nbParam = YakaTokenManager.tabident.nbParam();
+		int offset = nbParam*2+4;
+		YakaTokenManager.yvm.ireturn(offset);
 	}
 
 	public void fermeBloc(String id) {
