@@ -28,7 +28,7 @@ public class TabIdent {
 	 * 
 	 * @see TabIdent#TabIdent()
 	 */
-	private HashMap<String,Ident> globaux;
+	HashMap<String,Ident> globaux;
 	
 	/**
 	 * Pile des variables

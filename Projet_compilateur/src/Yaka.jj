@@ -24,6 +24,14 @@ PARSER_BEGIN(Yaka)
 
 
 public class Yaka {
+	public static Declaration declaration= new Declaration();
+	public static TabIdent tabident = new TabIdent();
+	public static Expression expression = new Expression();
+	public static YVM yvm = new YVMasm();
+	public static Conditionnelle condition = new Conditionnelle();
+	public static Fonction fonction = new Fonction();
+	public static Iteration iteration = new Iteration();
+	
 	public static void main(String args[]) {
 		Yaka analyseur;
 		java.io.InputStream input;
@@ -58,7 +66,7 @@ public class Yaka {
 				System.out.println("La g\u00e9n\u00e9ration du fichier a \u00e9chou\u00e9");
 			}
 			else {
-				YakaTokenManager.yvm.recopierEntete(fichierOut);
+				yvm.recopierEntete(fichierOut);
 				try {
 					tmp = new java.io.FileInputStream(temp);
 				} catch (java.io.FileNotFoundException e) {
@@ -87,10 +95,6 @@ TOKEN_MGR_DECLS :
 {
 public static String identLu,chaineLue;
 public static int entierLu;
-public static Declaration declaration= new Declaration();
-public static TabIdent tabident = new TabIdent();
-public static Expression expression = new Expression();
-public static YVM yvm = new YVMasm();
 }
 
 /*** Skip whitespace and comments ***/
@@ -124,6 +128,7 @@ TOKEN :
 | < SI: "SI" >
 | < FSI: "FSI">
 | < ENTIER: "ENTIER" >
+| < ERREUR: "ERREUR" >
 | < RETOURNE: "RETOURNE" >
 | < VRAI: "VRAI" >
 | < TANTQUE: "TANTQUE" >
@@ -190,38 +195,38 @@ void analyse() : {}
    (declFonction())*
    <PRINCIPAL>
 	{
-		YakaTokenManager.yvm.debut();
-		YakaTokenManager.yvm.ecrireEtiqu("main");
+		yvm.debut();
+		yvm.ecrireEtiqu("main");
 	}
    bloc()
    <FPRINCIPAL>
    <FPROGRAMME>
    {
-		YakaTokenManager.yvm.queue();
+		yvm.queue();
 	}
 }
 
 void declFonction():{}
 {
 	{
-		YakaTokenManager.declaration.inFunction(true);
+		declaration.inFunction(true);
 	}
 	typeF() <FONCTION> <ident>
 	{
 		String ident = YakaTokenManager.identLu;
-		YakaTokenManager.yvm.ecrireEtiqu(ident);
+		yvm.ecrireEtiqu(ident);
 	}
 	paramForms()
 	{
-		YakaTokenManager.tabident.rangeParam();
+		tabident.rangeParam();
 	}
 	bloc()
 	<FFONCTION>
 	{
-		YakaTokenManager.declaration.ajoutNomFonction(ident);
-		YakaTokenManager.expression.fermeBloc(ident);
-		YakaTokenManager.tabident.clearFun();
-		YakaTokenManager.declaration.inFunction(false);
+		declaration.ajoutNomFonction(ident);
+		expression.fermeBloc(ident);
+		tabident.clearFun();
+		declaration.inFunction(false);
 	}
 }
 
@@ -229,11 +234,11 @@ void typeF():{}
 {
 	<ENTIER>
   	{
-  		YakaTokenManager.declaration.ajoutFonction("ENTIER");
+  		declaration.ajoutFonction(YakaConstants.ENTIER);
   	}		
  | <BOOLEEN>
   	{
-  		YakaTokenManager.declaration.ajoutFonction("BOOLEEN");
+  		declaration.ajoutFonction(YakaConstants.BOOLEEN);
   	}
 }
 
@@ -246,14 +251,14 @@ void paramForm():{}
 {
 	type() <ident>
 	{
-		YakaTokenManager.declaration.addParam(YakaTokenManager.identLu);
+		declaration.addParam(YakaTokenManager.identLu);
 	}
 }
 
 void bloc() : {}{
  (declConst())*
  (declVar())*
-	{YakaTokenManager.yvm.ouvbloc(YakaTokenManager.tabident.nbVar() * 2);}
+	{yvm.ouvbloc(tabident.nbVar() * 2);}
    suiteInstr() 
 }
 
@@ -268,7 +273,7 @@ void defConst() : {}
 	
   <ident> 
   {
-  	YakaTokenManager.declaration.ajoutNomConstante(YakaTokenManager.identLu);
+  	declaration.ajoutNomConstante(YakaTokenManager.identLu);
   }
    "=" valConst()
  
@@ -277,23 +282,23 @@ void defConst() : {}
 void valConst() : {}{
   <entier>
    {
-   	YakaTokenManager.declaration.ajoutConstanteParEntier(YakaTokenManager.entierLu);
+   	declaration.ajoutConstanteParEntier(YakaTokenManager.entierLu);
   }
   |"-" <entier>
   {
-   	YakaTokenManager.declaration.ajoutConstanteParEntier(YakaTokenManager.entierLu*-1);
+   	declaration.ajoutConstanteParEntier(YakaTokenManager.entierLu*-1);
   }
   | <ident>
   {
-  	YakaTokenManager.declaration.ajoutConstanteParConstante(YakaTokenManager.identLu);
+  	declaration.ajoutConstanteParConstante(YakaTokenManager.identLu);
   }
  | <VRAI> 
   {
-  	YakaTokenManager.declaration.ajoutConstanteParBooleen(-1);
+  	declaration.ajoutConstanteParBooleen(-1);
   }		
  | <FAUX> 
   {
-  	YakaTokenManager.declaration.ajoutConstanteParBooleen(0);
+  	declaration.ajoutConstanteParBooleen(0);
   }		
 }
 
@@ -304,12 +309,12 @@ void declVar() : {}
   type()
   <ident>
   {
-	YakaTokenManager.declaration.ajoutNomVariable(YakaTokenManager.identLu);
+	declaration.ajoutNomVariable(YakaTokenManager.identLu);
   }
   ("," 
       <ident>
       {
-	YakaTokenManager.declaration.ajoutNomVariableSecondaire(YakaTokenManager.identLu);
+	declaration.ajoutNomVariableSecondaire(YakaTokenManager.identLu);
       }
   )* ";"
 	
@@ -319,11 +324,11 @@ void type() :{}
 {
    <ENTIER>
   	{
-  		YakaTokenManager.declaration.ajoutVariableParTYPE("ENTIER");
+  		declaration.ajoutVariableParTYPE(YakaConstants.ENTIER);
   	}		
  | <BOOLEEN>
   	{
-  		YakaTokenManager.declaration.ajoutVariableParTYPE("BOOLEEN");
+  		declaration.ajoutVariableParTYPE(YakaConstants.BOOLEEN);
   	}
 }
 /*
@@ -349,9 +354,9 @@ void retourne():{}
 {
 	<RETOURNE> expression()
 	{
-		YakaTokenManager.expression.testInFunc();
-		YakaTokenManager.expression.testTypeExprFunc();
-		YakaTokenManager.expression.returnFun();
+		expression.testInFunc();
+		expression.testTypeExprFunc();
+		expression.returnFun();
 	}
 }
 
@@ -359,22 +364,22 @@ void iteration():{}
 {
 	<TANTQUE>
 	{
-		YakaTokenManager.expression.addTantQue();
-		YakaTokenManager.expression.ecrireFaire();
+		iteration.addTantQue();
+		iteration.ecrireFaire();
 	}
 	expression()
 	{
-		YakaTokenManager.expression.testBool();
-		YakaTokenManager.expression.ecrireIffauxFait();
+		expression.testBool();
+		iteration.ecrireIffauxFait();
 	}
 	<FAIRE> suiteInstr()
 	{
-		YakaTokenManager.expression.ecrireGotoFaire();
+		iteration.ecrireGotoFaire();
 	}
 	<FAIT>
 	{
-		YakaTokenManager.expression.ecrireFait();
-		YakaTokenManager.expression.removeTantQue();
+		iteration.ecrireFait();
+		iteration.removeTantQue();
 	}
 }
 
@@ -382,23 +387,23 @@ void conditionnelle():{}
 {
 	<SI>
 	{
-		YakaTokenManager.expression.addSi();
+		condition.addSi();
 	}
 	expression()
 	{
-		YakaTokenManager.expression.testBool();
-		YakaTokenManager.expression.ecrireIffauxSinon();
+		expression.testBool();
+		condition.ecrireIffauxSinon();
 	}
 	<ALORS> suiteInstr()
 	{
-		YakaTokenManager.expression.ecrireGotoFSI();
-		YakaTokenManager.expression.ecrireSinon();
+		condition.ecrireGotoFSI();
+		condition.ecrireSinon();
 	}
 	(<SINON> suiteInstr())?
 	 <FSI>
 	{
-		YakaTokenManager.expression.ecrireFsi();
-		YakaTokenManager.expression.removeSi();
+		condition.ecrireFsi();
+		condition.removeSi();
 	}
 }
 
@@ -413,10 +418,10 @@ void affectation() : {}
 	
 	expression()
 	{
-		YakaTokenManager.expression.store(id);
+		expression.store(id);
 		/* Vider les piles pour évaluer une autre expression */
-		YakaTokenManager.expression.clearType();
-		YakaTokenManager.expression.clearOp();
+		expression.clearType();
+		expression.clearOp();
 	}
 }
 
@@ -424,7 +429,7 @@ void lecture() : {}
 {
 	<LIRE> "(" <ident> ")"
 	{
-		YakaTokenManager.expression.lire(YakaTokenManager.identLu);
+		expression.lire(YakaTokenManager.identLu);
 	}
 }
 
@@ -433,17 +438,17 @@ void ecriture() : {}
 	<ECRIRE> "("( 
 	expression()
 	{
-		YakaTokenManager.expression.ecrire();
+		expression.ecrire();
 	}
 	| 
 	<chaine> 
 	{
-		YakaTokenManager.yvm.ecrireChaine(YakaTokenManager.chaineLue);
+		yvm.ecrireChaine(YakaTokenManager.chaineLue);
 	}
 	)")" | 
 	<ALALIGNE>
 	{
-		YakaTokenManager.yvm.aLaLigne();
+		yvm.aLaLigne();
 	}
 }
 
@@ -459,8 +464,8 @@ void expression() : {}
   opRel()
   simpleExpr() 
 {
-	YakaTokenManager.expression.testRel();
-	YakaTokenManager.expression.executerOpRel();
+	expression.testRel();
+	expression.executerOpRel();
 } 
   )?
 {
@@ -478,8 +483,8 @@ void simpleExpr() : {}
    terme()
    {
 	   
-	   YakaTokenManager.expression.testAdd();
-	   YakaTokenManager.expression.executerOpAdd();
+	   expression.testAdd();
+	   expression.executerOpAdd();
 	}
    )*
 } 
@@ -491,8 +496,8 @@ void terme() : {}
   facteur()
    {
 	   
-	   YakaTokenManager.expression.testMul();
-	   YakaTokenManager.expression.executerOpMul();
+	   expression.testMul();
+	   expression.executerOpMul();
 	}
   )*
 }
@@ -503,8 +508,8 @@ void facteur() : {}
 	primaire()
   {
 	  
-	   YakaTokenManager.expression.testNeg();
-	  YakaTokenManager.expression.executerOpNeg();
+	   expression.testNeg();
+	  expression.executerOpNeg();
 	}
 }
 
@@ -518,36 +523,40 @@ void primaire (): {}
 void valeur () : {}
 { <entier> 	
 	{
-		YakaTokenManager.expression.empileType("entier");
-		YakaTokenManager.yvm.iconst(YakaTokenManager.entierLu);
+		expression.empileType(YakaConstants.ENTIER);
+		yvm.iconst(YakaTokenManager.entierLu);
 	}
  | <ident>
+	 {
+		expression.empileTypeAvecIdent(YakaTokenManager.identLu);
+		expression.loadIdent(YakaTokenManager.identLu);
+	 }
 	(
 		{
 			String id = YakaTokenManager.identLu;
-			YakaTokenManager.tabident.newFun();
-			YakaTokenManager.tabident.identIsFunction(id);
-			YakaTokenManager.yvm.reserveRetour();
+			tabident.identIsFunction(id);
+			tabident.newFun();
+			expression.newFun(id);
+			yvm.reserveRetour();
 		}
 		argumentsFonction()
 		{
-			YakaTokenManager.tabident.testNbParam(id);
-			YakaTokenManager.tabident.resetParamTest();
+			tabident.testNbParam(id);
+			tabident.resetParamTest();
+			expression.call();
+			expression.empileTypeFun();
+			expression.resetFun();
 		}
 	)?
-	 {
-		YakaTokenManager.expression.empileTypeAvecIdent(YakaTokenManager.identLu);
-		YakaTokenManager.expression.loadIdent(YakaTokenManager.identLu);
-	 }
  | <VRAI> 
 	{
-		YakaTokenManager.expression.empileType("booleen");
-		YakaTokenManager.yvm.iconst(-1);
+		expression.empileType(YakaConstants.BOOLEEN);
+		yvm.iconst(-1);
 	}
  | <FAUX> 
 	{
-		YakaTokenManager.expression.empileType("booleen");
-		YakaTokenManager.yvm.iconst(0);
+		expression.empileType(YakaConstants.BOOLEEN);
+		yvm.iconst(0);
 	}
  
 }
@@ -557,51 +566,43 @@ void argumentsFonction():{}
 	"("(
 	expression()
 	{
-		YakaTokenManager.tabident.addParamForTest();
-		YakaTokenManager.expression.testParamFonc();
+		tabident.addParamForTest();
+		expression.testParamFonc();
 	}
 	("," 
 	expression()
 	{
-		YakaTokenManager.tabident.addParamForTest();
-		YakaTokenManager.expression.testParamFonc();
+		tabident.addParamForTest();
+		expression.testParamFonc();
 	}
-	)*
-	)?
-	")"
+	)*)?")"
 }
 
 void opRel() : {}
 {
    "=" 	
   {
-	  YakaTokenManager.expression.empileOpera("=");
-	  YakaTokenManager.expression.setLastOpRel(YakaConstants.EGAL);
+	  expression.empileOpera(YakaConstants.EGAL);
 	}
  | "<>" 
   {
-	  YakaTokenManager.expression.empileOpera("<>");
-	  YakaTokenManager.expression.setLastOpRel(YakaConstants.DIFF);
+	  expression.empileOpera(YakaConstants.DIFF);
   }
  | "<" 	
   {
-	  YakaTokenManager.expression.empileOpera("<");
-	  YakaTokenManager.expression.setLastOpRel(YakaConstants.INF);
+	  expression.empileOpera(YakaConstants.INF);
   }
  | "<=" 
   {
-	  YakaTokenManager.expression.empileOpera("<=");
-	  YakaTokenManager.expression.setLastOpRel(YakaConstants.INFEGAL);
+	  expression.empileOpera(YakaConstants.INFEGAL);
   }
  | ">" 	
   {
-	  YakaTokenManager.expression.empileOpera(">");
-	  YakaTokenManager.expression.setLastOpRel(YakaConstants.SUP);
+	  expression.empileOpera(YakaConstants.SUP);
   }
  | ">=" 
   {
-	  YakaTokenManager.expression.empileOpera(">=");
-	  YakaTokenManager.expression.setLastOpRel(YakaConstants.SUPEGAL);
+	  expression.empileOpera(YakaConstants.SUPEGAL);
   }
 } 
 
@@ -609,18 +610,15 @@ void opAdd() : {}
 {
     "+"
   {
-	  YakaTokenManager.expression.empileOpera("+");
-	  YakaTokenManager.expression.setLastOpAdd(YakaConstants.ADD);
+	  expression.empileOpera(YakaConstants.ADD);
 	}
   |  "-" 
   {
-	  YakaTokenManager.expression.empileOpera("-");
-	  YakaTokenManager.expression.setLastOpAdd(YakaConstants.SUBNEG);
+	  expression.empileOpera(YakaConstants.SUBNEG);
 	}
   | <OU> 
   {
-	  YakaTokenManager.expression.empileOpera("ou");
-	  YakaTokenManager.expression.setLastOpAdd(YakaConstants.OR);
+	  expression.empileOpera(YakaConstants.OR);
 	}
 }
 
@@ -628,31 +626,26 @@ void opMul() : {}
 {
   "*"	
   {
-	YakaTokenManager.expression.empileOpera("*");
-	  YakaTokenManager.expression.setLastOpMul(YakaConstants.MUL);
+	expression.empileOpera(YakaConstants.MUL);
   }
   | "/"	
   {
-	YakaTokenManager.expression.empileOpera("/");
-	  YakaTokenManager.expression.setLastOpMul(YakaConstants.DIV);
+	expression.empileOpera(YakaConstants.DIV);
   }
   | <ET>	
   {
-	  YakaTokenManager.expression.empileOpera("et");
-	  YakaTokenManager.expression.setLastOpMul(YakaConstants.AND);
+	  expression.empileOpera(YakaConstants.AND);
 	}
 } 
 
 void opNeg() : {}
 { "-" 
   {
-	  YakaTokenManager.expression.empileOpera("-");
-	  YakaTokenManager.expression.setLastOpNeg(YakaConstants.SUBNEG);
+	  expression.empileOpera(YakaConstants.SUBNEG);
   }
  | <NON>
   {
-	  YakaTokenManager.expression.empileOpera("non");
-	  YakaTokenManager.expression.setLastOpNeg(YakaConstants.NOT);
+	  expression.empileOpera(YakaConstants.NOT);
   }
 }
 /* on ne peut pas faire opneg pour une expression */

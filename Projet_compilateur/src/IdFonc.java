@@ -3,15 +3,23 @@ import java.util.Stack;
 
 public class IdFonc extends Ident {
 
-	static Stack<String> param;
+	/**
+	 * Pile permettant de stocker les types de paramètres.
+	 */
+	static Stack<Integer> param;
+	
+	/**
+	 * Attribut permttant de connaitre le nombre de paramètre.
+	 */
 	public int nbParam;
+	
 	@Override
 	public String toString() {
 		return "IdFonc [param=" + param + ", nbParam=" + nbParam + "]";
 	}
 
 	public IdFonc(){
-		param = new Stack<String>();
+		param = new Stack<Integer>();
 	}
 	
 	@Override
@@ -24,11 +32,11 @@ public class IdFonc extends Ident {
 		return true;
 	}
 
-	public Stack<String> getParam() {
+	public Stack<Integer> getParam() {
 		return param;
 	}
 
-	public void ajoutTypeParam(String param) {
+	public void ajoutTypeParam(int param) {
 		this.param.push(param);
 	}
 	

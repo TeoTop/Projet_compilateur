@@ -21,9 +21,9 @@ public abstract class Ident {
 	 * Elle ne prend que deux valeurs : ENTIER ou BOOLEEN
 	 * 
 	 * @see Ident#getType()
-	 * @see Ident#setType(String)
+	 * @see Ident#setType(int)
 	 */
-	private String type;
+	private int type;
 
 	/**
 	 * Retourne l'attribut type de la classe Ident
@@ -31,7 +31,7 @@ public abstract class Ident {
 	 * 
 	 * @see Ident#type
 	 */
-	public String getType() {
+	public int getType() {
 		return this.type;
 	}
 
@@ -41,7 +41,7 @@ public abstract class Ident {
 	 * 
 	 * @see Ident#type
 	 */
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 

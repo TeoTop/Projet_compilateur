@@ -34,8 +34,11 @@ public class Declaration {
 	 * Correspond au type de la variable ou de la constante dans le code YAKA (soit entier
 	 * soit booléen).
 	 */
-	String type;
+	int type;
 
+	/**
+	 * Flag permettant de savoir si les déclarations sont celles d'une fonctions
+	 */
 	boolean inFunc;
 	
 	/**
@@ -45,7 +48,7 @@ public class Declaration {
 	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
 	public void ajoutNomVariable(String ident){
-		YakaTokenManager.tabident.rangeIdent(ident,this.id);
+		Yaka.tabident.rangeIdent(ident,this.id);
 	}
 	/**
 	 * Permet d'ajouter une fonction à la table des idents globaux.
@@ -54,7 +57,7 @@ public class Declaration {
 	 * @see TabIdent#addFonction(String nom)
 	 */
 	public void ajoutNomFonction(String ident){
-		YakaTokenManager.tabident.addFonction(ident,this.idFonc);
+		Yaka.tabident.addFonction(ident,this.idFonc);
 	}
 	/**
 	 * Permet d'ajouter un paramètre à la table des paramètres temporaires
@@ -63,7 +66,7 @@ public class Declaration {
 	 * @see TabIdent#addParam(String, Ident)
 	 */
 	public void addParam(String ident){
-		YakaTokenManager.tabident.addParam(ident,this.id);
+		Yaka.tabident.addParam(ident,this.id);
 	}
 	
 	/**
@@ -75,7 +78,7 @@ public class Declaration {
 	 * @see Declaration#type
 	 * @see IdVar#setType(String)
 	 */
-	public void ajoutVariableParTYPE(String type){
+	public void ajoutVariableParTYPE(int type){
 		this.id = new IdVar();
 		this.type = type;
 		this.id.setType(type);
@@ -89,7 +92,7 @@ public class Declaration {
 	 * @see Declaration#type
 	 * @see IdFonc#setType(String)
 	 */
-	public void ajoutFonction(String type){
+	public void ajoutFonction(int type){
 		this.idFonc = new IdFonc();
 		this.type = type;
 	  	this.idFonc.setType(type);
@@ -109,7 +112,7 @@ public class Declaration {
 	public void ajoutNomVariableSecondaire(String ident){
 		this.id = new IdVar();
 		this.id.setType(this.type);
-		YakaTokenManager.tabident.rangeIdent(ident,this.id);
+		Yaka.tabident.rangeIdent(ident,this.id);
 	}
 	
 	/**
@@ -121,7 +124,7 @@ public class Declaration {
 	 */
 	public void ajoutNomConstante(String ident){
 		this.id = new IdConst();
-		YakaTokenManager.tabident.rangeIdent(ident,this.id);
+		Yaka.tabident.rangeIdent(ident,this.id);
 	}
 	
 	/**
@@ -139,13 +142,13 @@ public class Declaration {
 	public void ajoutConstanteParConstante(String ident){
 		/*on vérifie que la constante est dans le tableau puis on la récupère pour la copier,
 		sinon on déclenche une erreur.*/
-	  	IdConst idConst = (IdConst) YakaTokenManager.tabident.chercheIdent(ident);
+	  	IdConst idConst = (IdConst) Yaka.tabident.chercheIdent(ident);
 	  	if (idConst != null){
 	  		((IdConst) this.id).setValeur(idConst.getValeur());
 	  		this.id.setType(idConst.getType());
 	  	}
 	  	else {
-	  		this.id.setType("erreur");
+	  		this.id.setType(YakaConstants.ERREUR);
 	  		Erreur.message("La constante `" + ident + "` n'existe pas");
 	  	}
 	}
@@ -160,7 +163,7 @@ public class Declaration {
 	 */
 	public void ajoutConstanteParEntier(int entier){
 		((IdConst) this.id).setValeur(entier);
-	  	this.id.setType("ENTIER");
+	  	this.id.setType(YakaConstants.ENTIER);
 	}
 	
 	/**
@@ -173,8 +176,15 @@ public class Declaration {
 	 */
 	public void ajoutConstanteParBooleen(int entier){
 		((IdConst) this.id).setValeur(entier);
-	  	this.id.setType("BOOLEEN");
+	  	this.id.setType(YakaConstants.BOOLEEN);
 	}
+	
+	/**
+	 * Permet de modifier l'attribut inFunc  
+	 * @param b
+	 * 
+	 * @see Declaration#inFunc
+	 */
 	public void inFunction(boolean b) {
 		this.inFunc=b;
 	}

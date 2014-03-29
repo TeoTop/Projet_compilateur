@@ -25,79 +25,81 @@ public interface YakaConstants {
   /** RegularExpression Id. */
   int ENTIER = 15;
   /** RegularExpression Id. */
-  int RETOURNE = 16;
+  int ERREUR = 16;
   /** RegularExpression Id. */
-  int VRAI = 17;
+  int RETOURNE = 17;
   /** RegularExpression Id. */
-  int TANTQUE = 18;
+  int VRAI = 18;
   /** RegularExpression Id. */
-  int CONST = 19;
+  int TANTQUE = 19;
   /** RegularExpression Id. */
-  int FAUX = 20;
+  int CONST = 20;
   /** RegularExpression Id. */
-  int FAIT = 21;
+  int FAUX = 21;
   /** RegularExpression Id. */
-  int OU = 22;
+  int FAIT = 22;
   /** RegularExpression Id. */
-  int ET = 23;
+  int OU = 23;
   /** RegularExpression Id. */
-  int NON = 24;
+  int ET = 24;
   /** RegularExpression Id. */
-  int FONCTION = 25;
+  int NON = 25;
   /** RegularExpression Id. */
-  int FFONCTION = 26;
+  int FONCTION = 26;
   /** RegularExpression Id. */
-  int PROGRAMME = 27;
+  int FFONCTION = 27;
   /** RegularExpression Id. */
-  int FPROGRAMME = 28;
+  int PROGRAMME = 28;
   /** RegularExpression Id. */
-  int PRINCIPAL = 29;
+  int FPROGRAMME = 29;
   /** RegularExpression Id. */
-  int FPRINCIPAL = 30;
+  int PRINCIPAL = 30;
   /** RegularExpression Id. */
-  int ALORS = 31;
+  int FPRINCIPAL = 31;
   /** RegularExpression Id. */
-  int ECRIRE = 32;
+  int ALORS = 32;
   /** RegularExpression Id. */
-  int LIRE = 33;
+  int ECRIRE = 33;
   /** RegularExpression Id. */
-  int ALALIGNE = 34;
+  int LIRE = 34;
   /** RegularExpression Id. */
-  int ADD = 35;
+  int ALALIGNE = 35;
   /** RegularExpression Id. */
-  int SUBNEG = 36;
+  int ADD = 36;
   /** RegularExpression Id. */
-  int OR = 37;
+  int SUBNEG = 37;
   /** RegularExpression Id. */
-  int MUL = 38;
+  int OR = 38;
   /** RegularExpression Id. */
-  int DIV = 39;
+  int MUL = 39;
   /** RegularExpression Id. */
-  int AND = 40;
+  int DIV = 40;
   /** RegularExpression Id. */
-  int NOT = 41;
+  int AND = 41;
   /** RegularExpression Id. */
-  int EGAL = 42;
+  int NOT = 42;
   /** RegularExpression Id. */
-  int DIFF = 43;
+  int EGAL = 43;
   /** RegularExpression Id. */
-  int INF = 44;
+  int DIFF = 44;
   /** RegularExpression Id. */
-  int INFEGAL = 45;
+  int INF = 45;
   /** RegularExpression Id. */
-  int SUP = 46;
+  int INFEGAL = 46;
   /** RegularExpression Id. */
-  int SUPEGAL = 47;
+  int SUP = 47;
   /** RegularExpression Id. */
-  int chiffre = 48;
+  int SUPEGAL = 48;
   /** RegularExpression Id. */
-  int entier = 49;
+  int chiffre = 49;
   /** RegularExpression Id. */
-  int lettre = 50;
+  int entier = 50;
   /** RegularExpression Id. */
-  int ident = 51;
+  int lettre = 51;
   /** RegularExpression Id. */
-  int chaine = 52;
+  int ident = 52;
+  /** RegularExpression Id. */
+  int chaine = 53;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -122,6 +124,7 @@ public interface YakaConstants {
     "\"SI\"",
     "\"FSI\"",
     "\"ENTIER\"",
+    "\"ERREUR\"",
     "\"RETOURNE\"",
     "\"VRAI\"",
     "\"TANTQUE\"",

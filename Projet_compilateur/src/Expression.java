@@ -15,77 +15,25 @@ import java.util.Stack;
  * @see Ident
  */
 public class Expression implements YakaConstants{
-	
-	/**
-     * La pile des types
-     * @see Expression#Expression()
-     * @see Expression#empileTypeAvecIdent(String)
-     * @see Expression#empileType(String)
-     */
-	private Stack<String> type;
-	
-	/**
-     * La pile des opérateurs
-     * @see Expression#Expression()
-     * @see Expression#empileOpera(String)
-     */
-	private Stack<String> opera;
-	
-	/**
-	 * Le dernier operateur de relation de comparaison utilisé
-	 * @see Expression#setLastOpRel(int)
-	 */
-	private int lasOpRel;
-	
-	/**
-	 * Le dernier operateur de multiplication utilisé (multiplication, division
-	 * ET)
-	 * @see Expression#setLastOpMul(int)
-	 */
-	private int lasOpMul;
-	
-	/**
-	 * Le dernier operateur d'addition utilisé (addition, soustraction, OR)
-	 * @see Expression#setLastOpAdd(int)
-	 */
-	private int lasOpAdd;
-	
-	/**
-	 * Le dernier operateur de négation utilisé (moins unaire, NON)
-	 * @see Expression#setLastOpNeg(int)
-	 */
-	private int lasOpNeg;
-	
-	/**
-	 * La piles des conditionnelles
-     * @see Expression#Expression()
-     * @see Expression#addSi()
-     * @see Expression#removeSi()
-	 */
-	private Stack<Integer> pileSI;
-	
-	/**
-	 * Compteur de conditionnelles
-     * @see Expression#Expression()
-     * @see Expression#addSi()
-	 */
-	private int comptSI;
-	
-	/**
-	 * La piles des boucles
-     * @see Expression#Expression()
-     * @see Expression#addTantQue()
-     * @see Expression#removeTantQue()
-	 */
-	private Stack<Integer> pileTQ;
-	
-	/**
-	 * Compteur de boucles
-     * @see Expression#Expression()
-     * @see Expression#addTantQue()
-	 */
-	private int comptTQ;
 
+	/**
+	 * La pile des types
+	 * @see Expression#Expression()
+	 * @see Expression#empileTypeAvecIdent(String)
+	 * @see Expression#empileType(int)
+	 */
+	private Stack<Integer> type;
+
+	/**
+	 * La pile des opérateurs
+	 * @see Expression#Expression()
+	 * @see Expression#empileOpera(int)
+	 */
+	private Stack<Integer> opera;
+
+	private Stack<String> lastFun;
+
+	private Stack<Boolean> inFunTest;
 	/**
 	 * Constructeur Expression
 	 * Création de la pile des types, des opérateurs ainsi que 
@@ -94,20 +42,15 @@ public class Expression implements YakaConstants{
 	 * 
 	 * @see Expression#type
 	 * @see Expression#opera
-	 * @see Expression#pileSI
-	 * @see Expression#comptSI
-	 * @see Expression#pileTQ
-	 * @see Expression#comptTQ
 	 */
 	public Expression() {
-		this.type = new Stack<String>();
-		this.opera = new Stack<String>();
-		this.pileSI = new Stack<Integer>();
-		this.comptSI = 1;
-		this.pileTQ = new Stack<Integer>();
-		this.comptTQ = 1;
+		this.type = new Stack<Integer>();
+		this.opera = new Stack<Integer>();
+		this.lastFun = new Stack<String>();
+		this.inFunTest = new Stack<Boolean>();
+		this.inFunTest.push(false);
 	}
-	
+
 	/**
 	 * Empile un type grâce à son ident
 	 * 
@@ -116,21 +59,47 @@ public class Expression implements YakaConstants{
 	 * @param id
 	 */
 	public void empileTypeAvecIdent(String id) {
-		Boolean existe = false;
 		/* tester si l'ident existe avant de l'empiler */
-		if (YakaTokenManager.tabident.existeIdent(id)){
-			this.type.push((YakaTokenManager.tabident.chercheIdent(id)).getType().toLowerCase());
-			existe=true;
+		if (Yaka.tabident.existeIdent(id)){
+			this.type.push((Yaka.tabident.chercheIdent(id)).getType());
 		}
-		else if (YakaTokenManager.tabident.existeIdentG(id)){
-			this.type.push((YakaTokenManager.tabident.chercheIdentG(id)).getType().toLowerCase());
-			existe=true;
-		}
-		if(!existe){
+		else if (!Yaka.tabident.existeIdentG(id)) {
 			Erreur.message("L'identificateur '" + id + "' n'a pas Ã©tÃ© dÃ©clarÃ©");
 		}
 	}
-	
+
+	public void newFun(String id) {
+		System.out.println(id);
+		this.lastFun.push(id);
+		this.inFunTest.push(true);
+	}
+
+	public void resetFun() {
+		if (this.inFunTest.peek()) {
+			this.lastFun.pop();
+			this.inFunTest.pop();
+		}
+	}
+
+
+
+	public void empileTypeFun() {
+		if(this.inFunTest.peek()) {
+			String id = this.lastFun.peek();
+			if (Yaka.tabident.existeIdentG(id)){
+				this.type.push((Yaka.tabident.chercheIdentG(id)).getType());
+			}		
+		}
+	}
+
+	public void call() {
+		if(this.inFunTest.peek()) {
+			String id = this.lastFun.peek();
+			if (Yaka.tabident.existeIdentG(id)){
+				Yaka.yvm.call(id);
+			}	
+		}
+	}
 
 	/**
 	 * Empile un type
@@ -138,7 +107,7 @@ public class Expression implements YakaConstants{
 	 * @see Expression#type
 	 * @param type
 	 */
-	public void empileType(String type) {
+	public void empileType(int type) {
 		this.type.push(type);
 	}
 
@@ -148,7 +117,7 @@ public class Expression implements YakaConstants{
 	 * @see Expression#opera
 	 * @param opera
 	 */
-	public void empileOpera(String opera) {
+	public void empileOpera(int opera) {
 		this.opera.push(opera);
 	}
 
@@ -159,41 +128,41 @@ public class Expression implements YakaConstants{
 	 * @see Expression#lasOpMul
 	 */
 	public void testMul() {
-		String type1,type2,op = "";
-		int p = this.lasOpMul;
-		
+		int type1,type2;
+		String op = "";
+		int p = this.opera.peek();
+
 		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case MUL : op="multiplication";break;
 		case DIV : op="division";break;
 		case AND : op="et logique";break;
 		}
-		
+
 		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
 			//on vérifie que les deux arguments on le même type. Puis on vérifie que l'opérateur correspond.
-			if (type1.equals(type2)) {
-				if (type1.equals("entier") && (p == MUL || p == DIV) || type1.equals("booleen") && p == AND) {
+			if (type1 == type2) {
+				if ((type1 == YakaConstants.ENTIER && (p == MUL || p == DIV)) || (type1 == YakaConstants.BOOLEEN && p == AND)) {
 					empileType(type1);
 				}
 				else {
-					empileType("erreur");
+					empileType(YakaConstants.ERREUR);
 					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre deux variables de type " + type1);
 				}
 			}
 			else {
-				if (!(type1.equals("erreur") || type2.equals("erreur"))) {
+				if (!(type1 == YakaConstants.ERREUR || type2 == YakaConstants.ERREUR)) {
 					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre les types " + type1 + " et " + type2);
 				}
-				empileType("erreur");
+				empileType(YakaConstants.ERREUR);
 			}
-			this.opera.pop();
 		}
 		else {
 			Erreur.message("L'opÃ©ration '" + op + "' ne peut s'effectuer");
-			empileType("erreur");
+			empileType(YakaConstants.ERREUR);
 		}
 	}
 
@@ -204,40 +173,40 @@ public class Expression implements YakaConstants{
 	 * @see Expression#lasOpAdd
 	 */
 	public void testAdd() {
-		String type1,type2,op = "";
-		int p = this.lasOpAdd;
-		
+		int type1,type2;
+		String op = "";
+		int p = this.opera.peek();
+
 		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case ADD : op="addtion";break;
 		case SUBNEG : op="soustration";break;
 		case OR : op="ou logique";break;
 		}
-		
+
 		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
-			//on vérifie que les deux arguments on le même type. Puis on vérifie que l'opérateur correspond.
-			if (type1.equals(type2)) {
-				if (type1.equals("entier") && (p == ADD || p == SUBNEG) || type1.equals("booleen") && p == OR) {
+			//on vérifie que les deux arguments ont le même type. Puis on vérifie que l'opérateur correspond.
+			if (type1 == type2) {
+				if (type1 == YakaConstants.ENTIER && (p == ADD || p == SUBNEG) || type1 == YakaConstants.BOOLEEN && p == OR) {
 					empileType(type1);
 				}
 				else {
-					empileType("erreur");
+					empileType(YakaConstants.ERREUR);
 					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre deux variables de type " + type1);
 				}
 			}
 			else {
-				if (!(type1.equals("erreur") || type2.equals("erreur"))) {
+				if (!(type1 == YakaConstants.ERREUR || type2 == YakaConstants.ERREUR)) {
 					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre les types " + type1 + " et " + type2);
 				}
-				empileType("erreur");
+				empileType(YakaConstants.ERREUR);
 			}
-			this.opera.pop();
 		}
 		else {
-			empileType("erreur");
+			empileType(YakaConstants.ERREUR);
 			Erreur.message("L'opÃ©ration '" + op + "' ne peut s'effectuer");
 		}
 	}
@@ -250,8 +219,8 @@ public class Expression implements YakaConstants{
 	 */
 	public void testRel() {
 		String op = "";
-		int p = this.lasOpRel;
-		
+		int p = this.opera.peek();
+
 		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case EGAL : op="Ã©gal";break;
@@ -261,28 +230,27 @@ public class Expression implements YakaConstants{
 		case SUP : op="supÃ©rieur";break;
 		case SUPEGAL : op="supÃ©rieur ou Ã©gal";break;
 		}
-		
+
 		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
-			String type1 = this.type.pop();
-			String type2 = this.type.pop();
+			int type1 = this.type.pop();
+			int type2 = this.type.pop();
 			//on vérifie que les deux arguments on le même type.
-			if (type1.equals("entier") && type2.equals("entier")) {
-				empileType("booleen");
+			if (type1 == YakaConstants.ENTIER && type2 == YakaConstants.ENTIER) {
+				empileType(YakaConstants.BOOLEEN);
 			}
 			else {
-				if (!(type1.equals("erreur") || type2.equals("erreur"))) {
+				if (!(type1 == YakaConstants.ERREUR || type2 == YakaConstants.ERREUR)) {
 					Erreur.message("Impossible d'effectuer l'opÃ©ration de comparaison '" + op + "' entre les types " + type1 + " et " + type2);
-					empileType("erreur");
+					empileType(YakaConstants.ERREUR);
 				}
 			}
-			this.opera.pop();
 		}
 		else {
 			Erreur.message("L'opÃ©ration de comparaison '" + op + "' ne peut s'effectuer");
 		}
 	}
-	
+
 	/**
 	 * Teste si le type en sommet de pile correspond à l'opérande utilisé pour une négation
 	 * 
@@ -290,21 +258,21 @@ public class Expression implements YakaConstants{
 	 */
 	public void testNeg() {
 		String op = "";
-		int p = this.lasOpNeg;
-		
+		int p = this.opera.peek();
+
 		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case NOT : op="non logique";break;
 		case SUBNEG : op="moins unaire";break;
 		}
-		
+
 		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 1) {
-			String type = this.type.peek();
+			int type = this.type.peek();
 			//on vérifie que le type de l'argument correspond à l'opérateur.
-			if (!((type.equals("entier") && p == SUBNEG) || (type.equals("booleen") && p == NOT ))){
-				if (!type.equals("erreur")) {
-					empileType("erreur");
+			if (!((type == YakaConstants.ENTIER && p == SUBNEG) || (type == YakaConstants.BOOLEEN && p == NOT ))){
+				if (type != YakaConstants.ERREUR) {
+					empileType(YakaConstants.ERREUR);
 					Erreur.message("Impossible d'effectuer l'opÃ©rateur '" + op +"' sur une variable de type " + type);
 				}
 			}
@@ -356,35 +324,36 @@ public class Expression implements YakaConstants{
 	 * @param id
 	 */
 	public void loadIdent(String id) {
-		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
+		System.out.println(id + " : " + this.lastFun);
+		Ident ident = Yaka.tabident.chercheIdent(id);
 		if (ident != null) {// l'ident existe var_param_const
 			if (ident.isVar()) {// ident est une variableOuParam
 				int offset =((IdVar) ident).getOffset();
 				if(offset < 0){//ident_var
 					int index=-1*offset/2 - 1;// index de la variable dans la pile des variables
-					if (YakaTokenManager.tabident.var.get(index)!=-1) {// la variable a été déjà définie
-						YakaTokenManager.yvm.iload(offset);
+					if (Yaka.tabident.var.get(index)!=-1) {// la variable a été déjà définie
+						Yaka.yvm.iload(offset);
 					}
 					else {// variable non définie
 						Erreur.message("La variable '" + id + "' n'est pas encore dï¿½finie");
 					}
 				}
 				else{//ident_param
-					YakaTokenManager.yvm.iload(offset);
+					Yaka.yvm.iload(offset);
 				}
 			}
 			else {// ident est une constante
-				YakaTokenManager.yvm.iconst(((IdConst) ident).getValeur());
+				Yaka.yvm.iconst(((IdConst) ident).getValeur());
 			}
 		}
 		else {
-			ident = YakaTokenManager.tabident.chercheIdentG(id);
+			ident = Yaka.tabident.chercheIdentG(id);
 			if(ident!=null){// ident existe fonc
-				YakaTokenManager.yvm.call(id);
+				//Yaka.yvm.call(id);
 			}
 			else {// l'ident n'existe pas
 				Erreur.message("La variable ou la constante '" + id + "' n'existe pas");
-				this.type.push("erreur");
+				this.type.push(YakaConstants.ERREUR);
 			}
 		}
 	}
@@ -400,22 +369,22 @@ public class Expression implements YakaConstants{
 	 * @param id
 	 */
 	public void store(String id) {
-		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
+		Ident ident = Yaka.tabident.chercheIdent(id);
 		if (ident != null) {// l'ident existe
 			if (ident.isVar()) {// ident est une variableOuParam
-				String type = this.type.peek();
-				if (type.equals(ident.getType().toLowerCase())) {// teste si l'expression a le même type que l'ident à affecter
+				int type = this.type.peek();
+				if (type == ident.getType()) {// teste si l'expression a le même type que l'ident à affecter
 					int offset = ((IdVar) ident).getOffset();
 					if(offset<0){//ident_var
 						int index = -1 * offset / 2 - 1;
-						YakaTokenManager.yvm.istore(offset);
-						YakaTokenManager.tabident.var.set(index, 1);
+						Yaka.yvm.istore(offset);
+						Yaka.tabident.var.set(index, 1);
 					}
 					else{//ident_param
 						Erreur.message("L'identificateur '" + id + "' n'est pas une variable");
 					}
 				}
-				else if (!type.equals("erreur")){// si le type en sommet de la pile est erreur, on écrit pas le msg d'erreur
+				else if (type != YakaConstants.ERREUR){// si le type en sommet de la pile est erreur, on écrit pas le msg d'erreur
 					Erreur.message("La variable '" + id + "' doit Ãªtre de type " + type);
 				}
 			}
@@ -435,13 +404,13 @@ public class Expression implements YakaConstants{
 	 * @see YVMasm
 	 */
 	public void executerOpRel() {
-		switch(this.lasOpRel) {
-		case EGAL : YakaTokenManager.yvm.iegal();break;
-		case DIFF : YakaTokenManager.yvm.idiff();break;
-		case INFEGAL : YakaTokenManager.yvm.iinfegal();break;
-		case INF : YakaTokenManager.yvm.iinf();break;
-		case SUP : YakaTokenManager.yvm.isup();break;
-		case SUPEGAL : YakaTokenManager.yvm.isupegal();break;
+		switch(this.opera.peek()) {
+		case EGAL : Yaka.yvm.iegal();this.opera.pop();break;
+		case DIFF : Yaka.yvm.idiff();this.opera.pop();break;
+		case INFEGAL : Yaka.yvm.iinfegal();this.opera.pop();break;
+		case INF : Yaka.yvm.iinf();this.opera.pop();break;
+		case SUP : Yaka.yvm.isup();this.opera.pop();break;
+		case SUPEGAL : Yaka.yvm.isupegal();this.opera.pop();break;
 		}
 	}
 
@@ -452,14 +421,14 @@ public class Expression implements YakaConstants{
 	 * @see YVMasm
 	 */
 	public void executerOpAdd() {
-		switch(this.lasOpAdd) {
-		case ADD : YakaTokenManager.yvm.iadd();break;
-		case SUBNEG : YakaTokenManager.yvm.isub();break;
-		case OR : YakaTokenManager.yvm.ior();break;
+		switch(this.opera.peek()) {
+		case ADD : Yaka.yvm.iadd();this.opera.pop();break;
+		case SUBNEG : Yaka.yvm.isub();this.opera.pop();break;
+		case OR : Yaka.yvm.ior();this.opera.pop();break;
 		}
 
 	}
-	
+
 	/**
 	 * Appel à une des méthodes de multiplication de YVMasm
 	 * 
@@ -467,14 +436,14 @@ public class Expression implements YakaConstants{
 	 * @see YVMasm
 	 */
 	public void executerOpMul() {
-		switch(this.lasOpMul) {
-		case MUL : YakaTokenManager.yvm.imul();break;
-		case DIV : YakaTokenManager.yvm.idiv();break;
-		case AND : YakaTokenManager.yvm.iand();break;
+		switch(this.opera.peek()) {
+		case MUL : Yaka.yvm.imul();this.opera.pop();break;
+		case DIV : Yaka.yvm.idiv();this.opera.pop();break;
+		case AND : Yaka.yvm.iand();this.opera.pop();break;
 		}
 
 	}
-	
+
 	/**
 	 * Appel à une des méthodes de négation de YVMasm
 	 * 
@@ -482,50 +451,10 @@ public class Expression implements YakaConstants{
 	 * @see YVMasm
 	 */
 	public void executerOpNeg() {
-		switch(this.lasOpNeg) {
-		case SUBNEG : YakaTokenManager.yvm.ineg();break;
-		case NOT : YakaTokenManager.yvm.inot();break;
+		switch(this.opera.peek()) {
+		case SUBNEG : Yaka.yvm.ineg();this.opera.pop();break;
+		case NOT : Yaka.yvm.inot();this.opera.pop();break;
 		}
-	}
-
-	/**
-	 * Met à jour le dernier opérateur de multiplication utilisé
-	 * 
-	 * @see Expression#lasOpMul
-	 * @param op
-	 */
-	public void setLastOpMul(int op) {
-		this.lasOpMul = op;
-	}
-	
-	/**
-	 * Met à jour le dernier opérateur d'addition utilisé
-	 * 
-	 * @see Expression#lasOpAdd
-	 * @param op
-	 */
-	public void setLastOpAdd(int op) {
-		this.lasOpAdd = op;
-	}
-	
-	/**
-	 * Met à jour le dernier opérateur de négation utilisé
-	 * 
-	 * @see Expression#lasOpNeg
-	 * @param op
-	 */
-	public void setLastOpNeg(int op) {
-		this.lasOpNeg = op;
-	}
-	
-	/**
-	 * Met à jour le dernier opérateur de comparaison utilisé
-	 * 
-	 * @see Expression#lasOpRel
-	 * @param op
-	 */
-	public void setLastOpRel(int op) {
-		this.lasOpRel = op;
 	}
 
 	/**
@@ -537,14 +466,14 @@ public class Expression implements YakaConstants{
 	 * @param id
 	 */
 	public void lire(String id) {
-		Ident ident = YakaTokenManager.tabident.chercheIdent(id);
+		Ident ident = Yaka.tabident.chercheIdent(id);
 		if (ident != null) {// l'ident existe
 			if (ident.isVar()) {// ident est une variable
-				if (ident.getType().equals("ENTIER")) {// la variable est de type entier
+				if (ident.getType() == YakaConstants.ENTIER) {// la variable est de type entier
 					int offset = ((IdVar) ident).getOffset();
 					int index = -1 * offset / 2 - 1;
-					YakaTokenManager.yvm.lireEnt(offset);
-					YakaTokenManager.tabident.var.set(index, 1);
+					Yaka.yvm.lireEnt(offset);
+					Yaka.tabident.var.set(index, 1);
 				}
 				else {// la variable n'est pa de type entier
 					Erreur.message("La variable '" + id +"' doit Ãªtre un entier");
@@ -567,12 +496,12 @@ public class Expression implements YakaConstants{
 	 * @see YVMasm
 	 */
 	public void ecrire() {
-		String type = this.type.peek();
-		if (type.equals("entier")) {
-			YakaTokenManager.yvm.ecrireEnt();
+		int type = this.type.peek();
+		if (type == YakaConstants.ENTIER) {
+			Yaka.yvm.ecrireEnt();
 		}
-		else if (type.equals("booleen")) {
-			YakaTokenManager.yvm.ecrireBool();
+		else if (type == YakaConstants.BOOLEEN) {
+			Yaka.yvm.ecrireBool();
 		}
 	}
 
@@ -582,163 +511,57 @@ public class Expression implements YakaConstants{
 	 * @see Expression#type
 	 */
 	public void testBool() {
-		String type = this.type.peek();
-		if (!type.equals("booleen")) {
+		int type = this.type.peek();
+		if (type != YakaConstants.BOOLEEN) {
 			Erreur.message("Le type de l'expression dans une conditionnelle doit ï¿½tre boolï¿½en");
 		}
 	}
-	
-	/**
-	 * Empiler les conditionnelles et d'incrementer le nombre de conditionnelles présentes dans le code YAKA 
-	 * 
-	 * @see Expression#pileSI
-	 * @see Expression#comptSI
-	 */
-	public void addSi() {
-		this.pileSI.push(this.comptSI++);
-	}
-	
-	/**
-	 * Appel à la méthode iffaux de YVMasm
-	 * 
-	 * @see YVMasm
-	 */
-	public void ecrireIffauxSinon() {
-		YakaTokenManager.yvm.iffaux("SINON" + this.pileSI.peek());
-	}
-	
-	/**
-	 * Appel à la méthode Goto de YVMasm
-	 * 
-	 * @see YVMasm
-	 */
-	public void ecrireGotoFSI() {
-		YakaTokenManager.yvm.Goto("FSI" + this.pileSI.peek());
-	}
-	
-	/**
-	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette sinon
-	 * 
-	 * @see YVMasm
-	 */
-	public void ecrireSinon() {
-		YakaTokenManager.yvm.ecrireEtiqu("SINON" + this.pileSI.peek());
-	}
-	
-	/**
-	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette fsi
-	 * 
-	 * @see YVMasm 
-	 */
-	public void ecrireFsi() {
-		YakaTokenManager.yvm.ecrireEtiqu("FSI" + this.pileSI.peek());
-	}
-	
-	/**
-	 * Dépiler la pile des conditionnelles
-	 * 
-	 * @see Expression#pileSI
-	 */
-	public void removeSi() {
-		this.pileSI.pop();
-	}
-	
-	/**
-	 * Empiler les itérations et d'incrementer le nombre d'itérations présentes dans le code YAKA 
-	 * 
-	 * @see Expression#pileTQ
-	 * @see Expression#comptTQ
-	 */
-	public void addTantQue() {
-		this.pileTQ.push(this.comptTQ++);
-	}
-	
-	/**
-	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette faire
-	 * 
-	 * @see YVMasm 
-	 */
-	public void ecrireFaire() {
-		YakaTokenManager.yvm.ecrireEtiqu("Faire" + this.pileTQ.peek());
-	}
-	
-	/**
-	 * Appel à la méthode iffaux de YVMasm
-	 * 
-	 * @see YVMasm 
-	 */
-	public void ecrireIffauxFait() {
-		YakaTokenManager.yvm.iffaux("FAIT" + this.pileTQ.peek());
-	}
-	
-	/**
-	 * Appel à la méthode Goto de YVMasm
-	 * 
-	 * @see YVMasm 
-	 */
-	public void ecrireGotoFaire() {
-		YakaTokenManager.yvm.Goto("FAIRE" + this.pileTQ.peek());
-	}
-	
-	/**
-	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette fait
-	 * 
-	 * @see YVMasm 
-	 */
-	public void ecrireFait() {
-		YakaTokenManager.yvm.ecrireEtiqu("FAIT" + this.pileTQ.peek());
-	}
-	
-	/**
-	 * Dépiler la pile des itérations
-	 * 
-	 * @see Expression#pileTQ
-	 */
-	public void removeTantQue() {
-		this.pileTQ.pop();
-	}
-
-	
-
 
 
 	public void testParamFonc() {
-		String typeExpr=this.type.peek();
-		int index = YakaTokenManager.tabident.paramTest.peek();
+		int typeExpr=this.type.peek();
+		int index = Yaka.tabident.paramTest.peek();
 		int nbParam = IdFonc.param.size();
 		if(index+1<=nbParam){//nbParam est encore >= nb expr entrees en param 
-			String typeParam=IdFonc.param.get(index).toLowerCase();
-			if (!typeExpr.equals(typeParam)){//types de param et expr sont differents
+			int typeParam=IdFonc.param.get(index);
+			if (typeExpr != typeParam){//types de param et expr sont differents
 				Erreur.message("Le type du paramètre " + index + " doit être de type " + typeParam);
 			}
 		}
 	}
 
 	public void testInFunc() {
-		if (!YakaTokenManager.declaration.inFunc){
+		if (!Yaka.declaration.inFunc){
 			Erreur.message("L'instruction RETOURNE ne s'applique que dans les fonctions");
 		}
 	}
 
 	public void testTypeExprFunc() {
-		String typeExpr = this.type.peek();
-		String typeFunc = YakaTokenManager.declaration.idFonc.getType().toLowerCase();
-		if(!typeExpr.equals(typeFunc)){
+		int typeExpr = this.type.peek();
+		int typeFunc = Yaka.declaration.idFonc.getType();
+		if(typeExpr != typeFunc){
 			Erreur.message("La valeur à retourner doit être de type " + typeFunc);
 		}
 	}
 
 	public void returnFun() {
-		int nbParam = YakaTokenManager.tabident.nbParam();
+		int nbParam = Yaka.tabident.nbParam();
 		int offset = nbParam*2+4;
-		YakaTokenManager.yvm.ireturn(offset);
+		Yaka.yvm.ireturn(offset);
 	}
+	/*public void returnFun(String id) {
+		if(Yaka.tabident.existeIdentG(id)){
+			IdFonc func=(IdFonc) Yaka.tabident.chercheIdentG(id);
+			int offset = func.nbParam*2+4;
+			Yaka.yvm.ireturn(offset);
+		}
+	}*/
 
 	public void fermeBloc(String id) {
-		if(YakaTokenManager.tabident.existeIdentG(id)){
-			IdFonc func=(IdFonc) YakaTokenManager.tabident.chercheIdentG(id);
+		if(Yaka.tabident.existeIdentG(id)){
+			IdFonc func=(IdFonc) Yaka.tabident.chercheIdentG(id);
 			int nbOctet = func.nbParam*2;
-			YakaTokenManager.yvm.fermeBloc(nbOctet);
+			Yaka.yvm.fermeBloc(nbOctet);
 		}
 	}
 }
