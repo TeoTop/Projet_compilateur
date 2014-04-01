@@ -27,7 +27,7 @@ public class Erreur {
 	 * @see Erreur#err
 	 */
 	public static void message(String erreur) {
-		System.out.println(erreur);
+		System.out.println("Ligne/Colonne " + Yaka.token1.beginLine + "/" + Yaka.token1.beginColumn + " : " + erreur);
 		err = true;
 	}
 	

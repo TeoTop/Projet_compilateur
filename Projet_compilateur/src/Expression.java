@@ -31,9 +31,7 @@ public class Expression implements YakaConstants{
 	 */
 	private Stack<Integer> opera;
 
-	private Stack<String> lastFun;
-
-	private Stack<Boolean> inFunTest;
+	
 	/**
 	 * Constructeur Expression
 	 * Création de la pile des types, des opérateurs ainsi que 
@@ -46,9 +44,17 @@ public class Expression implements YakaConstants{
 	public Expression() {
 		this.type = new Stack<Integer>();
 		this.opera = new Stack<Integer>();
-		this.lastFun = new Stack<String>();
-		this.inFunTest = new Stack<Boolean>();
-		this.inFunTest.push(false);
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 * 
+	 * @see Fonction#empileTypeFun
+	 */
+	public void pushType(int type){
+		this.type.push(type);
 	}
 
 	/**
@@ -65,39 +71,6 @@ public class Expression implements YakaConstants{
 		}
 		else if (!Yaka.tabident.existeIdentG(id)) {
 			Erreur.message("L'identificateur '" + id + "' n'a pas Ã©tÃ© dÃ©clarÃ©");
-		}
-	}
-
-	public void newFun(String id) {
-		System.out.println(id);
-		this.lastFun.push(id);
-		this.inFunTest.push(true);
-	}
-
-	public void resetFun() {
-		if (this.inFunTest.peek()) {
-			this.lastFun.pop();
-			this.inFunTest.pop();
-		}
-	}
-
-
-
-	public void empileTypeFun() {
-		if(this.inFunTest.peek()) {
-			String id = this.lastFun.peek();
-			if (Yaka.tabident.existeIdentG(id)){
-				this.type.push((Yaka.tabident.chercheIdentG(id)).getType());
-			}		
-		}
-	}
-
-	public void call() {
-		if(this.inFunTest.peek()) {
-			String id = this.lastFun.peek();
-			if (Yaka.tabident.existeIdentG(id)){
-				Yaka.yvm.call(id);
-			}	
 		}
 	}
 
@@ -129,6 +102,7 @@ public class Expression implements YakaConstants{
 	 */
 	public void testMul() {
 		int type1,type2;
+		String t1,t2;
 		String op = "";
 		int p = this.opera.peek();
 
@@ -143,6 +117,8 @@ public class Expression implements YakaConstants{
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
+			t1 = this.typeToString(type1);
+			t2 = this.typeToString(type2);
 			//on vérifie que les deux arguments on le même type. Puis on vérifie que l'opérateur correspond.
 			if (type1 == type2) {
 				if ((type1 == YakaConstants.ENTIER && (p == MUL || p == DIV)) || (type1 == YakaConstants.BOOLEEN && p == AND)) {
@@ -150,12 +126,12 @@ public class Expression implements YakaConstants{
 				}
 				else {
 					empileType(YakaConstants.ERREUR);
-					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre deux variables de type " + type1);
+					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre deux variables de type " + t1);
 				}
 			}
 			else {
 				if (!(type1 == YakaConstants.ERREUR || type2 == YakaConstants.ERREUR)) {
-					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre les types " + type1 + " et " + type2);
+					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre les types " + t1 + " et " + t2);
 				}
 				empileType(YakaConstants.ERREUR);
 			}
@@ -166,6 +142,16 @@ public class Expression implements YakaConstants{
 		}
 	}
 
+	
+	public String typeToString(int type){
+		String t = "";
+		switch(type){
+		case YakaConstants.ENTIER : t = "entier";break;
+		case YakaConstants.BOOLEEN : t = "booleen";break;
+		}
+		return t;
+	}
+	
 	/**
 	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
 	 * addition, une soustration et un OU booléen
@@ -174,6 +160,7 @@ public class Expression implements YakaConstants{
 	 */
 	public void testAdd() {
 		int type1,type2;
+		String t1,t2;
 		String op = "";
 		int p = this.opera.peek();
 
@@ -188,6 +175,8 @@ public class Expression implements YakaConstants{
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
+			t1 = this.typeToString(type1);
+			t2 = this.typeToString(type2);
 			//on vérifie que les deux arguments ont le même type. Puis on vérifie que l'opérateur correspond.
 			if (type1 == type2) {
 				if (type1 == YakaConstants.ENTIER && (p == ADD || p == SUBNEG) || type1 == YakaConstants.BOOLEEN && p == OR) {
@@ -195,12 +184,12 @@ public class Expression implements YakaConstants{
 				}
 				else {
 					empileType(YakaConstants.ERREUR);
-					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre deux variables de type " + type1);
+					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre deux variables de type " + t1);
 				}
 			}
 			else {
 				if (!(type1 == YakaConstants.ERREUR || type2 == YakaConstants.ERREUR)) {
-					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre les types " + type1 + " et " + type2);
+					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre les types " + t1 + " et " + t2);
 				}
 				empileType(YakaConstants.ERREUR);
 			}
@@ -219,6 +208,7 @@ public class Expression implements YakaConstants{
 	 */
 	public void testRel() {
 		String op = "";
+		String t1,t2;
 		int p = this.opera.peek();
 
 		//on vérifie le type d'opération à effectuer
@@ -235,13 +225,15 @@ public class Expression implements YakaConstants{
 		if (this.type.size() >= 2) {
 			int type1 = this.type.pop();
 			int type2 = this.type.pop();
+			t1 = this.typeToString(type1);
+			t2 = this.typeToString(type2);
 			//on vérifie que les deux arguments on le même type.
 			if (type1 == YakaConstants.ENTIER && type2 == YakaConstants.ENTIER) {
 				empileType(YakaConstants.BOOLEEN);
 			}
 			else {
 				if (!(type1 == YakaConstants.ERREUR || type2 == YakaConstants.ERREUR)) {
-					Erreur.message("Impossible d'effectuer l'opÃ©ration de comparaison '" + op + "' entre les types " + type1 + " et " + type2);
+					Erreur.message("Impossible d'effectuer l'opÃ©ration de comparaison '" + op + "' entre les types " + t1 + " et " + t2);
 					empileType(YakaConstants.ERREUR);
 				}
 			}
@@ -269,11 +261,13 @@ public class Expression implements YakaConstants{
 		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 1) {
 			int type = this.type.peek();
+			String t;
+			t = this.typeToString(type);
 			//on vérifie que le type de l'argument correspond à l'opérateur.
 			if (!((type == YakaConstants.ENTIER && p == SUBNEG) || (type == YakaConstants.BOOLEEN && p == NOT ))){
 				if (type != YakaConstants.ERREUR) {
 					empileType(YakaConstants.ERREUR);
-					Erreur.message("Impossible d'effectuer l'opÃ©rateur '" + op +"' sur une variable de type " + type);
+					Erreur.message("Impossible d'effectuer l'opÃ©rateur '" + op +"' sur une variable de type " + t);
 				}
 			}
 		}
@@ -324,7 +318,6 @@ public class Expression implements YakaConstants{
 	 * @param id
 	 */
 	public void loadIdent(String id) {
-		System.out.println(id + " : " + this.lastFun);
 		Ident ident = Yaka.tabident.chercheIdent(id);
 		if (ident != null) {// l'ident existe var_param_const
 			if (ident.isVar()) {// ident est une variableOuParam
@@ -373,6 +366,8 @@ public class Expression implements YakaConstants{
 		if (ident != null) {// l'ident existe
 			if (ident.isVar()) {// ident est une variableOuParam
 				int type = this.type.peek();
+				String t;
+				t = this.typeToString(type);
 				if (type == ident.getType()) {// teste si l'expression a le même type que l'ident à affecter
 					int offset = ((IdVar) ident).getOffset();
 					if(offset<0){//ident_var
@@ -385,7 +380,7 @@ public class Expression implements YakaConstants{
 					}
 				}
 				else if (type != YakaConstants.ERREUR){// si le type en sommet de la pile est erreur, on écrit pas le msg d'erreur
-					Erreur.message("La variable '" + id + "' doit Ãªtre de type " + type);
+					Erreur.message("La variable '" + id + "' doit Ãªtre de type " + t);
 				}
 			}
 			else {// ident est une constante
@@ -524,44 +519,22 @@ public class Expression implements YakaConstants{
 		int nbParam = IdFonc.param.size();
 		if(index+1<=nbParam){//nbParam est encore >= nb expr entrees en param 
 			int typeParam=IdFonc.param.get(index);
+			String t = this.typeToString(typeParam);
 			if (typeExpr != typeParam){//types de param et expr sont differents
-				Erreur.message("Le type du paramètre " + index + " doit être de type " + typeParam);
+				Erreur.message("Dans la fonction '" + Yaka.fonction.getLastFun().peek() + "' le type du paramètre " + (index+1) + " doit être un " + t);
 			}
 		}
 	}
 
-	public void testInFunc() {
-		if (!Yaka.declaration.inFunc){
-			Erreur.message("L'instruction RETOURNE ne s'applique que dans les fonctions");
-		}
-	}
+
 
 	public void testTypeExprFunc() {
 		int typeExpr = this.type.peek();
 		int typeFunc = Yaka.declaration.idFonc.getType();
+		String t = this.typeToString(typeFunc);
 		if(typeExpr != typeFunc){
-			Erreur.message("La valeur à retourner doit être de type " + typeFunc);
+			Erreur.message("La valeur à retourner doit être de type " + t);
 		}
 	}
 
-	public void returnFun() {
-		int nbParam = Yaka.tabident.nbParam();
-		int offset = nbParam*2+4;
-		Yaka.yvm.ireturn(offset);
-	}
-	/*public void returnFun(String id) {
-		if(Yaka.tabident.existeIdentG(id)){
-			IdFonc func=(IdFonc) Yaka.tabident.chercheIdentG(id);
-			int offset = func.nbParam*2+4;
-			Yaka.yvm.ireturn(offset);
-		}
-	}*/
-
-	public void fermeBloc(String id) {
-		if(Yaka.tabident.existeIdentG(id)){
-			IdFonc func=(IdFonc) Yaka.tabident.chercheIdentG(id);
-			int nbOctet = func.nbParam*2;
-			Yaka.yvm.fermeBloc(nbOctet);
-		}
-	}
 }
