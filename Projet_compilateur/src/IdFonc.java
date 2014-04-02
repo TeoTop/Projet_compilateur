@@ -39,6 +39,11 @@ public class IdFonc extends Ident {
 	public void ajoutTypeParam(int param) {
 		this.param.push(param);
 	}
+
+	@Override
+	public boolean isParam() {
+		return false;
+	}
 	
 
 }

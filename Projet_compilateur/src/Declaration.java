@@ -68,6 +68,20 @@ public class Declaration {
 	public void addParam(String ident){
 		Yaka.tabident.addParam(ident,this.id);
 	}
+	/**
+	 * Permet de créer un nouvel objet de la classe IdVar correspondant à une variable du
+	 * code YAKA et d'initialiser le type de la variable.
+	 * @param type
+	 * 
+	 * @see Declaration#id
+	 * @see Declaration#type
+	 * @see IdVar#setType(String)
+	 */
+	public void ajoutParam(int type){
+		this.id = new IdParam();
+		this.type = type;
+		this.id.setType(type);
+	}
 	
 	/**
 	 * Permet de créer un nouvel objet de la classe IdVar correspondant à une variable du

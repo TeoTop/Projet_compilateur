@@ -249,10 +249,22 @@ void paramForms():{}
 
 void paramForm():{}
 {
-	type() <ident>
+	typeP() <ident>
 	{
 		declaration.addParam(YakaTokenManager.identLu);
 	}
+}
+
+void typeP() :{}
+{
+   <ENTIER>
+  	{
+  		declaration.ajoutParam(YakaConstants.ENTIER);
+  	}		
+ | <BOOLEEN>
+  	{
+  		declaration.ajoutParam(YakaConstants.BOOLEEN);
+  	}
 }
 
 void bloc() : {}{

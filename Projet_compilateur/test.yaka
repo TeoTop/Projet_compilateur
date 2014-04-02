@@ -20,7 +20,7 @@ i=5;
 LIRE(j);
 ALALIGNE;
 k=max(i,min(j,5))+2;
-b=sup(1+max(i,j-5),min(i*2,j));
+b=sup(1+max(i,j-5),min(VRAI,j));
 ALALIGNE;
 ECRIRE(k);
 ALALIGNE;

@@ -44,13 +44,15 @@ public class TabIdent {
 	 */
 	private HashMap<Integer,HashMap<String,Ident>> param;// a changer en class
 	private int rang;
+	
 	/**
 	 * Pile des arguments
 	 * 
 	 */
-	public Stack<Integer> paramTest;
+	public Stack<Integer> argument;
 
 	/**
+	 * 
 	 * Constructeur TabIdent
 	 * Création de la table des identificateurs et de la pile des variables
 	 * 
@@ -63,7 +65,7 @@ public class TabIdent {
 		this.var = new Stack<Integer>();
 		this.param = new HashMap<Integer,HashMap<String,Ident>>();
 		this.rang=0;
-		this.paramTest= new Stack<Integer>();
+		this.argument= new Stack<Integer>();
 	}
 
 	/**
@@ -122,7 +124,7 @@ public class TabIdent {
 	 */
 	public void rangeIdent(String clef, Ident id){
 		if (!existeIdent(clef)) { // clef n'existe pas
-			if (id.isVar()){// id est une varialble
+			if (id.isVar()){// id est une variable
 				int offset = ( -2 * nbVar() ) - 2;
 				((IdVar) id).setOffset(offset);;
 				this.var.push(-1);// on empile -1 pour dire que la variable n'a pas encore de valeur
@@ -157,7 +159,7 @@ public class TabIdent {
 		for (int i = 0; i < nbParam; i++){
 			int offset = nbParam*2+4-((i+1)*2);
 			clef=(String) this.param.get(i).keySet().toArray()[0];
-			IdVar id = (IdVar) this.param.get(i).get(clef);
+			IdParam id = (IdParam) this.param.get(i).get(clef);
 			id.setOffset(offset);
 			this.locaux.put(clef, id);
 		}
@@ -188,7 +190,7 @@ public class TabIdent {
 			int nbParam =this.nbParam();
 			for (int i = 0; i < nbParam; i++){
 				String clef = (String) this.param.get(i).keySet().toArray()[0];
-				IdVar var = (IdVar) this.param.get(i).get(clef);
+				IdParam var = (IdParam) this.param.get(i).get(clef);
 				id.ajoutTypeParam(var.getType());
 				id.nbParam=nbParam();
 			}
@@ -209,7 +211,7 @@ public class TabIdent {
 		IdFonc func = (IdFonc) chercheIdentG(nom);
 		if (func!=null){//fonction existe
 			int nbParam = func.nbParam;
-			int paramTest = this.paramTest.peek();
+			int paramTest = this.argument.peek();
 			if (nbParam!=paramTest+1){
 				Erreur.message("La fonction '" + nom + "' n'est pas appliquée au nombre exact d'arguments");
 			}
@@ -259,14 +261,14 @@ public class TabIdent {
 	}
 
 	public void addParamForTest() {
-		this.paramTest.push(this.paramTest.pop()+1);
+		this.argument.push(this.argument.pop()+1);
 	}
 	
 	public void newFun() {
-		this.paramTest.push(-1);
+		this.argument.push(-1);
 	}
 
 	public void resetParamTest() {
-		this.paramTest.pop();
+		this.argument.pop();
 	}
 }

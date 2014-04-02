@@ -74,6 +74,7 @@ public abstract class Ident {
 		return "Ident [type=" + this.type + "]";
 	}
 
+	public abstract boolean isParam();
 
 
 }

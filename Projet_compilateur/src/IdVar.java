@@ -65,5 +65,10 @@ public class IdVar extends Ident {
 		return false;
 	}
 
+	@Override
+	public boolean isParam() {
+		return false;
+	}
+
 
 }

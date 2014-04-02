@@ -66,4 +66,9 @@ public class IdConst extends Ident {
 		return false;
 	}
 
+	@Override
+	public boolean isParam() {
+		return false;
+	}
+
 }
