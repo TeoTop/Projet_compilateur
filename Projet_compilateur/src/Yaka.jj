@@ -578,13 +578,13 @@ void argumentsFonction():{}
 	"("(
 	expression()
 	{
-		tabident.addParamForTest();
+		tabident.addArgument();
 		expression.testParamFonc();
 	}
 	("," 
 	expression()
 	{
-		tabident.addParamForTest();
+		tabident.addArgument();
 		expression.testParamFonc();
 	}
 	)*)?")"

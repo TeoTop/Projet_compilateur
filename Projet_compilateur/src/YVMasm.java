@@ -467,8 +467,6 @@ public class YVMasm extends YVM {
 	public void ouvbloc(int nbOctet) {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ouvbloc " + nbOctet);
-		/*Ecriture.ecrireStringln(this.fichier,  "\tmov bp,sp");
-		Ecriture.ecrireStringln(this.fichier , "\tsub sp," + nbOctet);*/
 		Ecriture.ecrireStringln(this.fichier , "\tenter " + nbOctet + ",0");
 	}
 
@@ -636,7 +634,14 @@ public class YVMasm extends YVM {
 		
 	}
 
-
+	/**
+	 * Permet de faire appel à une fonction ASM
+	 * 
+	 * @param id
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see YVMasm#fichier
+	 */
 	@Override
 	public void call(String id) {
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -644,7 +649,12 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tcall " + id);
 	}
 
-
+	/**
+	 * Permet de réserver l'espace dans la pile pour le retour de la fonction
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see YVM#fichier
+	 */
 	@Override
 	public void reserveRetour() {
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -652,7 +662,15 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tsub sp,2");
 	}
 
-
+	/**
+	 * Permet de placer la valeur de retour dans l'espace dédié de la pile (voir 
+	 * reserveRetour)
+	 * 
+	 * @param offset
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see YVMasm#fichier
+	 */
 	@Override
 	public void ireturn(int offset) {
 		String op = (offset>0) ? "+" : "";
@@ -662,7 +680,12 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tmov [bp" + op + offset + "]");
 	}
 
-
+	/**
+	 * Permet de spécifier le début de la fonction principale.
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see YVMasm#fichier
+	 */
 	@Override
 	public void debut() {
 		Ecriture.ecrireStringln(this.fichier,  "");
@@ -670,7 +693,15 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\tSTARTUPCODE");
 	}
 
-
+	/**
+	 * Permet d'écrire le code de retour d'une fonction ( on "retire" les paramètres
+	 * de la pile en fonction de nbOctet et on revient à la fonction appelante)
+	 * 
+	 * @param nbOctet
+	 * 
+	 * @see Ecriture#ecrireStringln(OutputStream, String)
+	 * @see YVMasm#fichier
+	 */
 	@Override
 	public void fermeBloc(int nbOctet) {
 		Ecriture.ecrireStringln(this.fichier,  "");
