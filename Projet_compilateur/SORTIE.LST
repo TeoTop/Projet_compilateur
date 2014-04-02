@@ -1,0 +1,197 @@
+Turbo Assembler	 Version 4.1	    03/18/14 17:11:11	    Page 1
+SORTIE.asm
+
+
+
+      1					 ;entete
+      2					 extrn ecrch:proc, lirent:proc,	ligsuiv:proc, ecrent:proc
+      3	    0000			 .MODEL	SMALL
+      4					 .586
+      5	    0000			 .CODE
+      6	    0000			 debut:
+      7						 STARTUPCODE
+1     8	    0000			 @Startup:
+1     9	    0000  BA 0000s			 MOV	 DX,@data
+1    10	    0003  8E DA				 MOV	 DS,DX
+1    11	    0005  8C D3				 MOV	 BX,SS
+1    12	    0007  2B DA				 SUB	 BX,DX
+1    13	    0009  C1 E3	04			 SHL	 BX,4
+1    14	    000C  8E D2				 MOV	 SS,DX
+1    15	    000E  03 E3				 ADD	 SP,BX
+     16
+     17						 ;ouvrePrinc 6
+     18	    0010  8B EC				 mov bp,sp
+     19	    0012  83 EC	06			 sub sp,6
+     20
+     21						 ;ecrireChaine "x = "
+     22	    0015			 .DATA
+     23	    0000  78 20	3D 20 24		 mess0 DB "x = $"
+     24	    0005			 .CODE
+     25	    0015  BA 0000r			 lea dx,mess0
+     26	    0018  52				 push dx
+     27	    0019  E8 0000e			 call ecrch
+     28
+     29						 ;lireEnt -2
+     30	    001C  8D 56	FE			 lea dx,[bp-2]
+     31	    001F  52				 push dx
+     32	    0020  E8 0000e			 call lirent
+     33
+     34						 ;aLaLigne
+     35	    0023  E8 0000e			 call ligsuiv
+     36
+     37						 ;ecrireChaine "y = "
+     38	    0026			 .DATA
+     39	    0005  79 20	3D 20 24		 mess1 DB "y = $"
+     40	    000A			 .CODE
+     41	    0026  BA 0005r			 lea dx,mess1
+     42	    0029  52				 push dx
+     43	    002A  E8 0000e			 call ecrch
+     44
+     45						 ;lireEnt -4
+     46	    002D  8D 56	FC			 lea dx,[bp-4]
+     47	    0030  52				 push dx
+     48	    0031  E8 0000e			 call lirent
+     49
+     50						 ;aLaLigne
+     51	    0034  E8 0000e			 call ligsuiv
+     52
+     53						 ;iload	-2
+     54	    0037  FF 76	FE			 push word ptr [bp-2]
+     55
+     56						 ;iload	-4
+     57	    003A  FF 76	FC			 push word ptr [bp-4]
+Turbo Assembler	 Version 4.1	    03/18/14 17:11:11	    Page 2
+SORTIE.asm
+
+
+
+     58
+     59						 ;iconst 2
+     60	    003D  6A 02				 push 2
+     61
+     62						 ;idiv
+     63	    003F  5B				 pop bx
+     64	    0040  58				 pop ax
+     65	    0041  99				 cwd
+     66	    0042  F7 F3				 div bx
+     67	    0044  50				 push ax
+     68
+     69						 ;iadd
+     70	    0045  5B				 pop bx
+     71	    0046  58				 pop ax
+     72	    0047  03 C3				 add ax,bx
+     73	    0049  50				 push ax
+     74
+     75						 ;iconst 5
+     76	    004A  6A 05				 push 5
+     77
+     78						 ;idiv
+     79	    004C  5B				 pop bx
+     80	    004D  58				 pop ax
+     81	    004E  99				 cwd
+     82	    004F  F7 F3				 div bx
+     83	    0051  50				 push ax
+     84
+     85						 ;istore -6
+     86	    0052  58				 pop ax
+     87	    0053  89 46	FA			 mov word ptr [bp-6],ax
+     88
+     89						 ;iload	-4
+     90	    0056  FF 76	FC			 push word ptr [bp-4]
+     91
+     92						 ;iconst 3
+     93	    0059  6A 03				 push 3
+     94
+     95						 ;iload	-4
+     96	    005B  FF 76	FC			 push word ptr [bp-4]
+     97
+     98						 ;imul
+     99	    005E  5B				 pop bx
+    100	    005F  58				 pop ax
+    101	    0060  F7 E3				 mul bx
+    102	    0062  50				 push ax
+    103
+    104						 ;iadd
+    105	    0063  5B				 pop bx
+    106	    0064  58				 pop ax
+    107	    0065  03 C3				 add ax,bx
+    108	    0067  50				 push ax
+    109
+    110						 ;iconst 4
+    111	    0068  6A 04				 push 4
+    112
+    113						 ;isub
+    114	    006A  5B				 pop bx
+Turbo Assembler	 Version 4.1	    03/18/14 17:11:11	    Page 3
+SORTIE.asm
+
+
+
+    115	    006B  58				 pop ax
+    116	    006C  2B C3				 sub ax,bx
+    117	    006E  50				 push ax
+    118
+    119						 ;istore -2
+    120	    006F  58				 pop ax
+    121	    0070  89 46	FE			 mov word ptr [bp-2],ax
+    122
+    123						 ;ecrireChaine "x = "
+    124	    0073			 .DATA
+    125	    000A  78 20	3D 20 24		 mess2 DB "x = $"
+    126	    000F			 .CODE
+    127	    0073  BA 000Ar			 lea dx,mess2
+    128	    0076  52				 push dx
+    129	    0077  E8 0000e			 call ecrch
+    130
+    131						 ;iload	-2
+    132	    007A  FF 76	FE			 push word ptr [bp-2]
+    133
+    134						 ;ecrireEnt
+    135	    007D  E8 0000e			 call ecrent
+    136
+    137						 ;aLaLigne
+    138	    0080  E8 0000e			 call ligsuiv
+    139
+    140						 ;ecrireChaine "z = "
+    141	    0083			 .DATA
+    142	    000F  7A 20	3D 20 24		 mess3 DB "z = $"
+    143	    0014			 .CODE
+    144	    0083  BA 000Fr			 lea dx,mess3
+    145	    0086  52				 push dx
+    146	    0087  E8 0000e			 call ecrch
+    147
+    148						 ;iload	-6
+    149	    008A  FF 76	FA			 push word ptr [bp-6]
+    150
+    151						 ;ecrireEnt
+    152	    008D  E8 0000e			 call ecrent
+    153
+    154						 ;aLaLigne
+    155	    0090  E8 0000e			 call ligsuiv
+    156
+    157						 ;ecrireChaine "a = "
+    158	    0093			 .DATA
+    159	    0014  61 20	3D 20 24		 mess4 DB "a = $"
+    160	    0019			 .CODE
+    161	    0093  BA 0014r			 lea dx,mess4
+    162	    0096  52				 push dx
+    163	    0097  E8 0000e			 call ecrch
+    164
+    165						 ;iconst -6
+    166	    009A  6A FA				 push -6
+    167
+    168						 ;ecrireEnt
+    169	    009C  E8 0000e			 call ecrent
+    170
+    171						 ;queue
+Turbo Assembler	 Version 4.1	    03/18/14 17:11:11	    Page 4
+SORTIE.asm
+
+
+
+    172	    009F  90				 nop
+    173						 EXITCODE
+1   174	    00A0  B4 4C				 MOV	 AH,4Ch
+1   175	    00A2  CD 21				 INT	 21h
+    176					 End debut
+

@@ -7,6 +7,7 @@ public class Yaka implements YakaConstants {
         public static Conditionnelle condition = new Conditionnelle();
         public static Fonction fonction = new Fonction();
         public static Iteration iteration = new Iteration();
+        public static Token token1 = new Token();
 
         public static void main(String args[]) {
                 Yaka analyseur;
@@ -91,7 +92,7 @@ public class Yaka implements YakaConstants {
   }
 
   static final public void declFonction() throws ParseException {
-                declaration.inFunction(true);
+                fonction.inFunction(true);
     typeF();
     jj_consume_token(FONCTION);
     jj_consume_token(ident);
@@ -102,9 +103,9 @@ public class Yaka implements YakaConstants {
     bloc();
     jj_consume_token(FFONCTION);
                 declaration.ajoutNomFonction(ident);
-                expression.fermeBloc(ident);
+                fonction.fermeBloc(ident);
                 tabident.clearFun();
-                declaration.inFunction(false);
+                fonction.inFunction(false);
   }
 
   static final public void typeF() throws ParseException {
@@ -362,9 +363,9 @@ public class Yaka implements YakaConstants {
   static final public void retourne() throws ParseException {
     jj_consume_token(RETOURNE);
     expression();
-                expression.testInFunc();
+                fonction.testInFunc();
                 expression.testTypeExprFunc();
-                expression.returnFun();
+                fonction.returnFun();
   }
 
   static final public void iteration() throws ParseException {
@@ -588,14 +589,14 @@ public class Yaka implements YakaConstants {
                         String id = YakaTokenManager.identLu;
                         tabident.identIsFunction(id);
                         tabident.newFun();
-                        expression.newFun(id);
+                        fonction.newFun(id);
                         yvm.reserveRetour();
         argumentsFonction();
                         tabident.testNbParam(id);
                         tabident.resetParamTest();
-                        expression.call();
-                        expression.empileTypeFun();
-                        expression.resetFun();
+                        fonction.call();
+                        fonction.empileTypeFun();
+                        fonction.resetFun();
         break;
       default:
         jj_la1[22] = jj_gen;
@@ -786,7 +787,7 @@ public class Yaka implements YakaConstants {
     jj_initialized_once = true;
     try { jj_input_stream = new SimpleCharStream(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source = new YakaTokenManager(jj_input_stream);
-    token = new Token();
+    token1 = new Token();
     jj_ntk = -1;
     jj_gen = 0;
     for (int i = 0; i < 30; i++) jj_la1[i] = -1;
@@ -800,7 +801,7 @@ public class Yaka implements YakaConstants {
   static public void ReInit(java.io.InputStream stream, String encoding) {
     try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }
     token_source.ReInit(jj_input_stream);
-    token = new Token();
+    token1 = new Token();
     jj_ntk = -1;
     jj_gen = 0;
     for (int i = 0; i < 30; i++) jj_la1[i] = -1;
@@ -817,7 +818,7 @@ public class Yaka implements YakaConstants {
     jj_initialized_once = true;
     jj_input_stream = new SimpleCharStream(stream, 1, 1);
     token_source = new YakaTokenManager(jj_input_stream);
-    token = new Token();
+    token1 = new Token();
     jj_ntk = -1;
     jj_gen = 0;
     for (int i = 0; i < 30; i++) jj_la1[i] = -1;
@@ -827,7 +828,7 @@ public class Yaka implements YakaConstants {
   static public void ReInit(java.io.Reader stream) {
     jj_input_stream.ReInit(stream, 1, 1);
     token_source.ReInit(jj_input_stream);
-    token = new Token();
+    token1 = new Token();
     jj_ntk = -1;
     jj_gen = 0;
     for (int i = 0; i < 30; i++) jj_la1[i] = -1;
@@ -843,7 +844,7 @@ public class Yaka implements YakaConstants {
     }
     jj_initialized_once = true;
     token_source = tm;
-    token = new Token();
+    token1 = new Token();
     jj_ntk = -1;
     jj_gen = 0;
     for (int i = 0; i < 30; i++) jj_la1[i] = -1;
@@ -852,7 +853,7 @@ public class Yaka implements YakaConstants {
   /** Reinitialise. */
   public void ReInit(YakaTokenManager tm) {
     token_source = tm;
-    token = new Token();
+    token1 = new Token();
     jj_ntk = -1;
     jj_gen = 0;
     for (int i = 0; i < 30; i++) jj_la1[i] = -1;
@@ -860,14 +861,14 @@ public class Yaka implements YakaConstants {
 
   static private Token jj_consume_token(int kind) throws ParseException {
     Token oldToken;
-    if ((oldToken = token).next != null) token = token.next;
-    else token = token.next = token_source.getNextToken();
+    if ((oldToken = token1).next != null) token1 = token1.next;
+    else token1 = token1.next = token_source.getNextToken();
     jj_ntk = -1;
-    if (token.kind == kind) {
+    if (token1.kind == kind) {
       jj_gen++;
-      return token;
+      return token1;
     }
-    token = oldToken;
+    token1 = oldToken;
     jj_kind = kind;
     throw generateParseException();
   }
@@ -875,16 +876,16 @@ public class Yaka implements YakaConstants {
 
 /** Get the next Token. */
   static final public Token getNextToken() {
-    if (token.next != null) token = token.next;
-    else token = token.next = token_source.getNextToken();
+    if (token1.next != null) token1 = token1.next;
+    else token1 = token1.next = token_source.getNextToken();
     jj_ntk = -1;
     jj_gen++;
-    return token;
+    return token1;
   }
 
 /** Get the specific Token. */
   static final public Token getToken(int index) {
-    Token t = token;
+    Token t = token1;
     for (int i = 0; i < index; i++) {
       if (t.next != null) t = t.next;
       else t = t.next = token_source.getNextToken();
@@ -893,8 +894,8 @@ public class Yaka implements YakaConstants {
   }
 
   static private int jj_ntk() {
-    if ((jj_nt=token.next) == null)
-      return (jj_ntk = (token.next=token_source.getNextToken()).kind);
+    if ((jj_nt=token1.next) == null)
+      return (jj_ntk = (token1.next=token_source.getNextToken()).kind);
     else
       return (jj_ntk = jj_nt.kind);
   }
@@ -934,7 +935,7 @@ public class Yaka implements YakaConstants {
     for (int i = 0; i < jj_expentries.size(); i++) {
       exptokseq[i] = jj_expentries.get(i);
     }
-    return new ParseException(token, exptokseq, tokenImage);
+    return new ParseException(token1, exptokseq, tokenImage);
   }
 
   /** Enable tracing. */

@@ -36,10 +36,6 @@ public class Declaration {
 	 */
 	int type;
 
-	/**
-	 * Flag permettant de savoir si les déclarations sont celles d'une fonctions
-	 */
-	boolean inFunc;
 	
 	/**
 	 * Permet d'ajouter une variable du code à la table des idents en fonction de son nom.
@@ -193,14 +189,6 @@ public class Declaration {
 	  	this.id.setType(YakaConstants.BOOLEEN);
 	}
 	
-	/**
-	 * Permet de modifier l'attribut inFunc  
-	 * @param b
-	 * 
-	 * @see Declaration#inFunc
-	 */
-	public void inFunction(boolean b) {
-		this.inFunc=b;
-	}
+
 	
 }

@@ -232,17 +232,8 @@ main:
 	;reserveRetour
 	sub sp,2
 
-	;iload -2
-	push word ptr [bp-2]
-
-	;iconst 2
-	push 2
-
-	;imul
-	pop bx
-	pop ax
-	mul bx
-	push ax
+	;iconst 1
+	push 1
 
 	;iload -4
 	push word ptr [bp-4]

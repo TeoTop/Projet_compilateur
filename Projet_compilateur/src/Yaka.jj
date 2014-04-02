@@ -209,7 +209,7 @@ void analyse() : {}
 void declFonction():{}
 {
 	{
-		declaration.inFunction(true);
+		fonction.inFunction(true);
 	}
 	typeF() <FONCTION> <ident>
 	{
@@ -224,9 +224,9 @@ void declFonction():{}
 	<FFONCTION>
 	{
 		declaration.ajoutNomFonction(ident);
-		expression.fermeBloc(ident);
+		fonction.fermeBloc(ident);
 		tabident.clearFun();
-		declaration.inFunction(false);
+		fonction.inFunction(false);
 	}
 }
 
@@ -366,9 +366,9 @@ void retourne():{}
 {
 	<RETOURNE> expression()
 	{
-		expression.testInFunc();
+		fonction.testInFunc();
 		expression.testTypeExprFunc();
-		expression.returnFun();
+		fonction.returnFun();
 	}
 }
 
@@ -548,16 +548,16 @@ void valeur () : {}
 			String id = YakaTokenManager.identLu;
 			tabident.identIsFunction(id);
 			tabident.newFun();
-			expression.newFun(id);
+			fonction.newFun(id);
 			yvm.reserveRetour();
 		}
 		argumentsFonction()
 		{
 			tabident.testNbParam(id);
 			tabident.resetParamTest();
-			expression.call();
-			expression.empileTypeFun();
-			expression.resetFun();
+			fonction.call();
+			fonction.empileTypeFun();
+			fonction.resetFun();
 		}
 	)?
  | <VRAI> 
