@@ -42,7 +42,7 @@ public class TabIdent {
 	 * @see TabIdent#TabIdent()
 	 * 
 	 */
-	private HashMap<Integer,HashMap<String,Ident>> param;// a changer en class
+	private HashMap<Integer,Parametre> param;
 	private int rang;
 	/**
 	 * Pile des arguments
@@ -61,7 +61,7 @@ public class TabIdent {
 		this.locaux = new HashMap<String,Ident>();
 		this.globaux = new HashMap<String,Ident>();
 		this.var = new Stack<Integer>();
-		this.param = new HashMap<Integer,HashMap<String,Ident>>();
+		this.param = new HashMap<Integer,Parametre>();
 		this.rang=0;
 		this.paramTest= new Stack<Integer>();
 	}
@@ -141,8 +141,7 @@ public class TabIdent {
 	 * @param ident
 	 */
 	public void addParam(String ident,Ident id){//appelee a partir de addparam_declaration
-		HashMap<String,Ident> tmp = new HashMap<String, Ident>();
-		tmp.put(ident, id);
+		Parametre tmp = new Parametre(ident, id);
 		this.param.put(this.rang,tmp);
 		this.rang++;
 	}	
@@ -156,10 +155,9 @@ public class TabIdent {
 		String clef;
 		for (int i = 0; i < nbParam; i++){
 			int offset = nbParam*2+4-((i+1)*2);
-			clef=(String) this.param.get(i).keySet().toArray()[0];
-			IdVar id = (IdVar) this.param.get(i).get(clef);
+			IdVar id = (IdVar) this.param.get(i).getId();
 			id.setOffset(offset);
-			this.locaux.put(clef, id);
+			this.locaux.put(this.param.get(i).getNom(), id);
 		}
 	}	
 	/**
@@ -187,8 +185,7 @@ public class TabIdent {
 		if (!existeIdentG(nom)) { // fonction n'existe pas
 			int nbParam =this.nbParam();
 			for (int i = 0; i < nbParam; i++){
-				String clef = (String) this.param.get(i).keySet().toArray()[0];
-				IdVar var = (IdVar) this.param.get(i).get(clef);
+				IdVar var = (IdVar) this.param.get(i).getId();
 				id.ajoutTypeParam(var.getType());
 				id.nbParam=nbParam();
 			}
