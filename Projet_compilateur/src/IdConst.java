@@ -60,12 +60,18 @@ public class IdConst extends Ident {
 	public String toString() {
 		return "IdConst [valeur=" + this.valeur + " type="+ this.getType() + "]";
 	}
-
+	/**
+	 * Retourne toujours faux puisque la classe correspond aux constantes
+	 * @return false
+	 */
 	@Override
 	public boolean isFonc() {
 		return false;
 	}
-
+	/**
+	 * Retourne toujours faux puisque la classe correspond aux constantes
+	 * @return false
+	 */
 	@Override
 	public boolean isParam() {
 		return false;

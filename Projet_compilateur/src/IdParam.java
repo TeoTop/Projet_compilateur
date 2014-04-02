@@ -61,11 +61,19 @@ public class IdParam extends Ident {
 	}
 
 	@Override
+	/**
+	 * Retourne toujours faux puisque la classe correspond aux Parametre
+	 * @return false
+	 */
 	public boolean isFonc() {
 		return false;
 	}
 	
 	@Override
+	/**
+	 * Retourne toujours vraie puisque la classe correspond aux Parametre
+	 * @return true
+	 */
 	public boolean isParam() {
 		return true;
 	}

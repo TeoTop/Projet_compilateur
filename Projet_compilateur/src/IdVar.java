@@ -61,11 +61,19 @@ public class IdVar extends Ident {
 	}
 
 	@Override
+	/**
+	 * Retourne toujours faux puisque la classe correspond aux variables
+	 * @return false
+	 */
 	public boolean isFonc() {
 		return false;
 	}
 
 	@Override
+	/**
+	 * Retourne toujours faux puisque la classe correspond aux variables
+	 * @return false
+	 */
 	public boolean isParam() {
 		return false;
 	}

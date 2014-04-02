@@ -8,7 +8,7 @@
  * 
  * @version 1.0
  * 
- * Classe permettant de définir le type d'une variable ou d'une constante
+ * Classe permettant de définir le type d'une variable ou d'une constante ou d'un parametre
  * 
  * @see IdVar
  * @see IdConst
@@ -73,7 +73,13 @@ public abstract class Ident {
 	public String toString() {
 		return "Ident [type=" + this.type + "]";
 	}
-
+	/**
+	 * Méthode permettant de savoir si l'objet Ident est une Parametre. 
+	 * @return true si c'est une variable, false sinon
+	 * @see IdVar#isParam()
+	 * @see IdConst#isParam()
+	 * @see IdFonc#isParam()
+	 */
 	public abstract boolean isParam();
 
 

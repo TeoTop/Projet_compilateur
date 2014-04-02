@@ -25,7 +25,7 @@ public class Expression implements YakaConstants{
 	private Stack<Integer> type;
 
 	/**
-	 * La pile des opï¿½rateurs
+	 * La pile des opérateurs
 	 * @see Expression#Expression()
 	 * @see Expression#empileOpera(int)
 	 */
@@ -34,9 +34,7 @@ public class Expression implements YakaConstants{
 	
 	/**
 	 * Constructeur Expression
-	 * Crï¿½ation de la pile des types, des opï¿½rateurs ainsi que 
-	 * la piles des conditionnalles et des itï¿½rations. La valeur des
-	 * compteurs de conditionnelles et de boucles est mise ï¿½ 1
+	 * Création de la pile des types et des opérateurs.
 	 * 
 	 * @see Expression#type
 	 * @see Expression#opera
@@ -48,17 +46,7 @@ public class Expression implements YakaConstants{
 	
 	
 	/**
-	 * 
-	 * @return
-	 * 
-	 * @see Fonction#empileTypeFun
-	 */
-	public void pushType(int type){
-		this.type.push(type);
-	}
-
-	/**
-	 * Empile un type grï¿½ce ï¿½ son ident
+	 * Empile un type grâce à son ident : variable ou constante 
 	 * 
 	 * @see Expression#type	
 	 * @see TabIdent
@@ -75,7 +63,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Empile un type
+	 * Empile un type dans la pile des types
 	 * 
 	 * @see Expression#type
 	 * @param type
@@ -85,7 +73,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Empiler un opï¿½rateur
+	 * Empiler un opérateur dans la pile des opérateurs
 	 * 
 	 * @see Expression#opera
 	 * @param opera
@@ -95,10 +83,9 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Teste si les deux types en sommet de pile correspondent ï¿½ l'opï¿½rande utilisï¿½ pour une
-	 * multiplication, une division et un ET boolï¿½en
+	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
+	 * multiplication, une division ou un ET booléen
 	 * 
-	 * @see Expression#lasOpMul
 	 */
 	public void testMul() {
 		int type1,type2;
@@ -106,14 +93,14 @@ public class Expression implements YakaConstants{
 		String op = "";
 		int p = this.opera.peek();
 
-		//on vï¿½rifie le type d'opÃ©ration Ã  effectuer
+		//on vérifie le type d'opération à  effectuer
 		switch(p) {
 		case MUL : op="multiplication";break;
 		case DIV : op="division";break;
 		case AND : op="et logique";break;
 		}
 
-		//on vï¿½rifie le nombre d'arguments dans la pile des types
+		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
@@ -126,7 +113,7 @@ public class Expression implements YakaConstants{
 				}
 				else {
 					empileType(YakaConstants.ERREUR);
-					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre deux variables de type " + t1);
+					Erreur.message("Impossible d'effectuer l'opération '" + op + "' entre deux variables de type " + t1);
 				}
 			}
 			else {
@@ -142,7 +129,12 @@ public class Expression implements YakaConstants{
 		}
 	}
 
-	
+	/**
+	 * Conversion de type en String grâce à son code en int 
+	 * 
+	 * @param type
+	 * @return string
+	 */
 	public String typeToString(int type){
 		String t = "";
 		switch(type){
@@ -153,10 +145,9 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
-	 * Teste si les deux types en sommet de pile correspondent ï¿½ l'opï¿½rande utilisï¿½ pour une
-	 * addition, une soustration et un OU boolï¿½en
+	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
+	 * addition, une soustration et un OU booléen
 	 * 
-	 * @see Expression#lasOpAdd
 	 */
 	public void testAdd() {
 		int type1,type2;
@@ -164,14 +155,14 @@ public class Expression implements YakaConstants{
 		String op = "";
 		int p = this.opera.peek();
 
-		//on vï¿½rifie le type d'opï¿½ration ï¿½ effectuer
+		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case ADD : op="addtion";break;
 		case SUBNEG : op="soustration";break;
 		case OR : op="ou logique";break;
 		}
 
-		//on vï¿½rifie le nombre d'arguments dans la pile des types
+		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
@@ -201,27 +192,26 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Teste si les deux types en sommet de pile correspondent ï¿½ l'opï¿½rande utilisï¿½ pour une
+	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
 	 * comparaison entre deux entiers
 	 * 
-	 * @see Expression#lasOpRel
 	 */
 	public void testRel() {
 		String op = "";
 		String t1,t2;
 		int p = this.opera.peek();
 
-		//on vï¿½rifie le type d'opï¿½ration ï¿½ effectuer
+		//on vérifie le type d'opération à effectuer
 		switch(p) {
-		case EGAL : op="Ã©gal";break;
-		case DIFF : op="diffÃ©rent";break;
-		case INF : op="infÃ©rieur";break;
-		case INFEGAL : op="infÃ©rieur ou Ã©gal";break;
-		case SUP : op="supÃ©rieur";break;
-		case SUPEGAL : op="supÃ©rieur ou Ã©gal";break;
+		case EGAL : op="égal";break;
+		case DIFF : op="différent";break;
+		case INF : op="inférieur";break;
+		case INFEGAL : op="inférieur ou égal";break;
+		case SUP : op="supérieur";break;
+		case SUPEGAL : op="supérieur ou égal";break;
 		}
 
-		//on vï¿½rifie le nombre d'arguments dans la pile des types
+		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			int type1 = this.type.pop();
 			int type2 = this.type.pop();
@@ -233,18 +223,18 @@ public class Expression implements YakaConstants{
 			}
 			else {
 				if (!(type1 == YakaConstants.ERREUR || type2 == YakaConstants.ERREUR)) {
-					Erreur.message("Impossible d'effectuer l'opÃ©ration de comparaison '" + op + "' entre les types " + t1 + " et " + t2);
+					Erreur.message("Impossible d'effectuer l'opération de comparaison '" + op + "' entre les types " + t1 + " et " + t2);
 					empileType(YakaConstants.ERREUR);
 				}
 			}
 		}
 		else {
-			Erreur.message("L'opÃ©ration de comparaison '" + op + "' ne peut s'effectuer");
+			Erreur.message("L'opération de comparaison '" + op + "' ne peut s'effectuer");
 		}
 	}
 
 	/**
-	 * Teste si le type en sommet de pile correspond ï¿½ l'opï¿½rande utilisï¿½ pour une nï¿½gation
+	 * Teste si le type en sommet de pile correspond à l'opérande utilisé pour une négation
 	 * 
 	 * @see Expression#lasOpNeg
 	 */
@@ -252,13 +242,13 @@ public class Expression implements YakaConstants{
 		String op = "";
 		int p = this.opera.peek();
 
-		//on vï¿½rifie le type d'opï¿½ration ï¿½ effectuer
+		//on vérifie le type d'opération à effectuer
 		switch(p) {
 		case NOT : op="non logique";break;
 		case SUBNEG : op="moins unaire";break;
 		}
 
-		//on vï¿½rifie le nombre d'arguments dans la pile des types
+		//on vérifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 1) {
 			int type = this.type.peek();
 			String t;
@@ -267,12 +257,12 @@ public class Expression implements YakaConstants{
 			if (!((type == YakaConstants.ENTIER && p == SUBNEG) || (type == YakaConstants.BOOLEEN && p == NOT ))){
 				if (type != YakaConstants.ERREUR) {
 					empileType(YakaConstants.ERREUR);
-					Erreur.message("Impossible d'effectuer l'opÃ©rateur '" + op +"' sur une variable de type " + t);
+					Erreur.message("Impossible d'effectuer l'opérateur '" + op +"' sur une variable de type " + t);
 				}
 			}
 		}
 		else {
-			Erreur.message("L'opÃ©rateur '" + op + "' ne peut Ãªtre effectuÃ©");
+			Erreur.message("L'opérateur '" + op + "' ne peut être effectué");
 		}
 
 	}
@@ -287,7 +277,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Vider la pile type
+	 * Vider la pile opérateur
 	 * 
 	 * @see Expression#opera
 	 */
@@ -309,7 +299,7 @@ public class Expression implements YakaConstants{
 
 	/**
 	 * 
-	 * Appel ï¿½ la mï¿½thode iload de YVMasm si l'ident est une variable et iconst si c'est une constante
+	 * Appel à la méthode iload de YVMasm si l'ident est une variable ou un paramètre et iconst si c'est une constante
 	 * 
 	 * @see Expression#type
 	 * @see YVMasm
@@ -323,10 +313,10 @@ public class Expression implements YakaConstants{
 			if (ident.isVar()) {// ident est une variable
 				int offset =((IdVar) ident).getOffset();
 				int index=-1*offset/2 - 1;// index de la variable dans la pile des variables
-				if (Yaka.tabident.var.get(index)!=-1) {// la variable a ï¿½tï¿½ dï¿½jï¿½ dï¿½finie
+				if (Yaka.tabident.var.get(index)!=-1) {// la variable a été définie
 					Yaka.yvm.iload(offset);
 				}
-				else {// variable non dï¿½finie
+				else {// variable non définie
 					Erreur.message("La variable '" + id + "' n'est pas encore dï¿½finie");
 				}
 			}
@@ -351,7 +341,7 @@ public class Expression implements YakaConstants{
 
 	/**
 	 * 
-	 * Appel ï¿½ la mï¿½thode istore de YVMasm si l'ident est une variable
+	 * Appel à la méthode istore de YVMasm si l'ident est une variable
 	 * 
 	 * @see Expression#type
 	 * @see YVMasm
@@ -376,7 +366,7 @@ public class Expression implements YakaConstants{
 					Erreur.message("L'identificateur '" + id + "' n'est pas une variable");
 				}
 				else if (type != YakaConstants.ERREUR){// si le type en sommet de la pile est erreur, on écrit pas le msg d'erreur
-					Erreur.message("La variable '" + id + "' doit Ãªtre de type " + t);
+					Erreur.message("La variable '" + id + "' doit être de type " + t);
 				}
 			}
 			else {// ident est une constante
@@ -389,9 +379,8 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel ï¿½ une des mï¿½thodes de comparaison de YVMasm
-	 * 
-	 * @see Expression#lasOpRel
+	 * Appel à une des méthodes de comparaison de YVMasm
+	 * @see Expression#opera
 	 * @see YVMasm
 	 */
 	public void executerOpRel() {
@@ -406,9 +395,8 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel ï¿½ une des mï¿½thodes d'addition de YVMasm
-	 * 
-	 * @see Expression#lasOpAdd
+	 * Appel à une des méthodes d'addition de YVMasm
+	 * @see Expression#opera
 	 * @see YVMasm
 	 */
 	public void executerOpAdd() {
@@ -421,9 +409,8 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel ï¿½ une des mï¿½thodes de multiplication de YVMasm
-	 * 
-	 * @see Expression#lasOpMul
+	 * Appel à une des méthodes de multiplication de YVMasm
+	 * @see Expression#opera
 	 * @see YVMasm
 	 */
 	public void executerOpMul() {
@@ -436,9 +423,8 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel ï¿½ une des mï¿½thodes de nï¿½gation de YVMasm
-	 * 
-	 * @see Expression#lasOpNeg
+	 * Appel à une des méthodes de négation de YVMasm
+	 * @see Expression#opera
 	 * @see YVMasm
 	 */
 	public void executerOpNeg() {
@@ -449,7 +435,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel ï¿½ la mï¿½thode lirEnt de YVMasm ssi la variable est de type entier
+	 * Appel à la méthode lirEnt de YVMasm ssi la variable est de type entier
 	 * 
 	 * @see TabIdent
 	 * @see YVMasm
@@ -480,8 +466,8 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel ï¿½ la mï¿½thode ecrireEnt si le type en sommet de pile est entier sinon si le type est booleen, on fait
-	 * appel ï¿½ la mï¿½thode ecrireBool de YVMasm
+	 * Appel à la méthode ecrireEnt si le type en sommet de pile est entier sinon si le type est booleen, on fait
+	 * appel à la méthode ecrireBool de YVMasm
 	 * 
 	 * @see Expression#type
 	 * @see YVMasm
@@ -497,7 +483,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Si le type en sommet de pile n'est pas boolï¿½en, un message d'erreur est affichï¿½
+	 * Si le type en sommet de pile n'est pas booléen, un message d'erreur est affiché
 	 * 
 	 * @see Expression#type
 	 */
@@ -508,7 +494,10 @@ public class Expression implements YakaConstants{
 		}
 	}
 
-
+	/**
+	 * Test si l'expression à affecter a le même type que la fonction appelée
+	 * @see Expression#type
+	 */
 	public void testParamFonc() {
 		int typeExpr=this.type.peek();
 		int index = Yaka.tabident.argument.peek();
@@ -523,7 +512,9 @@ public class Expression implements YakaConstants{
 	}
 
 
-
+	/**
+	 * Test si l'expression à retourner a le même type que la fonction déclarée
+	 */
 	public void testTypeExprFunc() {
 		int typeExpr = this.type.peek();
 		int typeFunc = Yaka.declaration.idFonc.getType();

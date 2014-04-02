@@ -14,7 +14,7 @@
  */
 public class Declaration {
 	/**
-	 * Objet de la classe Ident permettant de définir si c'est une constante ou une variable
+	 * Objet de la classe Ident permettant de définir si c'est une constante ou une variable ou un paramètre 
 	 * de type entier ou booléen.
 	 * 
 	 * @see Ident
@@ -65,13 +65,13 @@ public class Declaration {
 		Yaka.tabident.addParam(ident,this.id);
 	}
 	/**
-	 * Permet de créer un nouvel objet de la classe IdVar correspondant à une variable du
+	 * Permet de créer un nouvel objet de la classe IdParam correspondant à une variable du
 	 * code YAKA et d'initialiser le type de la variable.
 	 * @param type
 	 * 
 	 * @see Declaration#id
 	 * @see Declaration#type
-	 * @see IdVar#setType(String)
+	 * @see IdParam#setType(String)
 	 */
 	public void ajoutParam(int type){
 		this.id = new IdParam();
