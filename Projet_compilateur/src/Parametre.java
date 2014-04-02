@@ -8,11 +8,6 @@ public class Parametre {
 		this.id = id;
 	}
 
-	public Parametre() {
-		this.nom = "ee";
-		this.id = id;
-	}
-
 	public String getNom() {
 		return nom;
 	}
