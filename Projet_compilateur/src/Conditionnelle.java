@@ -4,16 +4,16 @@ import java.util.Stack;
 public class Conditionnelle implements YakaConstants{
 	/**
 	 * La piles des conditionnelles
-     * @see Expression#Expression()
-     * @see Expression#addSi()
-     * @see Expression#removeSi()
+	 *
+     * @see Conditionnelle#addSi()
+     * @see Conditionnelle#removeSi()
 	 */
 	private Stack<Integer> pileSI;
 	
 	/**
 	 * Compteur de conditionnelles
-     * @see Expression#Expression()
-     * @see Expression#addSi()
+	 * 
+     * @see Conditionnelle#addSi()
 	 */
 	private int comptSI;
 
@@ -25,8 +25,8 @@ public class Conditionnelle implements YakaConstants{
 	/**
 	 * Empiler les conditionnelles et d'incrementer le nombre de conditionnelles présentes dans le code YAKA 
 	 * 
-	 * @see Expression#pileSI
-	 * @see Expression#comptSI
+	 * @see Conditionnelle#pileSI
+	 * @see Conditionnelle#comptSI
 	 */
 	public void addSi() {
 		this.pileSI.push(this.comptSI++);
@@ -71,7 +71,7 @@ public class Conditionnelle implements YakaConstants{
 	/**
 	 * Dépiler la pile des conditionnelles
 	 * 
-	 * @see Expression#pileSI
+	 * @see Conditionnelle#pileSI
 	 */
 	public void removeSi() {
 		this.pileSI.pop();

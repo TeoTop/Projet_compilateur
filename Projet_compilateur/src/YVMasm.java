@@ -653,7 +653,7 @@ public class YVMasm extends YVM {
 	 * Permet de réserver l'espace dans la pile pour le retour de la fonction
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
-	 * @see YVM#fichier
+	 * @see YVMasm#fichier
 	 */
 	@Override
 	public void reserveRetour() {

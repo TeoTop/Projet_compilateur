@@ -238,7 +238,7 @@ public class Expression implements YakaConstants{
 	/**
 	 * Teste si le type en sommet de pile correspond à l'opérande utilisé pour une négation
 	 * 
-	 * @see Expression#lasOpNeg
+	 * @see Expression#opera
 	 */
 	public void testNeg() {
 		String op = "";

@@ -50,7 +50,7 @@ public class Declaration {
 	 * Permet d'ajouter une fonction à la table des idents globaux.
 	 * @param ident
 	 * 
-	 * @see TabIdent#addFonction(String nom)
+	 * @see TabIdent#addFonction(String, IdFonc)
 	 */
 	public void ajoutNomFonction(String ident){
 		Yaka.tabident.addFonction(ident,this.idFonc);
@@ -71,7 +71,7 @@ public class Declaration {
 	 * 
 	 * @see Declaration#id
 	 * @see Declaration#type
-	 * @see IdParam#setType(String)
+	 * @see Ident#setType(int)
 	 */
 	public void ajoutParam(int type){
 		this.id = new IdParam();
@@ -86,7 +86,7 @@ public class Declaration {
 	 * 
 	 * @see Declaration#id
 	 * @see Declaration#type
-	 * @see IdVar#setType(String)
+	 * @see Ident#setType(int)
 	 */
 	public void ajoutVariableParTYPE(int type){
 		this.id = new IdVar();
@@ -100,7 +100,7 @@ public class Declaration {
 	 * 
 	 * @see Declaration#id
 	 * @see Declaration#type
-	 * @see IdFonc#setType(String)
+	 * @see Ident#setType(int)
 	 */
 	public void ajoutFonction(int type){
 		this.idFonc = new IdFonc();
@@ -116,7 +116,7 @@ public class Declaration {
 	 * 
 	 * @see Declaration#id
 	 * @see Declaration#type
-	 * @see IdVar#setType(String)
+	 * @see Ident#setType(int)
 	 * @see TabIdent#rangeIdent(String, Ident)
 	 */
 	public void ajoutNomVariableSecondaire(String ident){
@@ -145,7 +145,7 @@ public class Declaration {
 	 * @param ident
 	 * 
 	 * @see Declaration#id
-	 * @see IdConst#setType(String)
+	 * @see Ident#setType(int)
 	 * @see IdConst#setValeur(int)
 	 * @see TabIdent#chercheIdent(String)
 	 */
@@ -169,7 +169,7 @@ public class Declaration {
 	 * 
 	 * @see Declaration#id
 	 * @see IdConst#setValeur(int)
-	 * @see IdConst#setType(String)
+	 * @see Ident#setType(int)
 	 */
 	public void ajoutConstanteParEntier(int entier){
 		((IdConst) this.id).setValeur(entier);
@@ -182,7 +182,7 @@ public class Declaration {
 	 * 
 	 * @see Declaration#id
 	 * @see IdConst#setValeur(int)
-	 * @see IdConst#setType(String)
+	 * @see Ident#setType(int)
 	 */
 	public void ajoutConstanteParBooleen(int entier){
 		((IdConst) this.id).setValeur(entier);

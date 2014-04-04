@@ -109,7 +109,7 @@ public class Fonction implements YakaConstants{
 	 * Permet de modifier l'attribut inFunc  
 	 * @param b
 	 * 
-	 * @see Declaration#inFunc
+	 * @see Fonction#inFunc
 	 */
 	public void inFunction(boolean b) {
 		this.inFunc=b;

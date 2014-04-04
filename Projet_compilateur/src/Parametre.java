@@ -29,14 +29,14 @@ public class Parametre {
 	}
 	/**
 	 * Recupere le nom de la fonction
-	 * @return
+	 * @return Retourne le nom du paramètre
 	 */
 	public String getNom() {
 		return nom;
 	}
 	/**
 	 * Recupere l'id de la fonction
-	 * @return
+	 * @return Retourne l'id du paramètre
 	 */
 	public Ident getId() {
 		return id;

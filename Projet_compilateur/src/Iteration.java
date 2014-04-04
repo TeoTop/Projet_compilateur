@@ -4,16 +4,14 @@ import java.util.Stack;
 public class Iteration implements YakaConstants{
 	/**
 	 * La piles des boucles
-     * @see Expression#Expression()
-     * @see Expression#addTantQue()
-     * @see Expression#removeTantQue()
+     * @see Iteration#addTantQue()
+     * @see Iteration#removeTantQue()
 	 */
 	private Stack<Integer> pileTQ;
 	
 	/**
 	 * Compteur de boucles
-     * @see Expression#Expression()
-     * @see Expression#addTantQue()
+     * @see Iteration#addTantQue()
 	 */
 	private int comptTQ;
 
@@ -25,8 +23,8 @@ public class Iteration implements YakaConstants{
 	/**
 	 * Empiler les itérations et d'incrementer le nombre d'itérations présentes dans le code YAKA 
 	 * 
-	 * @see Expression#pileTQ
-	 * @see Expression#comptTQ
+	 * @see Iteration#pileTQ
+	 * @see Iteration#comptTQ
 	 */
 	public void addTantQue() {
 		this.pileTQ.push(this.comptTQ++);
@@ -71,7 +69,7 @@ public class Iteration implements YakaConstants{
 	/**
 	 * Dépiler la pile des itérations
 	 * 
-	 * @see Expression#pileTQ
+	 * @see Iteration#pileTQ
 	 */
 	public void removeTantQue() {
 		this.pileTQ.pop();
