@@ -41,7 +41,7 @@ max:
 
 	;ireturn 8
 	pop ax
-	mov [bp+8]
+	mov [bp+8],ax
 
 	;goto FSI1
 	jmp FSI1
@@ -53,7 +53,7 @@ SINON1:
 
 	;ireturn 8
 	pop ax
-	mov [bp+8]
+	mov [bp+8],ax
 
 FSI1:
 
@@ -91,7 +91,7 @@ min:
 
 	;ireturn 8
 	pop ax
-	mov [bp+8]
+	mov [bp+8],ax
 
 	;goto FSI2
 	jmp FSI2
@@ -103,7 +103,7 @@ SINON2:
 
 	;ireturn 8
 	pop ax
-	mov [bp+8]
+	mov [bp+8],ax
 
 FSI2:
 
@@ -133,7 +133,7 @@ sup:
 
 	;ireturn 8
 	pop ax
-	mov [bp+8]
+	mov [bp+8],ax
 
 	;fermeBloc 4
 	leave

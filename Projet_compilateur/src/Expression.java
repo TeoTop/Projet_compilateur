@@ -218,10 +218,12 @@ public class Expression implements YakaConstants{
 			t1 = this.typeToString(type1);
 			t2 = this.typeToString(type2);
 			//on vérifie que les deux arguments on le même type.
-			if (type1 == YakaConstants.ENTIER && type2 == YakaConstants.ENTIER) {
+			Boolean test = (type1 == YakaConstants.ENTIER && type2 == YakaConstants.ENTIER) || (type1 == YakaConstants.BOOLEEN && type2 == YakaConstants.BOOLEEN && (p == YakaConstants.EGAL || p == YakaConstants.DIFF));
+			if (test) {
 				empileType(YakaConstants.BOOLEEN);
 			}
 			else {
+				
 				if (!(type1 == YakaConstants.ERREUR || type2 == YakaConstants.ERREUR)) {
 					Erreur.message("Impossible d'effectuer l'opération de comparaison '" + op + "' entre les types " + t1 + " et " + t2);
 					empileType(YakaConstants.ERREUR);

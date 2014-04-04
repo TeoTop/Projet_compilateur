@@ -677,7 +677,7 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "");
 		Ecriture.ecrireStringln(this.fichier,  "\t;ireturn " + offset);
 		Ecriture.ecrireStringln(this.fichier,  "\tpop ax");
-		Ecriture.ecrireStringln(this.fichier,  "\tmov [bp" + op + offset + "]");
+		Ecriture.ecrireStringln(this.fichier,  "\tmov [bp" + op + offset + "],ax");
 	}
 
 	/**

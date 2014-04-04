@@ -219,11 +219,11 @@ void declFonction():{}
 	paramForms()
 	{
 		tabident.rangeParam();
+		declaration.ajoutNomFonction(ident);
 	}
 	bloc()
 	<FFONCTION>
 	{
-		declaration.ajoutNomFonction(ident);
 		fonction.fermeBloc(ident);
 		tabident.clearFun();
 		fonction.inFunction(false);

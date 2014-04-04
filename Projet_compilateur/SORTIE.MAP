@@ -1,8 +1,8 @@
 
  Start  Stop   Length Name               Class
 
- 00000H 001C2H 001C3H _TEXT              CODE
- 001C4H 001F7H 00034H _DATA              DATA
+ 00000H 00334H 00335H _TEXT              CODE
+ 00336H 003ABH 00076H _DATA              DATA
 
-Program entry point at 0000:0000
+Program entry point at 0000:00C7
 
