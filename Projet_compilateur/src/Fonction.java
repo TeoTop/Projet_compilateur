@@ -16,7 +16,7 @@ public class Fonction implements YakaConstants{
 	
 
 	/**
-	 * Flag permettant de savoir si on est dans une fonction lors de sa déclaration
+	 * Flag permettant de savoir si on est dans une fonction lors de sa dÃ©claration
 	 */
 	boolean inFunc;
 
@@ -43,7 +43,7 @@ public class Fonction implements YakaConstants{
 	}
 	
 	/**
-	 * Crée une nouvelle fonction en empilant son id dans la pile
+	 * CrÃ©e une nouvelle fonction en empilant son id dans la pile
 	 * des fonctions et en empilant vrai dans la pile des flags
 	 * @param id
 	 */
@@ -52,7 +52,7 @@ public class Fonction implements YakaConstants{
 		this.inFunTest.push(true);
 	}
 	/**
-	 * Si on est dans une fonction, on la dépile de la pile des fonctions ainsi que le flag
+	 * Si on est dans une fonction, on la dÃ©pile de la pile des fonctions ainsi que le flag
 	 * 
 	 */
 	public void resetFun() {
@@ -64,7 +64,7 @@ public class Fonction implements YakaConstants{
 
 
 	/**
-	 * Empile le type de la dernière fonction  si elle est dans la hashmap des globaux, 
+	 * Empile le type de la derniÃ¨re fonction  si elle est dans la hashmap des globaux, 
 	 * et si on est vraiment dans une fonction
 	 */
 	public void empileTypeFun() {
@@ -77,7 +77,7 @@ public class Fonction implements YakaConstants{
 	}
 
 	/**
-	 * Appel à la methode call de YVMasm ssi on est dans une fonction
+	 * Appel Ã  la methode call de YVMasm ssi on est dans une fonction
 	 */
 	public void call() {
 		if(this.inFunTest.peek()) {
@@ -89,7 +89,7 @@ public class Fonction implements YakaConstants{
 	}
 	
 	/**
-	 * Test si on est dans une fonction lors de la déclaration.
+	 * Test si on est dans une fonction lors de la dÃ©claration.
 	 */
 	public void testInFunc() {
 		if (!this.inFunc){
@@ -97,7 +97,7 @@ public class Fonction implements YakaConstants{
 		}
 	}
 	/**
-	 * Appel à la methode ireturn de YVMasm
+	 * Appel Ã  la methode ireturn de YVMasm
 	 */
 	public void returnFun() {
 		int nbParam = Yaka.tabident.nbParam();
@@ -115,7 +115,7 @@ public class Fonction implements YakaConstants{
 		this.inFunc=b;
 	}
 	/**
-	 * Appel à la methode ireturn de YVMasm si elle existe dans la Hashmap des globaux
+	 * Appel Ã  la methode ireturn de YVMasm si elle existe dans la Hashmap des globaux
 	 * @param id
 	 */
 	public void fermeBloc(String id) {

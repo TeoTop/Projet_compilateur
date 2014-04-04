@@ -10,7 +10,7 @@
  * 
  * @see Ecriture
  * 
- * Lecture est une classe utilitaire permet de lire dans un fichier par l'intermédiaire 
+ * Lecture est une classe utilitaire permet de lire dans un fichier par l'intermÃ©diaire 
  * d'un pointeur de type InputStream..
  */
 
@@ -18,12 +18,12 @@ import java.io.*;
 
 public class Lecture {   
 	/**
-	 * Cette méthode permet de lire dans un fichier.
+	 * Cette mÃ©thode permet de lire dans un fichier.
 	 * @param nomFich
-	 * @return Un pointeur de type InputStream pointant sur le fichier passé en paramètre.
+	 * @return Un pointeur de type InputStream pointant sur le fichier passÃ© en paramÃ¨tre.
 	 */
     public static InputStream ouvrir(String nomFich) {
-		 //délivre un pointeur sur le fichier de nom nomFich (null si erreur)
+		 //dÃ©livre un pointeur sur le fichier de nom nomFich (null si erreur)
 		 InputStream f;
 		 try {f=new DataInputStream(new FileInputStream(nomFich));}
 		 catch (IOException e) {f=null;}
@@ -31,12 +31,12 @@ public class Lecture {
     }
 
     /**
-     * Cette méthode permet de tester si pointeur se trouve à la fin du fichier.
+     * Cette mÃ©thode permet de tester si pointeur se trouve Ã  la fin du fichier.
      * @param f
      * @return true si la fin du fichier est atteinte, false sinon.
      */
     public static boolean finFichier(InputStream f) {
-		//détermine si la fin de fichier est atteinte
+		//dÃ©termine si la fin de fichier est atteinte
 		try {return (f!=System.in && f.available()==0);}
         catch(IOException e) {System.out.println("pb test finFichier");
                        System.exit(1);
@@ -45,7 +45,7 @@ public class Lecture {
     }
 
     /**
-     * Cette méthode permet de fermer le fichier (supprime le pointeur passé en paramètre). 
+     * Cette mÃ©thode permet de fermer le fichier (supprime le pointeur passÃ© en paramÃ¨tre). 
      * @param f
      */
     public static void fermer(InputStream f) {
@@ -56,9 +56,9 @@ public class Lecture {
 
 
     /**
-     * Cette méthode permet de lire un caractère depuis le fichier passé en paramètre.
+     * Cette mÃ©thode permet de lire un caractÃ¨re depuis le fichier passÃ© en paramÃ¨tre.
      * @param f
-     * @return Le caractère lu
+     * @return Le caractÃ¨re lu
      */
     public static char lireChar(InputStream f) {
     	char carSuiv=' ';
@@ -73,8 +73,8 @@ public class Lecture {
     }
 
     /**
-     * Cette méthode permet de lire un caractère depuis la console.
-     * @return Le caractère lu
+     * Cette mÃ©thode permet de lire un caractÃ¨re depuis la console.
+     * @return Le caractÃ¨re lu
      */
     public static char lireChar() {return lireChar(System.in);}
 }

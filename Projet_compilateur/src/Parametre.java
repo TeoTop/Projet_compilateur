@@ -8,7 +8,7 @@
  * 
  * @version 1.0
  * 
- * Classe permettant de dÈfinir un paramËtre d'une fonction
+ * Classe permettant de d√©finir un param√®tre d'une fonction
  * 
  * @see IdVar
  * @see IdConst
@@ -19,7 +19,7 @@ public class Parametre {
 	private String nom;
 	private Ident id;
 	/**
-	 * Constructeur pour initialiser le parametre avec les deux parametre de la fonction
+	 * Constructeur pour initialiser le parametre avec les deux param√®tre de la fonction
 	 * @param nom de la fonction
 	 * @param id de ma fonction
 	 */

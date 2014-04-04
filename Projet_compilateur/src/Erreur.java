@@ -16,12 +16,12 @@
  */
 public class Erreur {
 	/**
-	 * Attribut permettant de savoir si une erreur a été commise dans le code YAKA
+	 * Attribut permettant de savoir si une erreur a Ã©tÃ© commise dans le code YAKA
 	 */
 	public static boolean err;
 	
 	/**
-	 * Permet d'afficher le message d'erreur et passe l'attribut err à vrai
+	 * Permet d'afficher le message d'erreur et passe l'attribut err Ã  vrai
 	 * @param erreur
 	 * 
 	 * @see Erreur#err

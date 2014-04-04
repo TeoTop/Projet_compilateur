@@ -25,7 +25,7 @@ public class Expression implements YakaConstants{
 	private Stack<Integer> type;
 
 	/**
-	 * La pile des opérateurs
+	 * La pile des opÃ©rateurs
 	 * @see Expression#Expression()
 	 * @see Expression#empileOpera(int)
 	 */
@@ -34,7 +34,7 @@ public class Expression implements YakaConstants{
 	
 	/**
 	 * Constructeur Expression
-	 * Création de la pile des types et des opérateurs.
+	 * CrÃ©ation de la pile des types et des opÃ©rateurs.
 	 * 
 	 * @see Expression#type
 	 * @see Expression#opera
@@ -46,7 +46,7 @@ public class Expression implements YakaConstants{
 	
 	
 	/**
-	 * Empile un type grâce à son ident : variable ou constante 
+	 * Empile un type grÃ¢ce Ã  son ident : variable ou constante 
 	 * 
 	 * @see Expression#type	
 	 * @see TabIdent
@@ -73,7 +73,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Empiler un opérateur dans la pile des opérateurs
+	 * Empiler un opÃ©rateur dans la pile des opÃ©rateurs
 	 * 
 	 * @see Expression#opera
 	 * @param opera
@@ -83,8 +83,8 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
-	 * multiplication, une division ou un ET booléen
+	 * Teste si les deux types en sommet de pile correspondent Ã  l'opÃ©rande utilisÃ© pour une
+	 * multiplication, une division ou un ET boolÃ©en
 	 * 
 	 */
 	public void testMul() {
@@ -93,27 +93,27 @@ public class Expression implements YakaConstants{
 		String op = "";
 		int p = this.opera.peek();
 
-		//on vérifie le type d'opération à  effectuer
+		//on vÃ©rifie le type d'opÃ©ration Ã  effectuer
 		switch(p) {
 		case MUL : op="multiplication";break;
 		case DIV : op="division";break;
 		case AND : op="et logique";break;
 		}
 
-		//on vérifie le nombre d'arguments dans la pile des types
+		//on vÃ©rifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
 			t1 = this.typeToString(type1);
 			t2 = this.typeToString(type2);
-			//on vérifie que les deux arguments on le même type. Puis on vérifie que l'opérateur correspond.
+			//on vÃ©rifie que les deux arguments on le mÃªme type. Puis on vÃ©rifie que l'opÃ©rateur correspond.
 			if (type1 == type2) {
 				if ((type1 == YakaConstants.ENTIER && (p == MUL || p == DIV)) || (type1 == YakaConstants.BOOLEEN && p == AND)) {
 					empileType(type1);
 				}
 				else {
 					empileType(YakaConstants.ERREUR);
-					Erreur.message("Impossible d'effectuer l'opération '" + op + "' entre deux variables de type " + t1);
+					Erreur.message("Impossible d'effectuer l'opÃ©ration '" + op + "' entre deux variables de type " + t1);
 				}
 			}
 			else {
@@ -130,7 +130,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Conversion de type en String grâce à son code en int 
+	 * Conversion de type en String grÃ¢ce Ã  son code en int 
 	 * 
 	 * @param type
 	 * @return string
@@ -145,8 +145,8 @@ public class Expression implements YakaConstants{
 	}
 	
 	/**
-	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
-	 * addition, une soustration et un OU booléen
+	 * Teste si les deux types en sommet de pile correspondent Ã  l'opÃ©rande utilisÃ© pour une
+	 * addition, une soustration et un OU boolÃ©en
 	 * 
 	 */
 	public void testAdd() {
@@ -155,20 +155,20 @@ public class Expression implements YakaConstants{
 		String op = "";
 		int p = this.opera.peek();
 
-		//on vérifie le type d'opération à effectuer
+		//on vÃ©rifie le type d'opÃ©ration Ã  effectuer
 		switch(p) {
 		case ADD : op="addtion";break;
 		case SUBNEG : op="soustration";break;
 		case OR : op="ou logique";break;
 		}
 
-		//on vérifie le nombre d'arguments dans la pile des types
+		//on vÃ©rifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			type1 = this.type.pop();
 			type2 = this.type.pop();
 			t1 = this.typeToString(type1);
 			t2 = this.typeToString(type2);
-			//on vérifie que les deux arguments ont le même type. Puis on vérifie que l'opérateur correspond.
+			//on vÃ©rifie que les deux arguments ont le mÃªme type. Puis on vÃ©rifie que l'opÃ©rateur correspond.
 			if (type1 == type2) {
 				if (type1 == YakaConstants.ENTIER && (p == ADD || p == SUBNEG) || type1 == YakaConstants.BOOLEEN && p == OR) {
 					empileType(type1);
@@ -192,7 +192,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Teste si les deux types en sommet de pile correspondent à l'opérande utilisé pour une
+	 * Teste si les deux types en sommet de pile correspondent Ã  l'opÃ©rande utilisÃ© pour une
 	 * comparaison entre deux entiers
 	 * 
 	 */
@@ -201,23 +201,23 @@ public class Expression implements YakaConstants{
 		String t1,t2;
 		int p = this.opera.peek();
 
-		//on vérifie le type d'opération à effectuer
+		//on vÃ©rifie le type d'opÃ©ration Ã  effectuer
 		switch(p) {
-		case EGAL : op="égal";break;
-		case DIFF : op="différent";break;
-		case INF : op="inférieur";break;
-		case INFEGAL : op="inférieur ou égal";break;
-		case SUP : op="supérieur";break;
-		case SUPEGAL : op="supérieur ou égal";break;
+		case EGAL : op="Ã©gal";break;
+		case DIFF : op="diffÃ©rent";break;
+		case INF : op="infÃ©rieur";break;
+		case INFEGAL : op="infÃ©rieur ou Ã©gal";break;
+		case SUP : op="supÃ©rieur";break;
+		case SUPEGAL : op="supÃ©rieur ou Ã©gal";break;
 		}
 
-		//on vérifie le nombre d'arguments dans la pile des types
+		//on vÃ©rifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 2) {
 			int type1 = this.type.pop();
 			int type2 = this.type.pop();
 			t1 = this.typeToString(type1);
 			t2 = this.typeToString(type2);
-			//on vérifie que les deux arguments on le même type.
+			//on vÃ©rifie que les deux arguments on le mÃªme type.
 			Boolean test = (type1 == YakaConstants.ENTIER && type2 == YakaConstants.ENTIER) || (type1 == YakaConstants.BOOLEEN && type2 == YakaConstants.BOOLEEN && (p == YakaConstants.EGAL || p == YakaConstants.DIFF));
 			if (test) {
 				empileType(YakaConstants.BOOLEEN);
@@ -225,18 +225,18 @@ public class Expression implements YakaConstants{
 			else {
 				
 				if (!(type1 == YakaConstants.ERREUR || type2 == YakaConstants.ERREUR)) {
-					Erreur.message("Impossible d'effectuer l'opération de comparaison '" + op + "' entre les types " + t1 + " et " + t2);
+					Erreur.message("Impossible d'effectuer l'opÃ©ration de comparaison '" + op + "' entre les types " + t1 + " et " + t2);
 					empileType(YakaConstants.ERREUR);
 				}
 			}
 		}
 		else {
-			Erreur.message("L'opération de comparaison '" + op + "' ne peut s'effectuer");
+			Erreur.message("L'opÃ©ration de comparaison '" + op + "' ne peut s'effectuer");
 		}
 	}
 
 	/**
-	 * Teste si le type en sommet de pile correspond à l'opérande utilisé pour une négation
+	 * Teste si le type en sommet de pile correspond Ã  l'opÃ©rande utilisÃ© pour une nÃ©gation
 	 * 
 	 * @see Expression#lasOpNeg
 	 */
@@ -244,27 +244,27 @@ public class Expression implements YakaConstants{
 		String op = "";
 		int p = this.opera.peek();
 
-		//on vérifie le type d'opération à effectuer
+		//on vÃ©rifie le type d'opÃ©ration Ã  effectuer
 		switch(p) {
 		case NOT : op="non logique";break;
 		case SUBNEG : op="moins unaire";break;
 		}
 
-		//on vérifie le nombre d'arguments dans la pile des types
+		//on vÃ©rifie le nombre d'arguments dans la pile des types
 		if (this.type.size() >= 1) {
 			int type = this.type.peek();
 			String t;
 			t = this.typeToString(type);
-			//on vérifie que le type de l'argument correspond à l'opérateur.
+			//on vÃ©rifie que le type de l'argument correspond Ã  l'opÃ©rateur.
 			if (!((type == YakaConstants.ENTIER && p == SUBNEG) || (type == YakaConstants.BOOLEEN && p == NOT ))){
 				if (type != YakaConstants.ERREUR) {
 					empileType(YakaConstants.ERREUR);
-					Erreur.message("Impossible d'effectuer l'opérateur '" + op +"' sur une variable de type " + t);
+					Erreur.message("Impossible d'effectuer l'opÃ©rateur '" + op +"' sur une variable de type " + t);
 				}
 			}
 		}
 		else {
-			Erreur.message("L'opérateur '" + op + "' ne peut être effectué");
+			Erreur.message("L'opÃ©rateur '" + op + "' ne peut Ãªtre effectuÃ©");
 		}
 
 	}
@@ -279,7 +279,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Vider la pile opérateur
+	 * Vider la pile opÃ©rateur
 	 * 
 	 * @see Expression#opera
 	 */
@@ -301,7 +301,7 @@ public class Expression implements YakaConstants{
 
 	/**
 	 * 
-	 * Appel à la méthode iload de YVMasm si l'ident est une variable ou un paramètre et iconst si c'est une constante
+	 * Appel Ã  la mÃ©thode iload de YVMasm si l'ident est une variable ou un paramÃ¨tre et iconst si c'est une constante
 	 * 
 	 * @see Expression#type
 	 * @see YVMasm
@@ -315,11 +315,11 @@ public class Expression implements YakaConstants{
 			if (ident.isVar()) {// ident est une variable
 				int offset =((IdVar) ident).getOffset();
 				int index=-1*offset/2 - 1;// index de la variable dans la pile des variables
-				if (Yaka.tabident.var.get(index)!=-1) {// la variable a été définie
+				if (Yaka.tabident.var.get(index)!=-1) {// la variable a Ã©tÃ© dÃ©finie
 					Yaka.yvm.iload(offset);
 				}
-				else {// variable non définie
-					Erreur.message("La variable '" + id + "' n'est pas encore dï¿½finie");
+				else {// variable non dÃ©finie
+					Erreur.message("La variable '" + id + "' n'est pas encore dÃ©finie");
 				}
 			}
 			else if (ident.isParam()){//ident_param
@@ -343,7 +343,7 @@ public class Expression implements YakaConstants{
 
 	/**
 	 * 
-	 * Appel à la méthode istore de YVMasm si l'ident est une variable
+	 * Appel Ã  la mÃ©thode istore de YVMasm si l'ident est une variable
 	 * 
 	 * @see Expression#type
 	 * @see YVMasm
@@ -358,7 +358,7 @@ public class Expression implements YakaConstants{
 				int type = this.type.peek();
 				String t;
 				t = this.typeToString(type);
-				if (type == ident.getType()) {// teste si l'expression a le même type que l'ident à affecter
+				if (type == ident.getType()) {// teste si l'expression a le mÃªme type que l'ident Ã  affecter
 					int offset = ((IdVar) ident).getOffset();
 					int index = -1 * offset / 2 - 1;
 					Yaka.yvm.istore(offset);
@@ -367,8 +367,8 @@ public class Expression implements YakaConstants{
 				else if (ident.isParam()){//ident_param
 					Erreur.message("L'identificateur '" + id + "' n'est pas une variable");
 				}
-				else if (type != YakaConstants.ERREUR){// si le type en sommet de la pile est erreur, on écrit pas le msg d'erreur
-					Erreur.message("La variable '" + id + "' doit être de type " + t);
+				else if (type != YakaConstants.ERREUR){// si le type en sommet de la pile est erreur, on Ã©crit pas le msg d'erreur
+					Erreur.message("La variable '" + id + "' doit Ãªtre de type " + t);
 				}
 			}
 			else {// ident est une constante
@@ -381,7 +381,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel à une des méthodes de comparaison de YVMasm
+	 * Appel Ã  une des mÃ©thodes de comparaison de YVMasm
 	 * @see Expression#opera
 	 * @see YVMasm
 	 */
@@ -397,7 +397,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel à une des méthodes d'addition de YVMasm
+	 * Appel Ã  une des mÃ©thodes d'addition de YVMasm
 	 * @see Expression#opera
 	 * @see YVMasm
 	 */
@@ -411,7 +411,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel à une des méthodes de multiplication de YVMasm
+	 * Appel Ã  une des mÃ©thodes de multiplication de YVMasm
 	 * @see Expression#opera
 	 * @see YVMasm
 	 */
@@ -425,7 +425,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel à une des méthodes de négation de YVMasm
+	 * Appel Ã  une des mÃ©thodes de nÃ©gation de YVMasm
 	 * @see Expression#opera
 	 * @see YVMasm
 	 */
@@ -437,7 +437,7 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel à la méthode lirEnt de YVMasm ssi la variable est de type entier
+	 * Appel Ã  la mÃ©thode lirEnt de YVMasm ssi la variable est de type entier
 	 * 
 	 * @see TabIdent
 	 * @see YVMasm
@@ -468,8 +468,8 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Appel à la méthode ecrireEnt si le type en sommet de pile est entier sinon si le type est booleen, on fait
-	 * appel à la méthode ecrireBool de YVMasm
+	 * Appel Ã  la mÃ©thode ecrireEnt si le type en sommet de pile est entier sinon si le type est booleen, on fait
+	 * appel Ã  la mÃ©thode ecrireBool de YVMasm
 	 * 
 	 * @see Expression#type
 	 * @see YVMasm
@@ -485,19 +485,19 @@ public class Expression implements YakaConstants{
 	}
 
 	/**
-	 * Si le type en sommet de pile n'est pas booléen, un message d'erreur est affiché
+	 * Si le type en sommet de pile n'est pas boolÃ©en, un message d'erreur est affichÃ©
 	 * 
 	 * @see Expression#type
 	 */
 	public void testBool() {
 		int type = this.type.peek();
 		if (type != YakaConstants.BOOLEEN) {
-			Erreur.message("Le type de l'expression dans une conditionnelle doit ï¿½tre boolï¿½en");
+			Erreur.message("Le type de l'expression dans une conditionnelle doit Ãªtre boolÃ©en");
 		}
 	}
 
 	/**
-	 * Test si l'expression à affecter a le même type que la fonction appelée
+	 * Test si l'expression Ã  affecter a le mÃªme type que la fonction appelÃ©e
 	 * @see Expression#type
 	 */
 	public void testParamFonc() {
@@ -508,21 +508,21 @@ public class Expression implements YakaConstants{
 			int typeParam=IdFonc.param.get(index);
 			String t = this.typeToString(typeParam);
 			if (typeExpr != typeParam){//types de param et expr sont differents
-				Erreur.message("Dans la fonction '" + Yaka.fonction.getLastFun().peek() + "' le type du paramètre " + (index+1) + " doit être un " + t);
+				Erreur.message("Dans la fonction '" + Yaka.fonction.getLastFun().peek() + "' le type du paramÃ¨tre " + (index+1) + " doit Ãªtre un " + t);
 			}
 		}
 	}
 
 
 	/**
-	 * Test si l'expression à retourner a le même type que la fonction déclarée
+	 * Test si l'expression Ã  retourner a le mÃªme type que la fonction dÃ©clarÃ©e
 	 */
 	public void testTypeExprFunc() {
 		int typeExpr = this.type.peek();
 		int typeFunc = Yaka.declaration.idFonc.getType();
 		String t = this.typeToString(typeFunc);
 		if(typeExpr != typeFunc){
-			Erreur.message("La valeur à retourner doit être de type " + t);
+			Erreur.message("La valeur Ã  retourner doit Ãªtre de type " + t);
 		}
 	}
 

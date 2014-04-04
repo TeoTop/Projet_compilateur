@@ -8,7 +8,7 @@
  * 
  * @version 1.0
  * 
- * Classe héritée de Ident. Permet de définir une constante du code YAKA
+ * Classe hÃ©ritÃ©e de Ident. Permet de dÃ©finir une constante du code YAKA
  * 
  * @see Ident
  */
@@ -23,7 +23,7 @@ public class IdConst extends Ident {
 	private int valeur;
 
 	/**
-	 * Retourne l'offset de la variable (où elle se situe dans la pile assembleur)
+	 * Retourne l'offset de la variable (oÃ¹ elle se situe dans la pile assembleur)
 	 * @return entier de l'attribut valeur
 	 * 
 	 * @see IdConst#valeur
@@ -33,7 +33,7 @@ public class IdConst extends Ident {
 	}
 
 	/**
-	 * Mettre  à jour l'attribut valeur de la classe IdConst
+	 * Mettre  Ã  jour l'attribut valeur de la classe IdConst
 	 * @param valeur
 	 * 
 	 * @see IdConst#valeur

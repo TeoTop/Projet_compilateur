@@ -8,14 +8,14 @@
  * 
  * @version 1.0
  * 
- * Classe permettant de déclarer et d'ajouter les variables ou les constantes du code YAKA. 
+ * Classe permettant de dÃ©clarer et d'ajouter les variables ou les constantes du code YAKA. 
  * 
  * @see Ident
  */
 public class Declaration {
 	/**
-	 * Objet de la classe Ident permettant de définir si c'est une constante ou une variable ou un paramètre 
-	 * de type entier ou booléen.
+	 * Objet de la classe Ident permettant de dÃ©finir si c'est une constante ou une variable ou un paramÃ¨tre 
+	 * de type entier ou boolÃ©en.
 	 * 
 	 * @see Ident
 	 * @see TabIdent
@@ -23,7 +23,7 @@ public class Declaration {
 	Ident id;
 	
 	/**
-	 * Objet de la classe IdFonc permettant de définir une fonction
+	 * Objet de la classe IdFonc permettant de dÃ©finir une fonction
 	 * 
 	 * @see IdFonc
 	 * @see TabIdent
@@ -32,13 +32,13 @@ public class Declaration {
 	
 	/**
 	 * Correspond au type de la variable ou de la constante dans le code YAKA (soit entier
-	 * soit booléen).
+	 * soit boolÃ©en).
 	 */
 	int type;
 
 	
 	/**
-	 * Permet d'ajouter une variable du code à la table des idents en fonction de son nom.
+	 * Permet d'ajouter une variable du code Ã  la table des idents en fonction de son nom.
 	 * @param ident
 	 * 
 	 * @see TabIdent#rangeIdent(String, Ident)
@@ -47,7 +47,7 @@ public class Declaration {
 		Yaka.tabident.rangeIdent(ident,this.id);
 	}
 	/**
-	 * Permet d'ajouter une fonction à la table des idents globaux.
+	 * Permet d'ajouter une fonction Ã  la table des idents globaux.
 	 * @param ident
 	 * 
 	 * @see TabIdent#addFonction(String nom)
@@ -56,7 +56,7 @@ public class Declaration {
 		Yaka.tabident.addFonction(ident,this.idFonc);
 	}
 	/**
-	 * Permet d'ajouter un paramètre à la table des paramètres temporaires
+	 * Permet d'ajouter un paramÃ¨tre Ã  la table des paramÃ¨tres temporaires
 	 * @param ident
 	 * 
 	 * @see TabIdent#addParam(String, Ident)
@@ -65,7 +65,7 @@ public class Declaration {
 		Yaka.tabident.addParam(ident,this.id);
 	}
 	/**
-	 * Permet de créer un nouvel objet de la classe IdParam correspondant à une variable du
+	 * Permet de crÃ©er un nouvel objet de la classe IdParam correspondant Ã  une variable du
 	 * code YAKA et d'initialiser le type de la variable.
 	 * @param type
 	 * 
@@ -80,7 +80,7 @@ public class Declaration {
 	}
 	
 	/**
-	 * Permet de créer un nouvel objet de la classe IdVar correspondant à une variable du
+	 * Permet de crÃ©er un nouvel objet de la classe IdVar correspondant Ã  une variable du
 	 * code YAKA et d'initialiser le type de la variable.
 	 * @param type
 	 * 
@@ -94,7 +94,7 @@ public class Declaration {
 		this.id.setType(type);
 	}
 	/**
-	 * Permet de créer un nouvel objet de la classe IdFonc correspondant à une fonction du
+	 * Permet de crÃ©er un nouvel objet de la classe IdFonc correspondant Ã© une fonction du
 	 * code YAKA et d'initialiser le type de la fonction.
 	 * @param type
 	 * 
@@ -109,7 +109,7 @@ public class Declaration {
 	}
 	
 	/**
-	 * Permet de créer un nouvel objet de la classe IdVar correspondant à une variable du
+	 * Permet de crÃ©er un nouvel objet de la classe IdVar correspondant Ã  une variable du
 	 * code YAKA et d'initialiser le type de la variable puis de la placer dans le tableau
 	 * des idents de la classe TabIdent.
 	 * @param ident
@@ -126,7 +126,7 @@ public class Declaration {
 	}
 	
 	/**
-	 * Permet d'ajouter une constante du code à la table des idents en fonction de son nom.
+	 * Permet d'ajouter une constante du code Ã  la table des idents en fonction de son nom.
 	 * @param ident
 	 * 
 	 * @see Declaration#id
@@ -138,9 +138,9 @@ public class Declaration {
 	}
 	
 	/**
-	 * Permet de créer un nouvel objet de la classe IdConst correspondant à partir d'une
-	 * constante déjà définie dont le nom est passé en paramètre. Pour ce faire, la méthode 
-	 * vérifie dans un premier temps que la constante existe dans la tableau de idents de 
+	 * Permet de crÃ©er un nouvel objet de la classe IdConst correspondant Ã  partir d'une
+	 * constante dÃ©jÃ  dÃ©finie dont le nom est passÃ© en paramÃ¨tre. Pour ce faire, la mÃ©thode 
+	 * vÃ©rifie dans un premier temps que la constante existe dans la tableau de idents de 
 	 * la classe TabIdent.
 	 * @param ident
 	 * 
@@ -150,8 +150,8 @@ public class Declaration {
 	 * @see TabIdent#chercheIdent(String)
 	 */
 	public void ajoutConstanteParConstante(String ident){
-		/*on vérifie que la constante est dans le tableau puis on la récupère pour la copier,
-		sinon on déclenche une erreur.*/
+		/*on vÃ©rifie que la constante est dans le tableau puis on la rÃ©cupÃ©re pour la copier,
+		sinon on dÃ©clenche une erreur.*/
 	  	IdConst idConst = (IdConst) Yaka.tabident.chercheIdent(ident);
 	  	if (idConst != null){
 	  		((IdConst) this.id).setValeur(idConst.getValeur());
@@ -164,7 +164,7 @@ public class Declaration {
 	}
 	
 	/**
-	 * Permet de créer une constante de type ENTIER dont la valeur est passé en paramètre.
+	 * Permet de crÃ©er une constante de type ENTIER dont la valeur est passÃ© en paramÃ¨tre.
 	 * @param entier
 	 * 
 	 * @see Declaration#id
@@ -177,7 +177,7 @@ public class Declaration {
 	}
 	
 	/**
-	 * Permet de créer une constante de type ENTIER dont la valeur est passé en paramètre.
+	 * Permet de crÃ©er une constante de type ENTIER dont la valeur est passÃ© en paramÃ¨tre.
 	 * @param entier
 	 * 
 	 * @see Declaration#id

@@ -7,7 +7,6 @@ public class Yaka implements YakaConstants {
         public static Conditionnelle condition = new Conditionnelle();
         public static Fonction fonction = new Fonction();
         public static Iteration iteration = new Iteration();
-        //public static Token token = new Token();
 
         public static void main(String args[]) {
                 Yaka analyseur;

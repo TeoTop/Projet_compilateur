@@ -8,7 +8,7 @@
  * 
  * @version 1.0
  * 
- * Classe héritée de Ident. Permet de définir une variable du code YAKA
+ * Classe hÃ©ritÃ©e de Ident. Permet de dÃ©finir une variable du code YAKA
  * 
  * @see Ident
  */
@@ -22,7 +22,7 @@ public class IdVar extends Ident {
 	private int offset;
 
 	/**
-	 * Retourne l'offset de la variable (où elle se situe dans la pile assembleur)
+	 * Retourne l'offset de la variable (oÃ¹ elle se situe dans la pile assembleur)
 	 * @return entier de l'attribut offset
 	 * 
 	 * @see IdVar#offset
@@ -32,7 +32,7 @@ public class IdVar extends Ident {
 	}
 
 	/**
-	 * Mettre à jour l'attribut offset de la classe IdVar
+	 * Mettre Ã  jour l'attribut offset de la classe IdVar
 	 * @param offset
 	 * 
 	 * @see IdVar#offset

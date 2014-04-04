@@ -11,7 +11,7 @@ import java.util.Stack;
  * 
  * @version 1.0
  * 
- * Classe permettant de définir le type d'une fonction
+ * Classe permettant de dÃ©finir le type d'une fonction
  * 
  * @see IdVar
  * @see IdConst
@@ -21,24 +21,24 @@ import java.util.Stack;
 public class IdFonc extends Ident {
 
 	/**
-	 * Pile permettant de stocker les types de paramètres.
+	 * Pile permettant de stocker les types de paramÃ¨tres.
 	 */
 	static Stack<Integer> param;
 	
 	/**
-	 * Attribut permttant de connaitre le nombre de paramètre.
+	 * Attribut permttant de connaitre le nombre de paramÃ¨tre.
 	 */
 	public int nbParam;
 	
 	@Override
 	/**
-	 * Affiche l'élément
+	 * Affiche l'Ã©lÃ©ment
 	 */
 	public String toString() {
 		return "IdFonc [param=" + param + ", nbParam=" + nbParam + "]";
 	}
 	/**
-	 * Initialise la IdFonc en créant une nouvelle pile
+	 * Initialise la IdFonc en crÃ©ant une nouvelle pile
 	 */
 	public IdFonc(){
 		param = new Stack<Integer>();
@@ -62,14 +62,14 @@ public class IdFonc extends Ident {
 		return true;
 	}
 	/**
-	 * Retourne la pile des paramètres
+	 * Retourne la pile des paramÃ¨tres
 	 * @return pile
 	 */
 	public Stack<Integer> getParam() {
 		return param;
 	}
 	/**
-	 * ajoute un parametre à la pile des parametres de la fonction
+	 * ajoute un parametre Ã  la pile des parametres de la fonction
 	 * @param param
 	 */
 	public void ajoutTypeParam(int param) {

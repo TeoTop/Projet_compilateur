@@ -23,7 +23,7 @@ public class Conditionnelle implements YakaConstants{
 	}
 	
 	/**
-	 * Empiler les conditionnelles et d'incrementer le nombre de conditionnelles présentes dans le code YAKA 
+	 * Empiler les conditionnelles et d'incrementer le nombre de conditionnelles prÃ©sentes dans le code YAKA 
 	 * 
 	 * @see Expression#pileSI
 	 * @see Expression#comptSI
@@ -33,7 +33,7 @@ public class Conditionnelle implements YakaConstants{
 	}
 	
 	/**
-	 * Appel à la méthode iffaux de YVMasm
+	 * Appel Ã  la mÃ©thode iffaux de YVMasm
 	 * 
 	 * @see YVMasm
 	 */
@@ -42,7 +42,7 @@ public class Conditionnelle implements YakaConstants{
 	}
 	
 	/**
-	 * Appel à la méthode Goto de YVMasm
+	 * Appel Ã  la mÃ©thode Goto de YVMasm
 	 * 
 	 * @see YVMasm
 	 */
@@ -51,7 +51,7 @@ public class Conditionnelle implements YakaConstants{
 	}
 	
 	/**
-	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette sinon
+	 * Appel Ã  la mÃ©thode ecrireEtiqu de YVMasm pour Ã©crire l'Ã©tiquette sinon
 	 * 
 	 * @see YVMasm
 	 */
@@ -60,7 +60,7 @@ public class Conditionnelle implements YakaConstants{
 	}
 	
 	/**
-	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette fsi
+	 * Appel Ã  la mÃ©thode ecrireEtiqu de YVMasm pour Ã©crire l'Ã©tiquette fsi
 	 * 
 	 * @see YVMasm 
 	 */
@@ -69,7 +69,7 @@ public class Conditionnelle implements YakaConstants{
 	}
 	
 	/**
-	 * Dépiler la pile des conditionnelles
+	 * DÃ©piler la pile des conditionnelles
 	 * 
 	 * @see Expression#pileSI
 	 */

@@ -12,17 +12,17 @@
  * @see Lecture
  * 
  * Ecriture est une classe utilitaire permettant d'ecrire directement dans la console ou 
- * dans un fichier texte par l'intermédiaire d'un pointeur de type OutputStream.
+ * dans un fichier texte par l'intermÃ©diaire d'un pointeur de type OutputStream.
  */
 
-//quelques primitives d'ï¿½criture ï¿½ l'ecran  ou dans un fichier
+//quelques primitives d'Ã©criture Ã  l'ecran  ou dans un fichier
 
 import java.io.*;
 
 public class Ecriture {   
 	/**
-	 * Permet de renseigner l'erreur passé en paramètre sur la console 
-	 * (le message d'erreur est affiché)
+	 * Permet de renseigner l'erreur passÃ© en paramÃ¨tre sur la console 
+	 * (le message d'erreur est affichÃ©)
 	 * @param e
 	 */
 	private static void erreur(IOException e) {
@@ -32,10 +32,10 @@ public class Ecriture {
 	}
 
 	/**
-	 * Permet de creer le lien vers le fichier passé en paramétre. Si le fichier existe,
-	 * son contenu est remplacé, sinon le fichier est créé.
+	 * Permet de creer le lien vers le fichier passÃ© en paramÃ¨tre. Si le fichier existe,
+	 * son contenu est remplacÃ©, sinon le fichier est crÃ©Ã©.
 	 * @param nomFich
-	 * @return Un pointeur de type OutputStream sur le fichier passé en paramétre.
+	 * @return Un pointeur de type OutputStream sur le fichier passÃ© en paramÃ¨tre.
 	 */
 	public static OutputStream ouvrir(String nomFich) {
 		OutputStream f;
@@ -46,11 +46,11 @@ public class Ecriture {
 	}
 	
 	/**
-	 * Permet de creer le lien vers le fichier passé en paramétre. Si le fichier existe,
-	 * son contenu n'est pas remplacé et le fichier est complété par le nouveau texte, 
-	 * sinon le fichier est créé.
+	 * Permet de creer le lien vers le fichier passÃ© en paramÃ¨tre. Si le fichier existe,
+	 * son contenu n'est pas remplacÃ© et le fichier est complÃ©tÃ© par le nouveau texte, 
+	 * sinon le fichier est crÃ©Ã©.
 	 * @param nomFich
-	 * @return Un pointeur de type OutputStream sur le fichier passé en paramétre.
+	 * @return Un pointeur de type OutputStream sur le fichier passÃ© en paramÃ¨tre.
 	 */
 	public static OutputStream ouvrirSuite(String nomFich) {
 		OutputStream f;
@@ -61,8 +61,8 @@ public class Ecriture {
 	}
 
 	/**
-	 * Permet de fermer le fichier précédemment ouvert. On supprime le pointeur passé en 
-	 * paramètre.
+	 * Permet de fermer le fichier prÃ©cÃ©demment ouvert. On supprime le pointeur passÃ© en 
+	 * paramÃ¨tre.
 	 * @param f
 	 */
 	public static void fermer(OutputStream f) {
@@ -73,7 +73,7 @@ public class Ecriture {
 
 
 	/**
-	 * Cette méthode permet d'écrire le caractère dans le fichier passé en paramètre.
+	 * Cette mÃ©thode permet d'Ã©crire le caractÃ¨re dans le fichier passÃ© en paramÃ¨tre.
 	 * @param f
 	 * @param c
 	 */
@@ -83,15 +83,15 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire le caractère dans la console.
+	 * Cette mÃ©thode permet d'Ã©crire le caractÃ¨re dans la console.
 	 * @param c
 	 */
 	public static void ecrireChar(char c) {ecrireChar(System.out,c);}
 
 	
 	/**
-	 * Cette méthode permet d'écrire la chaine de caractères dans le fichier passé en 
-	 * paramètre.
+	 * Cette mÃ©thode permet d'Ã©crire la chaine de caractÃ¨res dans le fichier passÃ© en 
+	 * paramÃ¨tre.
 	 * @param f
 	 * @param s
 	 */
@@ -101,7 +101,7 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire la chaine de caractères dans la console.
+	 * Cette mÃ©thode permet d'Ã©crire la chaine de caractÃ¨res dans la console.
 	 * @param s
 	 */
 	public static void ecrireString(String s) {
@@ -109,8 +109,8 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire la chaine de caractères dans le fichier passé en 
-	 * paramètre suivi d'un retour à la ligne.
+	 * Cette mÃ©thode permet d'Ã©crire la chaine de caractÃ¨res dans le fichier passÃ© en 
+	 * paramÃ¨tre suivi d'un retour Ã  la ligne.
 	 * @param f
 	 * @param s
 	 */
@@ -119,8 +119,8 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire la chaine de caractères dans console suivi d'un retour
-	 * à la ligne.
+	 * Cette mÃ©thode permet d'Ã©crire la chaine de caractÃ¨res dans console suivi d'un retour
+	 * Ã  la ligne.
 	 * @param s
 	 */
 	public static void ecrireStringln(String s) {
@@ -128,7 +128,7 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire un entier dans le fichier passé en paramètre.
+	 * Cette mÃ©thode permet d'Ã©crire un entier dans le fichier passÃ© en paramÃ¨tre.
 	 * @param f
 	 * @param x
 	 */
@@ -137,14 +137,14 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire un entier dans la console.
+	 * Cette mÃ©thode permet d'Ã©crire un entier dans la console.
 	 * @param x
 	 */
 	public static void ecrireInt(int x) {ecrireInt(System.out,x);}
 
 	/**
-	 * Cette méthode permet d'écrire un entier précédé d'autant d'espace que la longeur
-	 * spécifiée dans le fichier passé en paramètre.
+	 * Cette mÃ©thode permet d'Ã©crire un entier prÃ©cÃ©dÃ© d'autant d'espace que la longeur
+	 * spÃ©cifiÃ©e dans le fichier passÃ© en paramÃ¨tre.
 	 * @param f
 	 * @param x
 	 * @param longueur
@@ -157,8 +157,8 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire un entier précédé d'autant d'espace que la longeur
-	 * spécifiée dans la console.
+	 * Cette mÃ©thode permet d'Ã©crire un entier prÃ©cÃ©dÃ© d'autant d'espace que la longeur
+	 * spÃ©cifiÃ©e dans la console.
 	 * @param x
 	 * @param longueur
 	 */
@@ -167,7 +167,7 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire un décimale dans le fichier passé en paramètre.
+	 * Cette mÃ©thode permet d'Ã©crire un dÃ©cimale dans le fichier passÃ© en paramÃ¨tre.
 	 * @param f
 	 * @param d
 	 */
@@ -176,14 +176,14 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire un décimale dans la console.
+	 * Cette mÃ©thode permet d'Ã©crire un dÃ©cimale dans la console.
 	 * @param d
 	 */
 	public static void ecrireDouble(double d) {ecrireDouble(System.out,d);}
 
 	/**
-	 * Cette méthode permet d'écrire un décimale précédé d'autant d'espace que la longeur
-	 * spécifiée dans le fichier passé en paramètre.
+	 * Cette mÃ©thode permet d'Ã©crire un dÃ©cimale prÃ©cÃ©dÃ© d'autant d'espace que la longeur
+	 * spÃ©cifiÃ©e dans le fichier passÃ© en paramÃ¨tre.
 	 * @param f
 	 * @param d
 	 * @param longueur
@@ -196,8 +196,8 @@ public class Ecriture {
 	}
 
 	/**
-	 * Cette méthode permet d'écrire un décimale précédé d'autant d'espace que la longeur
-	 * spécifiée dans la console.
+	 * Cette mÃ©thode permet d'Ã©crire un dÃ©cimale prÃ©cÃ©dÃ© d'autant d'espace que la longeur
+	 * spÃ©cifiÃ©e dans la console.
 	 * @param d
 	 * @param longueur
 	 */
@@ -206,8 +206,8 @@ public class Ecriture {
 	}
 	
 	/**
-	 * Cette méthode permet de copier le contenue du fichier pointé par le pointeur output 
-	 * dans le fichier pointé par le pointeur input.
+	 * Cette mÃ©thode permet de copier le contenue du fichier pointÃ© par le pointeur output 
+	 * dans le fichier pointÃ© par le pointeur input.
 	 * @param output
 	 * @param input
 	 */

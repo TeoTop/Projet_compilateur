@@ -23,7 +23,7 @@ public class Iteration implements YakaConstants{
 	}
 	
 	/**
-	 * Empiler les itérations et d'incrementer le nombre d'itérations présentes dans le code YAKA 
+	 * Empiler les itÃ©rations et d'incrementer le nombre d'itÃ©rations prÃ©sentes dans le code YAKA 
 	 * 
 	 * @see Expression#pileTQ
 	 * @see Expression#comptTQ
@@ -33,7 +33,7 @@ public class Iteration implements YakaConstants{
 	}
 	
 	/**
-	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette faire
+	 * Appel Ã  la mÃ©thode ecrireEtiqu de YVMasm pour Ã©crire l'Ã©tiquette faire
 	 * 
 	 * @see YVMasm 
 	 */
@@ -42,7 +42,7 @@ public class Iteration implements YakaConstants{
 	}
 	
 	/**
-	 * Appel à la méthode iffaux de YVMasm
+	 * Appel Ã  la mÃ©thode iffaux de YVMasm
 	 * 
 	 * @see YVMasm 
 	 */
@@ -51,7 +51,7 @@ public class Iteration implements YakaConstants{
 	}
 	
 	/**
-	 * Appel à la méthode Goto de YVMasm
+	 * Appel Ã  la mÃ©thode Goto de YVMasm
 	 * 
 	 * @see YVMasm 
 	 */
@@ -60,7 +60,7 @@ public class Iteration implements YakaConstants{
 	}
 	
 	/**
-	 * Appel à la méthode ecrireEtiqu de YVMasm pour écrire l'étiquette fait
+	 * Appel Ã  la mÃ©thode ecrireEtiqu de YVMasm pour Ã©crire l'Ã©tiquette fait
 	 * 
 	 * @see YVMasm 
 	 */
@@ -69,7 +69,7 @@ public class Iteration implements YakaConstants{
 	}
 	
 	/**
-	 * Dépiler la pile des itérations
+	 * DÃ©piler la pile des itÃ©rations
 	 * 
 	 * @see Expression#pileTQ
 	 */

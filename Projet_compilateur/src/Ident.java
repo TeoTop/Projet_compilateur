@@ -8,7 +8,7 @@
  * 
  * @version 1.0
  * 
- * Classe permettant de définir le type d'une variable ou d'une constante ou d'un parametre
+ * Classe permettant de dÃ©finir le type d'une variable ou d'une constante ou d'un parametre
  * 
  * @see IdVar
  * @see IdConst
@@ -17,7 +17,7 @@
  */
 public abstract class Ident {
 	/**
-	 * Chaine permettant de renseigner si la variable ou la constante est entier ou booléen.
+	 * Chaine permettant de renseigner si la variable ou la constante est entier ou boolÃ©en.
 	 * Elle ne prend que deux valeurs : ENTIER ou BOOLEEN
 	 * 
 	 * @see Ident#getType()
@@ -36,7 +36,7 @@ public abstract class Ident {
 	}
 
 	/**
-	 * Mettre à jour l'attribut type de la classe Ident
+	 * Mettre Ã  jour l'attribut type de la classe Ident
 	 * @param type
 	 * 
 	 * @see Ident#type
@@ -46,7 +46,7 @@ public abstract class Ident {
 	}
 
 	/**
-	 * Méthode permettant de savoir si l'objet Ident est une variable. 
+	 * MÃ©thode permettant de savoir si l'objet Ident est une variable. 
 	 * @return true si c'est une variable, false sinon
 	 * @see IdVar#isVar()
 	 * @see IdConst#isVar()
@@ -54,7 +54,7 @@ public abstract class Ident {
 	 */
 	public abstract boolean isVar();
 	/**
-	 * Méthode permettant de savoir si l'objet Ident est une fonction. 
+	 * MÃ©thode permettant de savoir si l'objet Ident est une fonction. 
 	 * @return true si c'est une variable, false sinon
 	 * @see IdVar#isFonc()
 	 * @see IdConst#isFonc()
@@ -74,7 +74,7 @@ public abstract class Ident {
 		return "Ident [type=" + this.type + "]";
 	}
 	/**
-	 * Méthode permettant de savoir si l'objet Ident est une Parametre. 
+	 * MÃ©thode permettant de savoir si l'objet Ident est une Parametre. 
 	 * @return true si c'est une variable, false sinon
 	 * @see IdVar#isParam()
 	 * @see IdConst#isParam()

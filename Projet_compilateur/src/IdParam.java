@@ -8,13 +8,13 @@
  * 
  * @version 1.0
  * 
- * Classe héritée de Ident. Permet de définir un paramètre du code YAKA
+ * Classe hÃ©ritÃ©e de Ident. Permet de dÃ©finir un paramÃ¨tre du code YAKA
  * 
  * @see Ident
  */
 public class IdParam extends Ident {
 	/**
-	 * Permet d'enregistrer le positionnement du paramètre dans la pile assembleur
+	 * Permet d'enregistrer le positionnement du paramÃ¨tre dans la pile assembleur
 	 * 
 	 * @see IdParam#getOffset()
 	 * @see IdParam#setOffset(int)
@@ -22,7 +22,7 @@ public class IdParam extends Ident {
 	private int offset;
 
 	/**
-	 * Retourne l'offset du paramètre (où elle se situe dans la pile assembleur)
+	 * Retourne l'offset du paramÃ¨tre (oÃ¹ elle se situe dans la pile assembleur)
 	 * @return entier de l'attribut offset
 	 * 
 	 * @see IdParam#offset
@@ -32,7 +32,7 @@ public class IdParam extends Ident {
 	}
 
 	/**
-	 * Mettre à jour l'attribut offset de la classe IdParam
+	 * Mettre Ã  jour l'attribut offset de la classe IdParam
 	 * @param offset
 	 * 
 	 * @see IdParam#offset
