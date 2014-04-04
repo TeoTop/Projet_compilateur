@@ -18,31 +18,31 @@ public class TabIdent {
 	
 	/**
 	 * Table des identificateurs locaux pour les variables et constantes des fonctions et 
-	 * du programme principal. Cette table est effacée à chaque fin de fonction.
+	 * du programme principal. Cette table est effacÃ©e Ã  chaque fin de fonction.
 	 * 
 	 * @see TabIdent#TabIdent()
 	 */
 	private HashMap<String,Ident> locaux;
 	
 	/**
-	 * Table des identificateurs globaux pour les fonctions (nom, type de retour, paramètre). 
-	 * Cette table n'est jamais effacée lors de l'éxécution du compilateur.
+	 * Table des identificateurs globaux pour les fonctions (nom, type de retour, paramÃ¨tre). 
+	 * Cette table n'est jamais effacÃ©e lors de l'Ã©xÃ©cution du compilateur.
 	 * 
 	 * @see TabIdent#TabIdent()
 	 */
 	HashMap<String,Ident> globaux;
 	
 	/**
-	 * Pile des variables. Permet de savoir si une variable précédemment déclarée est
-	 * initialisée. 
+	 * Pile des variables. Permet de savoir si une variable prÃ©cÃ©demment dÃ©clarÃ©e est
+	 * initialisÃ©e. 
 	 * 
 	 * @see TabIdent#TabIdent()
 	 */
 	public Stack<Integer> var;
 	
 	/**
-	 * Pile temporaire des paramètres. Permet de renseigner les paramètres de la fonction
-	 * en cours. Cette table est effacée à chaque fin de fonction.
+	 * Pile temporaire des paramÃ¨tres. Permet de renseigner les paramÃ¨tres de la fonction
+	 * en cours. Cette table est effacÃ©e Ã  chaque fin de fonction.
 	 * 
 	 * @see TabIdent#TabIdent()
 	 * 
@@ -50,14 +50,14 @@ public class TabIdent {
 	private HashMap<Integer,Parametre> param;
 	
 	/**
-	 * Permet de savoir le nombre de paramètre de la fonction en cours.
+	 * Permet de savoir le nombre de paramÃ¨tre de la fonction en cours.
 	 */
 	private int rang;
 	
 	/**
-	 * Pile des arguments. Correspond aux paramètres lors de l'appel à la fonction. Sert
-	 * à tester le nombre d'argument d'une fonction. Utile pour les appels de fonctions
-	 * imbriqués.
+	 * Pile des arguments. Correspond aux paramÃ¨tres lors de l'appel Ã  la fonction. Sert
+	 * Ã  tester le nombre d'argument d'une fonction. Utile pour les appels de fonctions
+	 * imbriquÃ©s.
 	 * 
 	 */
 	public Stack<Integer> argument;
@@ -65,7 +65,7 @@ public class TabIdent {
 	/**
 	 * 
 	 * Constructeur TabIdent
-	 * Création de la table des identificateurs et de la pile des variables
+	 * CrÃ©ation de la table des identificateurs et de la pile des variables
 	 * 
 	 *  @see TabIdent#locaux
 	 *  @see TabIdent#var
@@ -92,7 +92,7 @@ public class TabIdent {
 	}
 	
 	/**
-	 * Retourne l'ident dans la table des locaux correspondant à la clef
+	 * Retourne l'ident dans la table des locaux correspondant Ã  la clef
 	 * 
 	 * @param clef
 	 * @return ident 
@@ -118,7 +118,7 @@ public class TabIdent {
 	}
 	
 	/**
-	 * Retourne l'ident dans la table des globaux correspondant à la clef
+	 * Retourne l'ident dans la table des globaux correspondant Ã  la clef
 	 * 
 	 * @param clef
 	 * @return ident 
@@ -148,13 +148,13 @@ public class TabIdent {
 			}
 			this.locaux.put(clef, id);
 		}
-		else {// clef existe déjà
+		else {// clef existe dÃ©jÃ 
 			Erreur.message("DÃ©claration double pour : " + clef);
 		}
 	}
 	
 	/**
-	 * Ajouter les paramètres dans la pile temporaire param
+	 * Ajouter les paramÃ¨tres dans la pile temporaire param
 	 * 
 	 * @param ident
 	 * 
@@ -167,7 +167,7 @@ public class TabIdent {
 	}	
 	
 	/**
-	 * Ajouter les paramètres dans la table des identificateurs locaux
+	 * Ajouter les paramÃ¨tres dans la table des identificateurs locaux
 	 * 
 	 * @see TabIdent#param
 	 */
@@ -185,7 +185,7 @@ public class TabIdent {
 	 * Vider la table des identificateurs locaux
 	 * Vider la hashMap param
 	 * Vider la pile des variables
-	 * Remettre le rang à 0
+	 * Remettre le rang Ã  0
 	 * 
 	 * @see TabIdent#locaux
 	 * @see TabIdent#param
@@ -200,7 +200,7 @@ public class TabIdent {
 	}
 	
 	/**
-	 * Ajouter une fonction à la table des globaux
+	 * Ajouter une fonction Ã  la table des globaux
 	 * 
 	 * @param nom
 	 * 
@@ -218,24 +218,24 @@ public class TabIdent {
 			}
 			this.globaux.put(nom, id);
 		}
-		else {// fonction existe déjà
-			Erreur.message("Déclaration double pour la fonction : " + nom);
+		else {// fonction existe dÃ©jÃ 
+			Erreur.message("DÃ©claration double pour la fonction : " + nom);
 		}
 	}	
 	
 	/**
-	 * Permet de tester si la fonction appelée existe. (A DEPLACER DANS FONCTION)
+	 * Permet de tester si la fonction appelÃ©e existe. (A DEPLACER DANS FONCTION)
 	 * 
 	 * @param identLu
 	 */
 	public void identIsFunction(String identLu) {
 		if (!existeIdentG(identLu))	{// fonction n'existe pas
-			Erreur.message("L'identificateur '" + identLu + "' doit être une fonction");
+			Erreur.message("L'identificateur '" + identLu + "' doit Ãªtre une fonction");
 		}
 	}
 	
 	/**
-	 * Permet de tester si la fonction appelée existe et que le nombre d'argument correspond.
+	 * Permet de tester si la fonction appelÃ©e existe et que le nombre d'argument correspond.
 	 * 
 	 * @param nom
 	 * 
@@ -248,11 +248,11 @@ public class TabIdent {
 			int nbParam = func.nbParam;
 			int paramTest = this.argument.peek();
 			if (nbParam!=paramTest+1){
-				Erreur.message("La fonction '" + nom + "' n'est pas appliquée au nombre exact d'arguments");
+				Erreur.message("La fonction '" + nom + "' n'est pas appliquÃ©e au nombre exact d'arguments");
 			}
 		}
 		else{//fonction n'existe pas
-			Erreur.message("La fonction '" + nom + "' n'est pas définie");
+			Erreur.message("La fonction '" + nom + "' n'est pas dÃ©finie");
 		}
 	}
 
@@ -268,9 +268,9 @@ public class TabIdent {
 	}
 	
 	/**
-	 * Retourne le nombre de paramètres
+	 * Retourne le nombre de paramÃ¨tres
 	 * 
-	 * @return nombre de paramètres
+	 * @return nombre de paramÃ¨tres
 	 * 
 	 * @see TabIdent#param
 	 */
@@ -290,7 +290,7 @@ public class TabIdent {
 	}
 
 	/**
-	 * Permet de spécifier qu'un argument a été passé en paramètre (de 0 à nbparam - 1)
+	 * Permet de spÃ©cifier qu'un argument a Ã©tÃ© passÃ© en paramÃ¨tre (de 0 Ã  nbparam - 1)
 	 * 
 	 * @see TabIdent#argument
 	 */
@@ -299,7 +299,7 @@ public class TabIdent {
 	}
 	
 	/**
-	 * Permet de signifier l'appel à une fonction dans la pile des arguments. 
+	 * Permet de signifier l'appel Ã  une fonction dans la pile des arguments. 
 	 * 
 	 * @see TabIdent#argument
 	 */
@@ -308,8 +308,8 @@ public class TabIdent {
 	}
 
 	/**
-	 * Permet de retirer les arguments de la pile lorsque que l'appel à la fonction est
-	 * terminé.
+	 * Permet de retirer les arguments de la pile lorsque que l'appel Ã  la fonction est
+	 * terminÃ©.
 	 * 
 	 * @see TabIdent#argument
 	 */

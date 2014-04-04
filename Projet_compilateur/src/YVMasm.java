@@ -8,8 +8,8 @@
  * 
  * @version 1.0
  * 
- * La classe YVMasm est étendue de la classe YVM et a pour but de traduire en assembleur
- * les méthodes YAKA. 
+ * La classe YVMasm est Ã©tendue de la classe YVM et a pour but de traduire en assembleur
+ * les mÃ©thodes YAKA. 
  * 
  * @see YVM
  * @see Ecriture
@@ -29,7 +29,7 @@ public class YVMasm extends YVM {
 	private OutputStream fichier;
 	
 	/**
-	 *  Compteur permettant de spécifier le numéro du message affiché dans la focntion 
+	 *  Compteur permettant de spÃ©cifier le numÃ©ro du message affichÃ© dans la focntion 
 	 *  ecrireChaine 
 	 *  
 	 *  @see YVMasm#YVMasm
@@ -37,7 +37,7 @@ public class YVMasm extends YVM {
 	private int comptString;
 	
 	/** 
-	 * Liste qui contiendra les fonctions externes nécessaires : lirent, ecrent, ecrbool, 
+	 * Liste qui contiendra les fonctions externes nÃ©cessaires : lirent, ecrent, ecrbool, 
 	 * ecrch, ligsuiv. 
 	 * 
 	 * @see YVMasm#YVMasm
@@ -45,7 +45,7 @@ public class YVMasm extends YVM {
 	private ArrayList<String> extern;
 	
 	/**
-	 * Constructeur : permet de créer un fichier temporaire dans lequel sera stocké le code
+	 * Constructeur : permet de crÃ©er un fichier temporaire dans lequel sera stockÃ© le code
 	 * assembleur avant la recopie dans le fichier final si il n'y a pas d'erreur.
 	 * 
 	 * @see YVMasm#fichier
@@ -96,7 +96,7 @@ public class YVMasm extends YVM {
 	}
 
 	/**
-	 * Transformation d'un code YAKA conditionnel inférieur en code ASM
+	 * Transformation d'un code YAKA conditionnel infÃ©rieur en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -117,7 +117,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA conditionnel d'égalité en code ASM
+	 * Transformation d'un code YAKA conditionnel d'Ã©galitÃ© en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -138,8 +138,8 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant le chargement d'une variable à l'offset 
-	 * passé en paramètre en code ASM
+	 * Transformation d'un code YAKA permettant le chargement d'une variable Ã  l'offset 
+	 * passÃ© en paramÃ¨tre en code ASM
 	 * 
 	 * @param offset
 	 * 
@@ -156,8 +156,8 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant le stockage d'une variable à l'offset 
-	 * passé en paramètre en code ASM
+	 * Transformation d'un code YAKA permettant le stockage d'une variable Ã  l'offset 
+	 * passÃ© en paramÃ¨tre en code ASM
 	 * 
 	 * @param offset
 	 * 
@@ -175,8 +175,8 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant le stockage d'une constante passé en 
-	 * paramètre en code ASM
+	 * Transformation d'un code YAKA permettant le stockage d'une constante passÃ© en 
+	 * paramÃ¨tre en code ASM
 	 * 
 	 * @param valeur
 	 * 
@@ -194,8 +194,8 @@ public class YVMasm extends YVM {
 	
 	/**
 	 * Transformation d'un code YAKA permettant de comparer la valeur se trouvant en sommet 
-	 * de pile à 0, si égale
-	 * alors go to vers étiquette en code ASM
+	 * de pile Ã  0, si Ã©gale
+	 * alors go to vers Ã©tiquette en code ASM
 	 * 
 	 * @param etiq
 	 * 
@@ -214,8 +214,8 @@ public class YVMasm extends YVM {
 	
 	/**
 	 * Transformation d'un code YAKA permettant de comparer la valeur se trouvant en sommet 
-	 * de pile à 0, si non égale
-	 * alors go to vers étiquette en code ASM
+	 * de pile Ã  0, si non Ã©gale
+	 * alors go to vers Ã©tiquette en code ASM
 	 * 
 	 * @param etiq
 	 * 
@@ -234,8 +234,8 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant d'aller exécuter les instructions se trouvant
-	 *  juste après l'étiquette en code ASM
+	 * Transformation d'un code YAKA permettant d'aller exÃ©cuter les instructions se trouvant
+	 *  juste aprÃ¨s l'Ã©tiquette en code ASM
 	 *  
 	 * @param etiq
 	 * 
@@ -252,7 +252,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une addition en code ASM
+	 * Transformation d'un code YAKA permettant de rÃ©aliser une addition en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -270,7 +270,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une multiplication en code ASM
+	 * Transformation d'un code YAKA permettant de rÃ©aliser une multiplication en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -288,7 +288,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une division en code ASM
+	 * Transformation d'un code YAKA permettant de rÃ©aliser une division en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -307,7 +307,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une comparaison supérieur en 
+	 * Transformation d'un code YAKA permettant de rÃ©aliser une comparaison supÃ©rieur en 
 	 * code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
@@ -329,8 +329,8 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une comparaison inférieur ou 
-	 * égale en code ASM
+	 * Transformation d'un code YAKA permettant de rÃ©aliser une comparaison infÃ©rieur ou 
+	 * Ã©gale en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -353,8 +353,8 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une comparaison supérieur ou 
-	 * égale en code ASM
+	 * Transformation d'un code YAKA permettant de rÃ©aliser une comparaison supÃ©rieur ou 
+	 * Ã©gale en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -375,7 +375,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser une comparaison de différence 
+	 * Transformation d'un code YAKA permettant de rÃ©aliser une comparaison de diffÃ©rence 
 	 * en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
@@ -396,8 +396,8 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Permet d'écrire en ASM l'entete necessaire pour exécuter le code ASM. Cette méthode
-	 * compléte l'entête avec les fonctions externes rassemblées dans un tableau de chaines. 
+	 * Permet d'Ã©crire en ASM l'entete necessaire pour exÃ©cuter le code ASM. Cette mÃ©thode
+	 * complÃ¨te l'entÃªte avec les fonctions externes rassemblÃ©es dans un tableau de chaines. 
 	 * 
 	 * @param fichierOut
 	 * 
@@ -410,15 +410,15 @@ public class YVMasm extends YVM {
 	 */
 	@Override
 	public void recopierEntete(String fichierOut) {
-		// on crée un nouveau fichier (final)
+		// on crÃ©e un nouveau fichier (final)
 		this.fichier = Ecriture.ouvrir(fichierOut);
 		Ecriture.ecrireStringln(this.fichier,  ";entete");
 		
-		//on vérifie que le tableau n'est pas vide
+		//on vÃ©rifie que le tableau n'est pas vide
 		if(!extern.isEmpty()){
 			Ecriture.ecrireString(this.fichier, "extrn ");
 			
-			// on itère sur le tableau pour récupérer tous ses éléments et les écrire
+			// on itÃ©re sur le tableau pour rÃ©cupÃ©rer tous ses Ã©lÃ©ments et les Ã©crire
 			Iterator<String> ite = this.extern.iterator();
 			while(ite.hasNext()){
 				String fonction = ite.next();
@@ -429,7 +429,7 @@ public class YVMasm extends YVM {
 			}
 		}
 
-		//on renseigne le début type d'un fichier assembleur
+		//on renseigne le dÃ©but type d'un fichier assembleur
 		Ecriture.ecrireStringln(this.fichier,  ".MODEL SMALL");
 		Ecriture.ecrireStringln(this.fichier,  ".586");
 		Ecriture.ecrireStringln(this.fichier,  ".CODE");
@@ -437,7 +437,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Permet d'écrire la fin type du fichier ASM necessaire à son exécution
+	 * Permet d'Ã©crire la fin type du fichier ASM necessaire Ã  son exÃ©cution
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see Ecriture#fermer(OutputStream)
@@ -472,7 +472,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser un OU en code ASM
+	 * Transformation d'un code YAKA permettant de rÃ©aliser un OU en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -489,7 +489,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser un NON en code ASM
+	 * Transformation d'un code YAKA permettant de rÃ©aliser un NON en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -505,7 +505,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Transformation d'un code YAKA permettant de réaliser un ET en code ASM
+	 * Transformation d'un code YAKA permettant de rÃ©aliser un ET en code ASM
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -522,7 +522,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Permet d'écrire l'entier qui est en sommet de pile
+	 * Permet d'Ã©crire l'entier qui est en sommet de pile
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * 
@@ -536,12 +536,12 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,"\tcall ecrent");
 		if(!this.extern.contains("ecrent")) this.extern.add("ecrent");
 		/* on pense a enregistrer la fonction externe dans le tableau afin de la renseigner
-		dans l'entête*/
+		dans l'entÃªte*/
 	}
 
 	
 	/**
-	 * Permet d'afficher la chaine passé en paramètre
+	 * Permet d'afficher la chaine passÃ© en paramÃ¨tre
 	 * 
 	 * @param x
 	 * 
@@ -557,13 +557,13 @@ public class YVMasm extends YVM {
 		Ecriture.ecrireStringln(this.fichier,  "\t;ecrireChaine " + x);
 		Ecriture.ecrireStringln(this.fichier, ".DATA\n\tmess" + this.comptString + " DB \"" + x.substring(1, x.length() - 1) + "$\""); /* enlever le dernier guillemet afin d'ajouter $ */
 		Ecriture.ecrireStringln(this.fichier, ".CODE\n\tlea dx,mess" + this.comptString + "\n\tpush dx\n\tcall ecrch");
-		this.comptString++;					// on incrémente pour les numéros de messages
+		this.comptString++;					// on incrÃ©mente pour les numÃ©ros de messages
 		if(!this.extern.contains("ecrch")) this.extern.add("ecrch");
 	}
 
 	
 	/**
-	 * Permet d'écrire le booléen qui est en sommet de pile
+	 * Permet d'Ã©crire le boolÃ©en qui est en sommet de pile
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * 
@@ -580,8 +580,8 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Permet de lire un entier placé à l'offset x en faisant appel à la fonction 
-	 * lirent (prédéfini en assembleur)
+	 * Permet de lire un entier placÃ© Ã  l'offset x en faisant appel Ã  la fonction 
+	 * lirent (prÃ©dÃ©fini en assembleur)
 	 * 
 	 * @param x
 	 * 
@@ -602,7 +602,7 @@ public class YVMasm extends YVM {
 
 	
 	/**
-	 * Permet de réaliser un retour à la ligne
+	 * Permet de rÃ©aliser un retour Ã  la ligne
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * 
@@ -620,7 +620,7 @@ public class YVMasm extends YVM {
 	
 	
 	/**
-	 * Permet d'écrire une étiquette de la chaine passé en paramètre
+	 * Permet d'Ã©crire une Ã©tiquette de la chaine passÃ© en paramÃ¨tre
 	 * 
 	 * @param etiq
 	 * 
@@ -635,7 +635,7 @@ public class YVMasm extends YVM {
 	}
 
 	/**
-	 * Permet de faire appel à une fonction ASM
+	 * Permet de faire appel Ã  une fonction ASM
 	 * 
 	 * @param id
 	 * 
@@ -650,7 +650,7 @@ public class YVMasm extends YVM {
 	}
 
 	/**
-	 * Permet de réserver l'espace dans la pile pour le retour de la fonction
+	 * Permet de rÃ©server l'espace dans la pile pour le retour de la fonction
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVM#fichier
@@ -663,7 +663,7 @@ public class YVMasm extends YVM {
 	}
 
 	/**
-	 * Permet de placer la valeur de retour dans l'espace dédié de la pile (voir 
+	 * Permet de placer la valeur de retour dans l'espace dÃ©diÃ© de la pile (voir 
 	 * reserveRetour)
 	 * 
 	 * @param offset
@@ -681,7 +681,7 @@ public class YVMasm extends YVM {
 	}
 
 	/**
-	 * Permet de spécifier le début de la fonction principale.
+	 * Permet de spÃ©cifier le dÃ©but de la fonction principale.
 	 * 
 	 * @see Ecriture#ecrireStringln(OutputStream, String)
 	 * @see YVMasm#fichier
@@ -694,8 +694,8 @@ public class YVMasm extends YVM {
 	}
 
 	/**
-	 * Permet d'écrire le code de retour d'une fonction ( on "retire" les paramètres
-	 * de la pile en fonction de nbOctet et on revient à la fonction appelante)
+	 * Permet d'Ã©crire le code de retour d'une fonction ( on "retire" les paramÃ¨tres
+	 * de la pile en fonction de nbOctet et on revient Ã  la fonction appelante)
 	 * 
 	 * @param nbOctet
 	 * 

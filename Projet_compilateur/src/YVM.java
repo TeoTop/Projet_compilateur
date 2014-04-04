@@ -8,7 +8,7 @@
  * 
  * @version 1.0
  * 
- * Classe permettant de regrouper les fonctions contenue dans le code YAKA
+ * Classe permettant de regrouper les fonctions contenues dans le code YAKA
  * 
  * @see YVMasm
  */
